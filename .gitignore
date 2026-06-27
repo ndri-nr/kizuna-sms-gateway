@@ -1,0 +1,4 @@
+release-key.jks
+.vscode/**
+.DS_Store
+**mobile/build/**

@@ -1,0 +1,71 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Balon Percakapan -->
+    <path
+        android:fillColor="#00A884"
+        android:pathData="
+            M41,36
+            H67
+            C72.5,36 77,40.5 77,46
+            V61
+            C77,66.5 72.5,71 67,71
+            H54
+            L45,79
+            V71
+            H41
+            C35.5,71 31,66.5 31,61
+            V46
+            C31,40.5 35.5,36 41,36
+            Z"/>
+
+    <!-- Garis Pesan Atas -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="
+            M42,41
+            H66
+            A1.5,1.5 0 0 1 66,44
+            H42
+            A1.5,1.5 0 0 1 42,41
+            Z"/>
+
+    <!-- Huruf K (Tengah) -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="
+            M44,49
+            V59
+            M50,49
+            L44,54
+            L50,59"/>
+
+    <!-- Huruf G (Tengah) -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="
+            M64,50
+            A5,5 0 1,0 64,58
+            V54
+            H60"/>
+
+    <!-- Garis Pesan Bawah -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="
+            M42,64
+            H66
+            A1.5,1.5 0 0 1 66,67
+            H42
+            A1.5,1.5 0 0 1 42,64
+            Z"/>
+</vector>
