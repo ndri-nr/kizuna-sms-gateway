@@ -62,25 +62,39 @@ class HttpGatewayServer @Inject constructor(
                             if (keyInfo == null) {
                                 call.respond(HttpStatusCode.Forbidden, mapOf("error" to "Invalid or inactive API Key"))
                                 finish()
+                                return@intercept
                             }
-                            // TODO: Implement rate limiting logic here using keyInfo
+                            
+                            // Rate Limiting Logic
+                            if (keyInfo.smsPerMinute > 0) {
+                                val minuteAgo = java.time.LocalDateTime.now().minusMinutes(1)
+                                val countMinute = outboundRepository.getSmsCountByKeyInTimeRange(apiKey, minuteAgo)
+                                if (countMinute >= keyInfo.smsPerMinute) {
+                                    call.respond(HttpStatusCode.TooManyRequests, mapOf("error" to "Minute rate limit exceeded"))
+                                    finish()
+                                    return@intercept
+                                }
+                            }
                         }
                     }
 
                     post("/send") {
+                        val apiKey = call.request.headers["X-API-KEY"]
                         val request = call.receive<SmsRequest>()
                         val id = outboundRepository.insertOutboundSms(
                             OutboundSms(
                                 phoneNumber = request.phoneNumber,
                                 message = request.message,
                                 simSlot = request.simSlot ?: 0,
-                                webhookUrl = request.webhookUrl
+                                webhookUrl = request.webhookUrl,
+                                apiKey = apiKey
                             )
                         )
                         call.respond(HttpStatusCode.Accepted, SmsResponse(id, "PENDING"))
                     }
 
                     post("/send-batch") {
+                        val apiKey = call.request.headers["X-API-KEY"]
                         val batchRequest = call.receive<BatchSmsRequest>()
                         val responses = batchRequest.messages.map { request ->
                             val id = outboundRepository.insertOutboundSms(
@@ -88,7 +102,8 @@ class HttpGatewayServer @Inject constructor(
                                     phoneNumber = request.phoneNumber,
                                     message = request.message,
                                     simSlot = request.simSlot ?: 0,
-                                    webhookUrl = request.webhookUrl
+                                    webhookUrl = request.webhookUrl,
+                                    apiKey = apiKey
                                 )
                             )
                             SmsResponse(id, "PENDING")

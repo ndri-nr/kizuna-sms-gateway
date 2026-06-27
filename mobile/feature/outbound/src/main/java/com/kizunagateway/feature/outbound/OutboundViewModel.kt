@@ -143,12 +143,11 @@ class OutboundViewModel @Inject constructor(
         }
     }
 
-    fun updateApiKeyRateLimit(apiKey: ApiKey, perMinute: Int, perHour: Int) {
+    fun updateApiKeyRateLimit(apiKey: ApiKey, perMinute: Int) {
         viewModelScope.launch {
             outboundRepository.updateApiKey(
                 apiKey.copy(
-                    smsPerMinute = perMinute,
-                    smsPerHour = perHour
+                    smsPerMinute = perMinute
                 )
             )
             notificationService.showMessage("Rate limit updated for ${apiKey.name}")

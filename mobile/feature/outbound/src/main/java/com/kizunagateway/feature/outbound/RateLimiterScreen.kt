@@ -36,7 +36,7 @@ fun RateLimiterScreen(viewModel: OutboundViewModel) {
                 fontWeight = FontWeight.Bold
             )
             Text(
-                text = "Manage sending limits for each API key. Set to 0 or leave empty for unlimited.",
+                text = "Manage sending limits per minute for each API key. Set to 0 or leave empty for unlimited.",
                 color = KizunaColors.Muted,
                 fontSize = 14.sp,
                 modifier = Modifier.padding(top = 8.dp, bottom = 16.dp)
@@ -54,8 +54,8 @@ fun RateLimiterScreen(viewModel: OutboundViewModel) {
                     items(apiKeys) { apiKey ->
                         RateLimiterCard(
                             apiKey = apiKey,
-                            onUpdateLimit = { perMinute, perHour ->
-                                viewModel.updateApiKeyRateLimit(apiKey, perMinute, perHour)
+                            onUpdateLimit = { perMinute ->
+                                viewModel.updateApiKeyRateLimit(apiKey, perMinute)
                             }
                         )
                     }
@@ -68,10 +68,9 @@ fun RateLimiterScreen(viewModel: OutboundViewModel) {
 @Composable
 fun RateLimiterCard(
     apiKey: ApiKey,
-    onUpdateLimit: (Int, Int) -> Unit
+    onUpdateLimit: (Int) -> Unit
 ) {
     var perMinuteText by remember(apiKey) { mutableStateOf(if (apiKey.smsPerMinute > 0) apiKey.smsPerMinute.toString() else "") }
-    var perHourText by remember(apiKey) { mutableStateOf(if (apiKey.smsPerHour > 0) apiKey.smsPerHour.toString() else "") }
 
     Card(
         colors = CardDefaults.cardColors(containerColor = KizunaColors.Surface),
@@ -92,46 +91,25 @@ fun RateLimiterCard(
                 modifier = Modifier.padding(bottom = 12.dp)
             )
 
-            Row(
+            OutlinedTextField(
+                value = perMinuteText,
+                onValueChange = { perMinuteText = it.filter { char -> char.isDigit() } },
+                label = { Text("SMS Per Minute", fontSize = 12.sp) },
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                OutlinedTextField(
-                    value = perMinuteText,
-                    onValueChange = { perMinuteText = it.filter { char -> char.isDigit() } },
-                    label = { Text("Per Minute", fontSize = 12.sp) },
-                    modifier = Modifier.weight(1f),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = KizunaColors.Primary,
-                        unfocusedBorderColor = KizunaColors.Background,
-                        focusedLabelColor = KizunaColors.Primary,
-                        unfocusedLabelColor = KizunaColors.Muted
-                    ),
-                    textStyle = LocalTextStyle.current.copy(fontSize = 14.sp)
-                )
-
-                OutlinedTextField(
-                    value = perHourText,
-                    onValueChange = { perHourText = it.filter { char -> char.isDigit() } },
-                    label = { Text("Per Hour", fontSize = 12.sp) },
-                    modifier = Modifier.weight(1f),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = KizunaColors.Primary,
-                        unfocusedBorderColor = KizunaColors.Background,
-                        focusedLabelColor = KizunaColors.Primary,
-                        unfocusedLabelColor = KizunaColors.Muted
-                    ),
-                    textStyle = LocalTextStyle.current.copy(fontSize = 14.sp)
-                )
-            }
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = KizunaColors.Primary,
+                    unfocusedBorderColor = KizunaColors.Background,
+                    focusedLabelColor = KizunaColors.Primary,
+                    unfocusedLabelColor = KizunaColors.Muted
+                ),
+                textStyle = LocalTextStyle.current.copy(fontSize = 14.sp)
+            )
 
             Button(
                 onClick = {
                     val perMin = perMinuteText.toIntOrNull() ?: 0
-                    val perHour = perHourText.toIntOrNull() ?: 0
-                    onUpdateLimit(perMin, perHour)
+                    onUpdateLimit(perMin)
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -139,7 +117,7 @@ fun RateLimiterCard(
                 colors = ButtonDefaults.buttonColors(containerColor = KizunaColors.Primary),
                 shape = RoundedCornerShape(8.dp)
             ) {
-                Text("Save Limits", color = Color.White)
+                Text("Save Limit", color = Color.White)
             }
         }
     }

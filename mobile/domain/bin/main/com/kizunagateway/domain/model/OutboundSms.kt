@@ -19,7 +19,8 @@ data class OutboundSms(
     val deliveredAt: LocalDateTime? = null,
     val errorMessage: String? = null,
     val messageId: String? = null, // External ID or Android SMS ID
-    val webhookUrl: String? = null
+    val webhookUrl: String? = null,
+    val apiKey: String? = null
 )
 
 @Serializable

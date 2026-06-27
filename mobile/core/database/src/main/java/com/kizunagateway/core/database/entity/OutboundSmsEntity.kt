@@ -19,7 +19,8 @@ data class OutboundSmsEntity(
     val deliveredAt: LocalDateTime?,
     val errorMessage: String?,
     val messageId: String?,
-    val webhookUrl: String?
+    val webhookUrl: String?,
+    val apiKey: String? = null
 )
 
 fun OutboundSmsEntity.toDomain() = OutboundSms(
@@ -33,7 +34,8 @@ fun OutboundSmsEntity.toDomain() = OutboundSms(
     deliveredAt = deliveredAt,
     errorMessage = errorMessage,
     messageId = messageId,
-    webhookUrl = webhookUrl
+    webhookUrl = webhookUrl,
+    apiKey = apiKey
 )
 
 fun OutboundSms.toEntity() = OutboundSmsEntity(
@@ -47,5 +49,6 @@ fun OutboundSms.toEntity() = OutboundSmsEntity(
     deliveredAt = deliveredAt,
     errorMessage = errorMessage,
     messageId = messageId,
-    webhookUrl = webhookUrl
+    webhookUrl = webhookUrl,
+    apiKey = apiKey
 )

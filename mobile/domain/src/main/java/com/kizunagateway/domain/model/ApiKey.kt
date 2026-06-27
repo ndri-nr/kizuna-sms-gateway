@@ -10,7 +10,6 @@ data class ApiKey(
     val key: String,
     val name: String,
     val smsPerMinute: Int = 10,
-    val smsPerHour: Int = 100,
     @Serializable(with = LocalDateTimeSerializer::class)
     val createdAt: LocalDateTime = LocalDateTime.now(),
     val isActive: Boolean = true

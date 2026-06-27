@@ -51,6 +51,10 @@ class OutboundRepositoryImpl @Inject constructor(
         return outboundSmsDao.getPendingCount()
     }
 
+    override suspend fun getSmsCountByKeyInTimeRange(apiKey: String, startTime: java.time.LocalDateTime): Int {
+        return outboundSmsDao.getSmsCountByKeyInTimeRange(apiKey, startTime)
+    }
+
     override fun getAllApiKeys(): Flow<List<ApiKey>> {
         return apiKeyDao.getAllApiKeys().map { entities ->
             entities.map { it.toDomain() }

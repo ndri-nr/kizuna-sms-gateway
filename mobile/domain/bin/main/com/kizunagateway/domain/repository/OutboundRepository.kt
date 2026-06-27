@@ -15,6 +15,7 @@ interface OutboundRepository {
     suspend fun deleteOutboundSms(id: Long)
     suspend fun deleteAllOutboundSms()
     fun getPendingCount(): Flow<Int>
+    suspend fun getSmsCountByKeyInTimeRange(apiKey: String, startTime: java.time.LocalDateTime): Int
 
     // API Key Management
     fun getAllApiKeys(): Flow<List<ApiKey>>

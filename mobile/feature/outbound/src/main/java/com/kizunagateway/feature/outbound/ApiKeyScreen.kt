@@ -220,8 +220,9 @@ fun ApiKeyCard(
                         color = KizunaColors.Primary.copy(alpha = 0.1f),
                         shape = RoundedCornerShape(4.dp)
                     ) {
+                        val rateText = if (apiKey.smsPerMinute > 0) "${apiKey.smsPerMinute} SMS/min" else "Unlimited"
                         Text(
-                            text = "Rate: ${apiKey.smsPerHour} SMS/hr",
+                            text = "Rate: $rateText",
                             color = KizunaColors.Primary,
                             fontWeight = FontWeight.Bold,
                             fontSize = 10.sp,

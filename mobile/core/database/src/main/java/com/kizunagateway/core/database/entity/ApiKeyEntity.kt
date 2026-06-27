@@ -12,7 +12,6 @@ data class ApiKeyEntity(
     val key: String,
     val name: String,
     val smsPerMinute: Int,
-    val smsPerHour: Int,
     val createdAt: LocalDateTime,
     val isActive: Boolean
 )
@@ -22,7 +21,6 @@ fun ApiKeyEntity.toDomain() = ApiKey(
     key = key,
     name = name,
     smsPerMinute = smsPerMinute,
-    smsPerHour = smsPerHour,
     createdAt = createdAt,
     isActive = isActive
 )
@@ -32,7 +30,6 @@ fun ApiKey.toEntity() = ApiKeyEntity(
     key = key,
     name = name,
     smsPerMinute = smsPerMinute,
-    smsPerHour = smsPerHour,
     createdAt = createdAt,
     isActive = isActive
 )

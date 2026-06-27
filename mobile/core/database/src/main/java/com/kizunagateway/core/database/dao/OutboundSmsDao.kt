@@ -30,4 +30,7 @@ interface OutboundSmsDao {
 
     @Query("SELECT COUNT(*) FROM outbound_sms WHERE status = 'PENDING'")
     fun getPendingCount(): Flow<Int>
+
+    @Query("SELECT COUNT(*) FROM outbound_sms WHERE apiKey = :apiKey AND createdAt >= :startTime")
+    suspend fun getSmsCountByKeyInTimeRange(apiKey: String, startTime: java.time.LocalDateTime): Int
 }
