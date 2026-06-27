@@ -98,5 +98,13 @@ The backup JSON includes:
 3. **Adding Features**: Create a new module in `:feature` and register it in `settings.gradle.kts` and `:app`.
 4. **Dependencies**: Managed via `libs.versions.toml`.
 
+## 📄 License & Dual Licensing
+
+This project is dual-licensed under:
+1. **GNU Affero General Public License v3.0 (AGPL-3.0)**: Free for individuals, personal projects, open-source projects, and educational/testing purposes. If you use, modify, or host this software as a network service, you must release your modified source code under the same license.
+2. **Paid Commercial License**: If your company/organization wants to use this project for commercial purposes without the restrictions of the AGPL-3.0 (e.g., keeping your proprietary code private), you must purchase a **one-time payment commercial license**.
+
+For commercial licensing inquiries, please contact the repository owner.
+
 ---
 *Created with ❤️ by the Kizuna Team.*

@@ -65,6 +65,7 @@ private val inboundSubTabs = listOf(
 private val outboundSubTabs = listOf(
     "Dashboard",
     "Credentials",
+    "Rate Limiter",
     "Logs",
     "Documentation",
     "Settings"
@@ -288,6 +289,9 @@ fun KizunaNavGraph(
                                     }
                                     "Logs" -> {
                                         OutboundLogsScreen(viewModel = viewModel)
+                                    }
+                                    "Rate Limiter" -> {
+                                        com.kizunagateway.feature.outbound.RateLimiterScreen(viewModel = viewModel)
                                     }
                                     "Documentation" -> {
                                         OutboundDocumentationScreen(viewModel = viewModel)

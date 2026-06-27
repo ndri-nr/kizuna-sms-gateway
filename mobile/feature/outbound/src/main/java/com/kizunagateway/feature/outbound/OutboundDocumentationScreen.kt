@@ -1,12 +1,16 @@
 package com.kizunagateway.feature.outbound
 
 import android.widget.Toast
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ContentCopy
+import androidx.compose.material.icons.filled.ExpandLess
+import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -24,8 +28,11 @@ import com.kizunagateway.core.ui.theme.KizunaColors
 @Composable
 fun OutboundDocumentationScreen(viewModel: OutboundViewModel) {
     val baseUrl by viewModel.baseUrl.collectAsState()
+    val webhookUrl by viewModel.webhookUrl.collectAsState()
     val clipboardManager = LocalClipboardManager.current
     val context = LocalContext.current
+
+    val finalWebhookUrl = if (webhookUrl.isBlank()) "https://your-app.com/webhook/sms-status" else webhookUrl
 
     Box(
         modifier = Modifier
@@ -58,19 +65,30 @@ fun OutboundDocumentationScreen(viewModel: OutboundViewModel) {
                         .padding(8.dp)
                 ) {
                     Text(
-                        text = baseUrl,
+                        text = if (baseUrl.isBlank()) "https://sms-gateway.artivy.id/your-gateway-id" else baseUrl,
                         color = KizunaColors.Primary,
                         fontFamily = FontFamily.Monospace,
                         fontSize = 12.sp,
                         modifier = Modifier.weight(1f)
                     )
                     IconButton(onClick = {
-                        clipboardManager.setText(AnnotatedString(baseUrl))
+                        val urlToCopy = if (baseUrl.isBlank()) "https://sms-gateway.artivy.id/your-gateway-id" else baseUrl
+                        clipboardManager.setText(AnnotatedString(urlToCopy))
                         Toast.makeText(context, "URL copied to clipboard", Toast.LENGTH_SHORT).show()
                     }) {
                         Icon(Icons.Default.ContentCopy, contentDescription = "Copy", tint = KizunaColors.Muted, modifier = Modifier.size(16.dp))
                     }
                 }
+            }
+
+            item {
+                Text(
+                    text = "Endpoints",
+                    color = KizunaColors.OnSurface,
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
             }
 
             item {
@@ -155,6 +173,36 @@ fun OutboundDocumentationScreen(viewModel: OutboundViewModel) {
                     """.trimIndent()
                 )
             }
+
+            item {
+                Text(
+                    text = "Webhooks",
+                    color = KizunaColors.OnSurface,
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(top = 16.dp)
+                )
+            }
+
+            item {
+                ApiEndpointCard(
+                    method = "POST",
+                    path = finalWebhookUrl,
+                    description = "Callback triggered when SMS status changes",
+                    headers = mapOf("Content-Type" to "application/json"),
+                    requestBody = """
+                    {
+                      "id": 123,
+                      "phoneNumber": "+628123456789",
+                      "status": "SENT",
+                      "errorMessage": null,
+                      "sentAt": "2023-10-27T10:00:00",
+                      "messageId": "msg_01h..."
+                    }
+                    """.trimIndent(),
+                    responseBody = "Expects 200 OK"
+                )
+            }
             
             item { Spacer(modifier = Modifier.height(16.dp)) }
         }
@@ -170,46 +218,73 @@ fun ApiEndpointCard(
     requestBody: String? = null,
     responseBody: String? = null
 ) {
+    var expanded by remember { mutableStateOf(false) }
+
     Card(
         colors = CardDefaults.cardColors(containerColor = KizunaColors.Surface),
         shape = RoundedCornerShape(12.dp),
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { expanded = !expanded }
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Surface(
-                    color = if (method == "POST") Color(0xFF25D366).copy(alpha = 0.1f) else KizunaColors.Primary.copy(alpha = 0.1f),
+                    color = when (method) {
+                        "POST" -> Color(0xFF25D366).copy(alpha = 0.1f)
+                        "GET" -> KizunaColors.Primary.copy(alpha = 0.1f)
+                        else -> KizunaColors.Muted.copy(alpha = 0.1f)
+                    },
                     shape = RoundedCornerShape(4.dp)
                 ) {
                     Text(
                         text = method,
-                        color = if (method == "POST") Color(0xFF25D366) else KizunaColors.Primary,
+                        color = when (method) {
+                            "POST" -> Color(0xFF25D366)
+                            "GET" -> KizunaColors.Primary
+                            else -> KizunaColors.Muted
+                        },
                         fontWeight = FontWeight.Bold,
                         fontSize = 12.sp,
                         modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
                     )
                 }
                 Spacer(modifier = Modifier.width(8.dp))
-                Text(text = path, color = KizunaColors.OnSurface, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                Text(
+                    text = path,
+                    color = KizunaColors.OnSurface,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 14.sp,
+                    modifier = Modifier.weight(1f)
+                )
+                Icon(
+                    imageVector = if (expanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
+                    contentDescription = if (expanded) "Collapse" else "Expand",
+                    tint = KizunaColors.Muted
+                )
             }
             
             Text(text = description, color = KizunaColors.Muted, fontSize = 13.sp, modifier = Modifier.padding(vertical = 8.dp))
 
-            DocSection("Headers") {
-                headers.forEach { (k, v) ->
-                    Text("$k: $v", color = KizunaColors.OnSurface, fontSize = 12.sp, fontFamily = FontFamily.Monospace)
-                }
-            }
+            AnimatedVisibility(visible = expanded) {
+                Column {
+                    DocSection("Headers") {
+                        headers.forEach { (k, v) ->
+                            Text("$k: $v", color = KizunaColors.OnSurface, fontSize = 12.sp, fontFamily = FontFamily.Monospace)
+                        }
+                    }
 
-            requestBody?.let {
-                DocSection("Request Body") {
-                    Text(it, color = KizunaColors.OnSurface, fontSize = 11.sp, fontFamily = FontFamily.Monospace)
-                }
-            }
+                    requestBody?.let {
+                        DocSection("Request Body") {
+                            Text(it, color = KizunaColors.OnSurface, fontSize = 11.sp, fontFamily = FontFamily.Monospace)
+                        }
+                    }
 
-            responseBody?.let {
-                DocSection("Response Body") {
-                    Text(it, color = KizunaColors.OnSurface, fontSize = 11.sp, fontFamily = FontFamily.Monospace)
+                    responseBody?.let {
+                        DocSection("Response Body") {
+                            Text(it, color = KizunaColors.OnSurface, fontSize = 11.sp, fontFamily = FontFamily.Monospace)
+                        }
+                    }
                 }
             }
         }
