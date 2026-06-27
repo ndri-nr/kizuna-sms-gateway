@@ -79,3 +79,12 @@
 -keep class * extends androidx.work.ListenableWorker {
     public <init>(android.content.Context, androidx.work.WorkerParameters);
 }
+
+# ----- Ktor / Netty / Logging -----
+-dontwarn io.netty.internal.tcnative.**
+-dontwarn java.lang.management.**
+-dontwarn org.apache.log4j.**
+-dontwarn org.apache.logging.log4j.**
+-dontwarn org.eclipse.jetty.npn.**
+-dontwarn org.slf4j.impl.**
+-dontwarn reactor.blockhound.integration.BlockHoundIntegration
