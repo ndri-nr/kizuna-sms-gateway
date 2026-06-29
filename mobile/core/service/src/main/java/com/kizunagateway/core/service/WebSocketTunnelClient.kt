@@ -9,6 +9,7 @@ import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.websocket.*
 import kotlinx.coroutines.*
+import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -16,6 +17,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Serializable
+@InternalSerializationApi
 data class TunnelRequest(
     val id: String,
     val method: String,
@@ -25,6 +27,7 @@ data class TunnelRequest(
 )
 
 @Serializable
+@InternalSerializationApi
 data class TunnelResponse(
     val id: String,
     val status: Int,
@@ -89,6 +92,7 @@ class WebSocketTunnelClient @Inject constructor(
         }
     }
 
+    @OptIn(InternalSerializationApi::class)
     private suspend fun handleRequest(text: String, session: DefaultWebSocketSession) {
         try {
             val request = json.decodeFromString<TunnelRequest>(text)

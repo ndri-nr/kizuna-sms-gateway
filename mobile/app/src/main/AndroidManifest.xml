@@ -21,7 +21,8 @@
         android:label="Kizuna: SMS Gateway"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.App.Starting">
+        android:theme="@style/Theme.App.Starting"
+        android:usesCleartextTraffic="true">
         
         <activity
             android:name=".MainActivity"
