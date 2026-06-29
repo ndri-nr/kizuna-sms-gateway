@@ -4,4 +4,7 @@
     <string name="stopping_outbound_service">Menghentikan layanan keluar…</string>
     <string name="outbound_channel_name">Saluran SMS Gateway Keluar</string>
     <string name="websocket_service_unavailable">Layanan Websocket tidak tersedia</string>
+    <string name="tunnel_connected">Tunnel terhubung</string>
+    <string name="tunnel_disconnected">Tunnel terputus</string>
+    <string name="service_stopped">Service dihentikan</string>
 </resources>

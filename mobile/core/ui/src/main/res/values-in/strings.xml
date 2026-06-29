@@ -22,8 +22,8 @@
     <string name="english">Inggris</string>
     <string name="indonesian">Indonesia</string>
     <string name="back">Kembali</string>
-    <string name="service_started">Layanan dimulai</string>
-    <string name="service_stopped">Layanan dihentikan</string>
+    <string name="service_started">Service dimulai</string>
+    <string name="service_stopped">Service dihentikan</string>
     <string name="api_key_generated">API Key dibuat</string>
     <string name="api_key_enabled">API Key diaktifkan</string>
     <string name="api_key_disabled">API Key dinonaktifkan</string>
@@ -73,14 +73,14 @@
     <string name="no_webhook_delivered">Belum ada webhook yang terkirim</string>
 
     <!-- Rules -->
-    <string name="routing_rules">Aturan Perutean</string>
-    <string name="no_routing_rules">Tidak ada aturan perutean yang dikonfigurasi</string>
+    <string name="routing_rules">Aturan Routing</string>
+    <string name="no_routing_rules">Tidak ada aturan routing yang dikonfigurasi</string>
     <string name="forward_to">Teruskan ke: %1$s</string>
     <string name="sender_regex">Regex Pengirim: %1$s</string>
     <string name="contains">Berisi: %1$s</string>
-    <string name="catch_all_rule">Aturan Tangkap Semua</string>
+    <string name="catch_all_rule">Semua Aturan Berlaku</string>
     <string name="delete_rule">Hapus Aturan</string>
-    <string name="delete_rule_confirm">Apakah Anda yakin ingin menghapus aturan perutean ini?</string>
+    <string name="delete_rule_confirm">Apakah Anda yakin ingin menghapus aturan routing ini?</string>
     <string name="add_rule">Tambah Aturan</string>
     <string name="delete">Hapus</string>
     <string name="create_rule">Buat Aturan</string>
@@ -125,7 +125,7 @@
     <string name="status">Status</string>
     <string name="received_at">Diterima Pada</string>
     <string name="sms_id">ID SMS: %1$s</string>
-    <string name="attempts">Upaya: %1$d</string>
+    <string name="attempts">Banyak Percobaan: %1$d</string>
     <string name="latest">Terbaru: %1$s</string>
     <string name="delivered">Terkirim</string>
     <string name="delivery_history">Riwayat Pengiriman</string>
@@ -314,7 +314,7 @@
     <string name="privacy_2_title">2. Transmisi Data</string>
     <string name="privacy_2_body">Konten SMS dan metadata perangkat (Pengirim, Stempel Waktu, dll.) dikirimkan hanya ke webhook dan titik akhir API yang secara eksplisit dikonfigurasi oleh Anda. Anda bertanggung jawab atas keamanan titik akhir yang Anda tentukan.</string>
     <string name="privacy_3_title">3. Izin Perangkat</string>
-    <string name="privacy_3_body">Untuk berfungsi sebagai gateway, Aplikasi memerlukan izin penting:\n• RECEIVE_SMS &amp; READ_SMS: Untuk mencegat dan meneruskan pesan masuk.\n• SEND_SMS: To process outbound requests.\n• READ_PHONE_STATE: Untuk mengidentifikasi perangkat untuk perutean gateway.\nIzin ini digunakan secara eksklusif untuk fungsionalitas inti gateway.</string>
+    <string name="privacy_3_body">Untuk berfungsi sebagai gateway, Aplikasi memerlukan izin penting:\n• RECEIVE_SMS &amp; READ_SMS: Untuk mencegat dan meneruskan pesan masuk.\n• SEND_SMS: Untuk memproses permintaan keluar.\n• READ_PHONE_STATE: Untuk mengidentifikasi perangkat untuk perutean gateway.\nIzin ini digunakan secara eksklusif untuk fungsionalitas inti gateway.</string>
     <string name="privacy_4_title">4. Penyimpanan Lokal &amp; Keamanan</string>
     <string name="privacy_4_body">Riwayat pesan disimpan secara lokal di database perangkat Anda. Kami menyarankan untuk mengamankan perangkat Anda dengan kunci biometrik atau kode sandi untuk melindungi data lokal dari akses fisik yang tidak sah.</string>
     <string name="privacy_5_title">5. Keamanan Keluar</string>

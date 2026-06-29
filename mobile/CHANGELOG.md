@@ -1,14 +1,37 @@
-# Changelog
+# 📓 Changelog
 
-All notable changes to the **Kizuna: SMS Gateway** project will be documented in this file.
+All notable changes to the **Kizuna: SMS Gateway** project will be documented in this file. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
-## [1.0.0] - 2026-06-27
+## 🚀 [1.0.1] - 2026-06-29
 
-This is the initial release of **Kizuna: SMS Gateway**, a robust, Clean-Architecture-based Android application that bridges mobile SMS services with external web applications. It serves as both an inbound gateway (relaying received SMS to webhooks) and an outbound gateway (providing a local REST API to send SMS).
+> ### 💡 Release Spotlight
+> **v1.0.1** is a stability and refinement release focusing heavily on networking reliability (specifically local network connectivity and WebSocket tunnel configurations), resolving system notification feedback, and completing localized translation support.
 
-### 🚀 Key Features
+### 🛠️ Fixed
+- **Outbound Service** (`WebSocketTunnelClient`):
+  - Refactored the WebSocket tunnel URL normalization process to resolve connection issues when targeting local network IPs or custom ports.
+- **Notifications & UI Feedback**:
+  - Restored missing `Toast` alerts when starting/stopping the outbound service or when the tunnel state transitions (connects/disconnects).
+- **Localization (i18n)**:
+  - Completed Indonesian translations and optimized language-switching reliability across all application flows.
+- **Base URL Display**:
+  - Re-engineered the Base URL generation logic to dynamically and accurately show local IP addresses alongside custom protocols.
+
+### 🔄 Changed
+- **Foreground Service**:
+  - Upgraded notifications for the persistent foreground service to accurately reflect current service and connection statuses.
+- **WebSocket Tunneling**:
+  - Modified `WebSocketTunnelClient` to utilize absolute connection URLs, expanding compatibility across various proxy and backend configurations.
+
+---
+
+## 📦 [1.0.0] - 2026-06-27
+
+This is the initial release of **Kizuna: SMS Gateway** — a robust, Clean-Architecture-based Android application that bridges mobile SMS services with external web applications. It serves as both an inbound gateway (relaying received SMS to webhooks) and an outbound gateway (providing a local REST API to send SMS).
+
+### 🌟 Key Features
 
 #### 📥 Inbound Gateway (SMS to Webhook)
 - **Rule-Based Routing**: Match incoming SMS messages using Sender Regex patterns or keyword "Contains" queries. Supports rule priorities to determine execution order.
@@ -26,7 +49,7 @@ This is the initial release of **Kizuna: SMS Gateway**, a robust, Clean-Architec
 - **Global Webhook Callback**: Configurable URL callback to notify external systems of delivery outcomes (`Sent`, `Failed`, or `Delivered`).
 - **WebSocket Tunneling**: Initial framework integration supporting remote access without requiring complex port forwarding (in development).
 
-#### 🛠 System & Configuration
+#### 🔧 System & Configuration
 - **Full Data Backup & Restore**: Standardized backup utility that exports/imports all rules, webhooks, API keys, configs, and message/delivery logs as a single JSON payload.
 - **Device Identification**: Generation of unique Device IDs and Device Secret Tokens, automatically attached to webhook headers (as `X_HEADER_TOKEN`) to authenticate requests.
 - **Battery Optimization Handling**: Prompt systems guiding users to disable Android battery optimizations, ensuring background services run uninterrupted.
@@ -43,10 +66,11 @@ This is the initial release of **Kizuna: SMS Gateway**, a robust, Clean-Architec
 
 ---
 
-### 🏗 Technical Stack & Architecture
+### 🏗️ Technical Stack & Architecture
 
 - **Architecture**: Multi-module Clean Architecture (`:domain`, `:core`, `:feature`, `:app`).
 - **Dependency Injection**: Hilt (Dagger).
 - **Persistence**: Room Database (for SMS logs and rules) & DataStore (for configuration preferences).
 - **Networking**: Ktor Server (for local REST API) & OkHttp/Retrofit (for webhook HTTP clients).
 - **Asynchrony**: Kotlin Coroutines & StateFlow.
+

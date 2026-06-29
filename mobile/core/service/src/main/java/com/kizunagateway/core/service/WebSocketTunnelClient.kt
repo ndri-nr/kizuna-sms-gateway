@@ -16,6 +16,7 @@ import kotlinx.serialization.json.Json
 import com.kizunagateway.core.service.R
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.time.Duration.Companion.milliseconds
 
 @Serializable
 @InternalSerializationApi
@@ -62,16 +63,26 @@ class WebSocketTunnelClient @Inject constructor(
             var backoff = 1000L
             while (isActive) {
                 try {
-                    Log.i("Tunnel", "Connecting to tunnel server: $tunnelUrl")
+                    // Normalize URL: ensure it starts with ws:// or wss://
+                    val wsBaseUrl = when {
+                        tunnelUrl.startsWith("ws://") || tunnelUrl.startsWith("wss://") -> tunnelUrl
+                        tunnelUrl.startsWith("http://") -> tunnelUrl.replace("http://", "ws://")
+                        tunnelUrl.startsWith("https://") -> tunnelUrl.replace("https://", "wss://")
+                        else -> "ws://$tunnelUrl" // Default to ws:// for plain host/IP
+                    }
+                    val fullWsUrl = "${wsBaseUrl.trimEnd('/')}/ws/${gatewayId.lowercase()}"
+
+                    Log.i("Tunnel", "Connecting to tunnel server: $fullWsUrl")
                     client.webSocket(
                         method = HttpMethod.Get,
-                        host = tunnelUrl,
+                        host = wsBaseUrl.trimEnd('/'),
                         path = "/ws/${gatewayId.lowercase()}",
                         request = {
                             header("Authorization", deviceSecret)
                         }
                     ) {
                         Log.i("Tunnel", "Connected to tunnel server")
+                        notificationService.showMessage(R.string.tunnel_connected)
                         backoff = 1000L // Reset backoff on successful connection
                         
                         for (frame in incoming) {
@@ -81,13 +92,15 @@ class WebSocketTunnelClient @Inject constructor(
                             }
                         }
                     }
+                    // If webSocket block finishes without exception, it means disconnected
+                    notificationService.showMessage(R.string.tunnel_disconnected)
                 } catch (e: Exception) {
                     if (e is CancellationException) throw e
                     Log.e("Tunnel", "Tunnel error: ${e.message}")
                     notificationService.showMessage(R.string.websocket_service_unavailable)
                     onError() // Notify service to stop
 
-                    delay(backoff)
+                    delay(backoff.milliseconds)
                     backoff = (backoff * 2).coerceAtMost(60_000L)
                 }
             }

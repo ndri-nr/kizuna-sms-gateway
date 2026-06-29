@@ -11,6 +11,7 @@ import com.kizunagateway.core.network.HttpGatewayServer
 import com.kizunagateway.domain.model.OutboundSmsStatus
 import com.kizunagateway.domain.repository.GatewayConfigRepository
 import com.kizunagateway.domain.repository.OutboundRepository
+import com.kizunagateway.domain.service.NotificationService
 import com.kizunagateway.domain.service.SmsSender
 import com.kizunagateway.domain.service.WebhookHttpClient
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,6 +34,7 @@ class OutboundSmsService : Service() {
     @Inject lateinit var gatewayConfigRepository: GatewayConfigRepository
     @Inject lateinit var smsSender: SmsSender
     @Inject lateinit var webhookHttpClient: WebhookHttpClient
+    @Inject lateinit var notificationService: NotificationService
 
     private val serviceScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
     private var processingJob: Job? = null
@@ -102,6 +104,7 @@ class OutboundSmsService : Service() {
             serviceScope.launch {
                 processingJob?.cancelAndJoin()
                 stopForeground(STOP_FOREGROUND_REMOVE)
+                notificationService.showMessage(R.string.service_stopped)
                 stopSelf()
             }
         }
