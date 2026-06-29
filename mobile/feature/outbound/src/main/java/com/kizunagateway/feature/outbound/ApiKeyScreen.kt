@@ -18,10 +18,12 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.kizunagateway.core.ui.R
 import com.kizunagateway.core.ui.theme.KizunaColors
 import com.kizunagateway.domain.model.ApiKey
 
@@ -43,7 +45,7 @@ fun ApiKeyScreen(viewModel: OutboundViewModel) {
                 contentColor = Color.White,
                 shape = RoundedCornerShape(16.dp)
             ) {
-                Icon(Icons.Default.Add, contentDescription = "Add API Key")
+                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add_api_key))
             }
         },
         containerColor = Color.Transparent,
@@ -58,7 +60,7 @@ fun ApiKeyScreen(viewModel: OutboundViewModel) {
         ) {
             Column(modifier = Modifier.fillMaxSize()) {
                 Text(
-                    text = "API Key Credentials",
+                    text = stringResource(R.string.api_key_credentials),
                     color = KizunaColors.OnSurface,
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold
@@ -67,7 +69,7 @@ fun ApiKeyScreen(viewModel: OutboundViewModel) {
 
                 if (apiKeys.isEmpty()) {
                     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        Text(text = "No API keys configured", color = KizunaColors.Muted)
+                        Text(text = stringResource(R.string.no_api_keys), color = KizunaColors.Muted)
                     }
                 } else {
                     LazyColumn(
@@ -80,7 +82,7 @@ fun ApiKeyScreen(viewModel: OutboundViewModel) {
                                 onDelete = { keyToDelete = apiKey.id },
                                 onCopy = {
                                     clipboardManager.setText(AnnotatedString(apiKey.key))
-                                    Toast.makeText(context, "API Key copied to clipboard", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, context.getString(R.string.api_key_copied), Toast.LENGTH_SHORT).show()
                                 }
                             )
                         }
@@ -94,15 +96,15 @@ fun ApiKeyScreen(viewModel: OutboundViewModel) {
         AlertDialog(
             onDismissRequest = { showAddDialog = false },
             containerColor = KizunaColors.Surface,
-            title = { Text("Add API Key", color = KizunaColors.OnSurface) },
+            title = { Text(stringResource(R.string.add_api_key), color = KizunaColors.OnSurface) },
             text = {
                 Column {
-                    Text("Give this key a name to identify the application using it.", color = KizunaColors.Muted, fontSize = 14.sp)
+                    Text(stringResource(R.string.add_api_key_desc), color = KizunaColors.Muted, fontSize = 14.sp)
                     Spacer(modifier = Modifier.height(16.dp))
                     OutlinedTextField(
                         value = newKeyName,
                         onValueChange = { newKeyName = it },
-                        label = { Text("Key Name (e.g. My App)") },
+                        label = { Text(stringResource(R.string.key_name_placeholder)) },
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedBorderColor = KizunaColors.Primary,
                             unfocusedBorderColor = KizunaColors.Muted,
@@ -124,12 +126,12 @@ fun ApiKeyScreen(viewModel: OutboundViewModel) {
                         }
                     }
                 ) {
-                    Text("Generate", color = KizunaColors.Primary, fontWeight = FontWeight.Bold)
+                    Text(stringResource(R.string.generate), color = KizunaColors.Primary, fontWeight = FontWeight.Bold)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showAddDialog = false }) {
-                    Text("Cancel", color = KizunaColors.Muted)
+                    Text(stringResource(R.string.cancel), color = KizunaColors.Muted)
                 }
             }
         )
@@ -139,8 +141,8 @@ fun ApiKeyScreen(viewModel: OutboundViewModel) {
         AlertDialog(
             onDismissRequest = { keyToDelete = null },
             containerColor = KizunaColors.Surface,
-            title = { Text("Delete API Key", color = KizunaColors.OnSurface) },
-            text = { Text("Are you sure you want to delete this API key? Applications using this key will no longer be able to send messages.", color = KizunaColors.Muted) },
+            title = { Text(stringResource(R.string.delete_api_key), color = KizunaColors.OnSurface) },
+            text = { Text(stringResource(R.string.delete_api_key_confirm), color = KizunaColors.Muted) },
             confirmButton = {
                 TextButton(
                     onClick = {
@@ -148,12 +150,12 @@ fun ApiKeyScreen(viewModel: OutboundViewModel) {
                         keyToDelete = null
                     }
                 ) {
-                    Text("Delete", color = Color(0xFFF87171), fontWeight = FontWeight.Bold)
+                    Text(stringResource(R.string.delete), color = Color(0xFFF87171), fontWeight = FontWeight.Bold)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { keyToDelete = null }) {
-                    Text("Cancel", color = KizunaColors.Muted)
+                    Text(stringResource(R.string.cancel), color = KizunaColors.Muted)
                 }
             }
         )
@@ -208,7 +210,7 @@ fun ApiKeyCard(
                     ) {
                         Icon(
                             imageVector = Icons.Default.ContentCopy,
-                            contentDescription = "Copy key",
+                            contentDescription = stringResource(R.string.copy_key),
                             tint = KizunaColors.Muted,
                             modifier = Modifier.size(16.dp)
                         )
@@ -220,9 +222,9 @@ fun ApiKeyCard(
                         color = KizunaColors.Primary.copy(alpha = 0.1f),
                         shape = RoundedCornerShape(4.dp)
                     ) {
-                        val rateText = if (apiKey.smsPerMinute > 0) "${apiKey.smsPerMinute} SMS/min" else "Unlimited"
+                        val rateText = if (apiKey.smsPerMinute > 0) "${apiKey.smsPerMinute} SMS/min" else stringResource(R.string.unlimited)
                         Text(
-                            text = "Rate: $rateText",
+                            text = stringResource(R.string.rate, rateText),
                             color = KizunaColors.Primary,
                             fontWeight = FontWeight.Bold,
                             fontSize = 10.sp,
@@ -252,7 +254,7 @@ fun ApiKeyCard(
                 ) {
                     Icon(
                         Icons.Default.Delete,
-                        contentDescription = "Delete",
+                        contentDescription = stringResource(R.string.delete),
                         tint = Color(0xFFF87171),
                         modifier = Modifier.size(28.dp)
                     )

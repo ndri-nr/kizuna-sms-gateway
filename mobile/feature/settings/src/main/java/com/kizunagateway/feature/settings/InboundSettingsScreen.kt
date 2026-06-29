@@ -16,11 +16,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.kizunagateway.core.ui.R
 import com.kizunagateway.core.ui.theme.KizunaColors
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -44,7 +46,7 @@ fun SettingsScreen(viewModel: InboundSettingsViewModel) {
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Text(
-                text = "Settings",
+                text = stringResource(R.string.settings),
                 color = KizunaColors.OnSurface,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
@@ -63,13 +65,13 @@ fun SettingsScreen(viewModel: InboundSettingsViewModel) {
                     ) {
                         Column(modifier = Modifier.weight(1f)) {
                             Text(
-                                text = "Delete Untracked SMS",
+                                text = stringResource(R.string.delete_untracked_sms),
                                 color = KizunaColors.OnSurface,
                                 fontWeight = FontWeight.Medium,
                                 fontSize = 16.sp
                             )
                             Text(
-                                text = "Automatically remove the received messages that don't match any rules.",
+                                text = stringResource(R.string.delete_untracked_sms_desc),
                                 color = KizunaColors.Muted,
                                 fontSize = 12.sp
                             )
@@ -92,7 +94,7 @@ fun SettingsScreen(viewModel: InboundSettingsViewModel) {
 
                     Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                         Text(
-                            text = "Device Secret Token",
+                            text = stringResource(R.string.device_secret_token),
                             color = KizunaColors.OnSurface,
                             fontWeight = FontWeight.Medium,
                             fontSize = 16.sp
@@ -121,7 +123,7 @@ fun SettingsScreen(viewModel: InboundSettingsViewModel) {
                             IconButton(onClick = { isTokenVisible = !isTokenVisible }) {
                                 Icon(
                                     imageVector = if (isTokenVisible) Icons.Default.VisibilityOff else Icons.Default.Visibility,
-                                    contentDescription = if (isTokenVisible) "Hide token" else "Show token",
+                                    contentDescription = if (isTokenVisible) stringResource(R.string.hide_token) else stringResource(R.string.show_token),
                                     tint = KizunaColors.Muted,
                                     modifier = Modifier.size(20.dp)
                                 )
@@ -130,12 +132,12 @@ fun SettingsScreen(viewModel: InboundSettingsViewModel) {
                             IconButton(onClick = {
                                 if (token != "---") {
                                     clipboardManager.setText(AnnotatedString(token))
-                                    Toast.makeText(context, "Token copied to clipboard", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, context.getString(R.string.token_copied), Toast.LENGTH_SHORT).show()
                                 }
                             }) {
                                 Icon(
                                     imageVector = Icons.Default.ContentCopy,
-                                    contentDescription = "Copy token",
+                                    contentDescription = stringResource(R.string.copy_token),
                                     tint = KizunaColors.Muted,
                                     modifier = Modifier.size(20.dp)
                                 )
@@ -143,7 +145,7 @@ fun SettingsScreen(viewModel: InboundSettingsViewModel) {
                         }
 
                         Text(
-                            text = "This device token will be automatically sent as header when hit the webhooks with name X_HEADER_TOKEN. You can use this token to authenticate or identify the source of the request.",
+                            text = stringResource(R.string.device_token_desc),
                             color = KizunaColors.Muted,
                             fontSize = 11.sp
                         )

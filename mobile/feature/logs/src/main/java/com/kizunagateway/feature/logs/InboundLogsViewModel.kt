@@ -116,11 +116,11 @@ class LogsViewModel @Inject constructor(
         return try {
             val obj = JSONObject(json)
             obj.toString(4)
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             try {
                 val array = JSONArray(json)
                 array.toString(4)
-            } catch (e2: Exception) {
+            } catch (_: Exception) {
                 json
             }
         }
@@ -131,7 +131,7 @@ class LogsViewModel @Inject constructor(
             val type = object : TypeToken<Map<String, String>>() {}.type
             val map: Map<String, String> = Gson().fromJson(json, type)
             map.entries.joinToString("\n") { "${it.key}: ${it.value}" }
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             json
         }
     }

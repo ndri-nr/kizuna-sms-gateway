@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="outbound_service_running">Layanan keluar sedang berjalan…</string>
+    <string name="stopping_outbound_service">Menghentikan layanan keluar…</string>
+    <string name="outbound_channel_name">Saluran SMS Gateway Keluar</string>
+    <string name="websocket_service_unavailable">Layanan Websocket tidak tersedia</string>
+</resources>

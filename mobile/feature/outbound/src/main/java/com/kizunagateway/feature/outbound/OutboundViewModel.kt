@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.kizunagateway.core.service.OutboundSmsService
+import com.kizunagateway.core.ui.R
 import com.kizunagateway.domain.model.ApiKey
 import com.kizunagateway.domain.model.OutboundSms
 import com.kizunagateway.domain.repository.GatewayConfigRepository
@@ -91,7 +92,7 @@ class OutboundViewModel @Inject constructor(
         } else {
             getApplication<Application>().startService(intent)
         }
-        notificationService.showMessage(if (enabled) "Service started" else "Service stopped")
+        notificationService.showMessage(if (enabled) R.string.service_started else R.string.service_stopped)
     }
 
     fun generateApiKey(name: String) {
@@ -101,7 +102,7 @@ class OutboundViewModel @Inject constructor(
                 name = name
             )
             outboundRepository.insertApiKey(key)
-            notificationService.showMessage("API Key generated")
+            notificationService.showMessage(R.string.api_key_generated)
         }
     }
 
@@ -109,7 +110,7 @@ class OutboundViewModel @Inject constructor(
         viewModelScope.launch {
             val newState = !apiKey.isActive
             outboundRepository.updateApiKey(apiKey.copy(isActive = newState))
-            notificationService.showMessage(if (newState) "API Key enabled" else "API Key disabled")
+            notificationService.showMessage(if (newState) R.string.api_key_enabled else R.string.api_key_disabled)
         }
     }
 
@@ -132,7 +133,7 @@ class OutboundViewModel @Inject constructor(
                     smsPerMinute = perMinute
                 )
             )
-            notificationService.showMessage("Rate limit updated for ${apiKey.name}")
+            notificationService.showMessage(R.string.rate_limit_updated, apiKey.name)
         }
     }
 

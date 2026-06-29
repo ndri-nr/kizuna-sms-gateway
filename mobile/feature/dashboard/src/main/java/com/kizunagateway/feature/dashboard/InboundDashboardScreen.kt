@@ -12,9 +12,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.kizunagateway.core.ui.R
 
 @Composable
 fun DashboardScreen(
@@ -46,7 +48,7 @@ fun DashboardContent(
     ) {
         if (showHeaderOnly) {
             Text(
-                text = "Dashboard",
+                text = stringResource(R.string.dashboard),
                 color = KizunaColors.OnSurface,
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
@@ -61,14 +63,14 @@ fun DashboardContent(
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(
-                        text = uiState.gatewayConfig?.gatewayName ?: "Kizuna: SMS Gateway",
+                        text = uiState.gatewayConfig?.gatewayName ?: stringResource(R.string.app_name),
                         color = KizunaColors.OnSurface,
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        text = "ID: ${uiState.gatewayConfig?.gatewayId ?: "Initializing..."}",
+                        text = "ID: ${uiState.gatewayConfig?.gatewayId ?: stringResource(R.string.pending)}",
                         color = KizunaColors.Primary,
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Medium
@@ -83,13 +85,13 @@ fun DashboardContent(
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             StatCard(
-                title = "SMS Today",
+                title = stringResource(R.string.sms_today),
                 value = uiState.smsToday.toString(),
                 color = KizunaColors.Primary, // Replaced hardcoded
                 modifier = Modifier.weight(1f)
             )
             StatCard(
-                title = "Queue Size",
+                title = stringResource(R.string.queue_size),
                 value = uiState.queueSize.toString(),
                 color = Color(0xFFFBBF24), // Keep some functional colors but maybe move to theme later
                 modifier = Modifier.weight(1f)
@@ -101,13 +103,13 @@ fun DashboardContent(
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             StatCard(
-                title = "Success",
+                title = stringResource(R.string.success),
                 value = uiState.webhookSuccess.toString(),
                 color = Color(0xFF25D366),
                 modifier = Modifier.weight(1f)
             )
             StatCard(
-                title = "Failed",
+                title = stringResource(R.string.failed),
                 value = uiState.webhookFailed.toString(),
                 color = MaterialTheme.colorScheme.error,
                 modifier = Modifier.weight(1f)
@@ -124,7 +126,7 @@ fun DashboardContent(
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
-                    text = "Last SMS Received",
+                    text = stringResource(R.string.last_sms_received),
                     color = KizunaColors.OnSurface,
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
@@ -132,7 +134,7 @@ fun DashboardContent(
                 Spacer(modifier = Modifier.height(8.dp))
                 if (uiState.lastSms != null) {
                     Text(
-                        text = "From: ${uiState.lastSms.sender}",
+                        text = "${stringResource(R.string.from)}: ${uiState.lastSms.sender}",
                         color = KizunaColors.Primary,
                         style = MaterialTheme.typography.bodySmall,
                         fontWeight = FontWeight.Bold
@@ -145,7 +147,7 @@ fun DashboardContent(
                     )
                 } else {
                     Text(
-                        text = "No messages received yet",
+                        text = stringResource(R.string.no_messages_received),
                         color = KizunaColors.Muted,
                         style = MaterialTheme.typography.bodyMedium
                     )
@@ -153,7 +155,7 @@ fun DashboardContent(
 
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
-                    text = "Last Successful Webhook",
+                    text = stringResource(R.string.last_successful_webhook),
                     color = KizunaColors.OnSurface,
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
@@ -162,19 +164,19 @@ fun DashboardContent(
                 if (uiState.lastSuccessLog != null) {
                     val webhookDisplayName = uiState.lastWebhookName ?: "ID: ${uiState.lastSuccessLog.webhookId}"
                     Text(
-                        text = "To: $webhookDisplayName",
+                        text = "${stringResource(R.string.to)}: $webhookDisplayName",
                         color = Color(0xFF25D366),
                         style = MaterialTheme.typography.bodySmall,
                         fontWeight = FontWeight.Bold
                     )
                     Text(
-                        text = "Response Code: ${uiState.lastSuccessLog.responseCode}",
+                        text = "${stringResource(R.string.response_code)}: ${uiState.lastSuccessLog.responseCode}",
                         color = KizunaColors.Muted,
                         style = MaterialTheme.typography.bodyMedium
                     )
                 } else {
                     Text(
-                        text = "No webhook delivered yet",
+                        text = stringResource(R.string.no_webhook_delivered),
                         color = KizunaColors.Muted,
                         style = MaterialTheme.typography.bodyMedium
                     )

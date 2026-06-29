@@ -2,6 +2,7 @@ package com.kizunagateway.feature.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kizunagateway.core.ui.R
 import com.kizunagateway.domain.model.AppNotification
 import com.kizunagateway.domain.model.CustomVariable
 import com.kizunagateway.domain.model.GatewayConfig
@@ -60,7 +61,7 @@ class InboundSettingsViewModel @Inject constructor(
             val updated = current.copy(gatewayName = name)
             gatewayConfigRepository.saveGatewayConfig(updated)
             _gatewayConfig.value = updated
-            notificationService.showMessage("Gateway name updated")
+            notificationService.showMessage(R.string.gateway_name_updated)
         }
     }
 
@@ -70,7 +71,7 @@ class InboundSettingsViewModel @Inject constructor(
             val updated = current.copy(deleteUntrackedSms = delete)
             gatewayConfigRepository.saveGatewayConfig(updated)
             _gatewayConfig.value = updated
-            notificationService.showMessage(if (delete) "Untracked SMS deletion enabled" else "Untracked SMS deletion disabled")
+            notificationService.showMessage(if (delete) R.string.untracked_sms_deletion_enabled else R.string.untracked_sms_deletion_disabled)
         }
     }
 
@@ -78,7 +79,7 @@ class InboundSettingsViewModel @Inject constructor(
         viewModelScope.launch {
             variableRepository.insertVariable(variable)
             loadData()
-            notificationService.showMessage("Variable saved")
+            notificationService.showMessage(R.string.variable_saved)
         }
     }
 
@@ -119,7 +120,7 @@ class InboundSettingsViewModel @Inject constructor(
                 )
             } catch (e: Exception) {
                 e.printStackTrace()
-                notificationService.showMessage("Failed to export backup")
+                notificationService.showMessage(R.string.export_failed)
             }
         }
     }
@@ -137,10 +138,10 @@ class InboundSettingsViewModel @Inject constructor(
                 importBackupUseCase(payload)
 
                 loadData()
-                notificationService.showMessage("Data and configuration restored successfully")
+                notificationService.showMessage(R.string.import_success)
             } catch (e: Exception) {
                 e.printStackTrace()
-                notificationService.showMessage("Failed to import backup")
+                notificationService.showMessage(R.string.import_failed)
             }
         }
     }

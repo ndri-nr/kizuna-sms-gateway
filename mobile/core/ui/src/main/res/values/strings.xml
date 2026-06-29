@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Kizuna: SMS Gateway</string>
+    <string name="connected">Connected</string>
+    <string name="disconnected">Disconnected</string>
+    <string name="pending">Pending</string>
+    <string name="sent">Sent</string>
+    <string name="failed">Failed</string>
+    <string name="permissions_granted">All required permissions granted</string>
+    <string name="permissions_required">Permissions are required for full functionality</string>
+    <string name="could_not_open_file">Could not open file</string>
+    <string name="settings">Settings</string>
+    <string name="delete_untracked_sms">Delete Untracked SMS</string>
+    <string name="delete_untracked_sms_desc">Automatically remove the received messages that don\'t match any rules.</string>
+    <string name="device_secret_token">Device Secret Token</string>
+    <string name="hide_token">Hide token</string>
+    <string name="show_token">Show token</string>
+    <string name="copy_token">Copy token</string>
+    <string name="token_copied">Token copied to clipboard</string>
+    <string name="device_token_desc">This device token will be automatically sent as header when hit the webhooks with name X_HEADER_TOKEN. You can use this token to authenticate or identify the source of the request.</string>
+    <string name="language">Language</string>
+    <string name="english">English</string>
+    <string name="indonesian">Indonesian</string>
+    <string name="back">Back</string>
+    <string name="service_started">Service started</string>
+    <string name="service_stopped">Service stopped</string>
+    <string name="api_key_generated">API Key generated</string>
+    <string name="api_key_enabled">API Key enabled</string>
+    <string name="api_key_disabled">API Key disabled</string>
+    <string name="rate_limit_updated">Rate limit updated for %1$s</string>
+    <string name="gateway_name_updated">Gateway name updated</string>
+    <string name="untracked_sms_deletion_enabled">Untracked SMS deletion enabled</string>
+    <string name="untracked_sms_deletion_disabled">Untracked SMS deletion disabled</string>
+    <string name="variable_saved">Variable saved</string>
+    <string name="backup_saved">Backup saved successfully</string>
+    <string name="export_failed">Failed to export backup</string>
+    <string name="import_success">Data and configuration restored successfully</string>
+    <string name="import_failed">Failed to import backup</string>
+
+    <!-- About Screen -->
+    <string name="about">About</string>
+    <string name="gateway_detail">Gateway Detail</string>
+    <string name="gateway_name">Gateway Name</string>
+    <string name="edit_gateway_name">Edit Gateway Name</string>
+    <string name="name">Name</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="backup_and_restore">Backup and Restore</string>
+    <string name="backup_data">Backup Data</string>
+    <string name="restore_data">Restore Data</string>
+    <string name="support">Support</string>
+    <string name="support_desc">Need help or have suggestions? Contact us via email.</string>
+    <string name="email_support">Email Support</string>
+    <string name="legal">Legal</string>
+    <string name="terms_and_conditions">Terms and Conditions</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="version">Version</string>
+    <string name="rights_reserved">© 2026 Kizuna: SMS Gateway. All rights reserved.</string>
+    <string name="last_updated">Last Updated: June 2026</string>
+    <string name="support_email_subject">Kizuna: SMS Gateway Support</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard">Dashboard</string>
+    <string name="sms_today">SMS Today</string>
+    <string name="queue_size">Queue Size</string>
+    <string name="success">Success</string>
+    <string name="last_sms_received">Last SMS Received</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="no_messages_received">No messages received yet</string>
+    <string name="last_successful_webhook">Last Successful Webhook</string>
+    <string name="response_code">Response Code</string>
+    <string name="no_webhook_delivered">No webhook delivered yet</string>
+
+    <!-- Rules -->
+    <string name="routing_rules">Routing Rules</string>
+    <string name="no_routing_rules">No routing rules configured</string>
+    <string name="forward_to">Forward to: %1$s</string>
+    <string name="sender_regex">Sender Regex: %1$s</string>
+    <string name="contains">Contains: %1$s</string>
+    <string name="catch_all_rule">Catch-All Rule</string>
+    <string name="delete_rule">Delete Rule</string>
+    <string name="delete_rule_confirm">Are you sure you want to delete this routing rule?</string>
+    <string name="add_rule">Add Rule</string>
+    <string name="delete">Delete</string>
+    <string name="create_rule">Create Rule</string>
+    <string name="edit_rule">Edit Rule</string>
+    <string name="rule_name">Rule Name</string>
+    <string name="enable_rule">Enable Rule</string>
+    <string name="priority_desc">Priority (Higher runs first)</string>
+    <string name="sender_regex_optional">Sender Regex (Optional)</string>
+    <string name="contains_text_optional">Contains Text (Optional)</string>
+    <string name="select_webhook">Select Webhook</string>
+    <string name="target_webhook">Target: %1$s</string>
+    <string name="search_webhook">Search webhook…</string>
+    <string name="no_results_found">No results found</string>
+    <string name="save_rule">Save Rule</string>
+    <string name="unknown">Unknown</string>
+    <string name="cannot_enable_rule_webhook_error">Cannot enable rule. Target webhook is disabled or missing.</string>
+    <string name="rule_created">Rule created</string>
+    <string name="rule_updated">Rule updated</string>
+    <string name="rule_deleted">Rule deleted</string>
+    <string name="rule_enabled">Rule enabled</string>
+    <string name="rule_disabled">Rule disabled</string>
+
+    <!-- Logs -->
+    <string name="inbound_logs">Inbound Logs</string>
+    <string name="delivery_logs">Delivery Logs</string>
+    <string name="received_sms">Received SMS</string>
+    <string name="clear_logs">Clear Logs</string>
+    <string name="clear_sms">Clear SMS</string>
+    <string name="clear_all">Clear All</string>
+    <string name="delete_all">Delete All</string>
+    <string name="clear_logs_title">Clear Logs</string>
+    <string name="clear_logs_confirm">Are you sure you want to delete all delivery logs? This action cannot be undone.</string>
+    <string name="clear_sms_confirm">Are you sure you want to delete all received SMS messages? This action cannot be undone.</string>
+    <string name="delete_log_confirm">Are you sure you want to delete this delivery log entry?</string>
+    <string name="delete_group_confirm">Are you sure you want to delete all logs for this SMS? This action cannot be undone.</string>
+    <string name="delete_sms_confirm">Are you sure you want to delete this received SMS message?</string>
+    <string name="no_logs_found">No logs found</string>
+    <string name="no_delivery_logs">No delivery logs</string>
+    <string name="no_sms_received">No SMS messages received</string>
+    <string name="load_more_logs">Load More Logs</string>
+    <string name="load_more_sms">Load More SMS</string>
+    <string name="status">Status</string>
+    <string name="received_at">Received At</string>
+    <string name="sms_id">SMS ID: %1$s</string>
+    <string name="attempts">Attempts: %1$d</string>
+    <string name="latest">Latest: %1$s</string>
+    <string name="delivered">Delivered</string>
+    <string name="delivery_history">Delivery History</string>
+    <string name="retry_latest">Retry Latest</string>
+    <string name="delete_group">Delete Group</string>
+    <string name="webhook">Webhook: %1$s</string>
+    <string name="request_headers">Request Headers:</string>
+    <string name="request_payload">Request Payload:</string>
+    <string name="response_body">Response Body:</string>
+    <string name="time">Time: %1$s</string>
+    <string name="processed">Processed</string>
+
+    <!-- Webhooks -->
+    <string name="webhooks">Webhooks</string>
+    <string name="add_webhook">Add Webhook</string>
+    <string name="delete_webhook">Delete Webhook</string>
+    <string name="delete_webhook_confirm">Are you sure you want to delete this webhook?</string>
+    <string name="url">URL</string>
+    <string name="global_headers">Global Headers</string>
+    <string name="no_webhooks">No webhooks configured</string>
+    <string name="used_by">Used by</string>
+    <string name="create_webhook">Create Webhook</string>
+    <string name="edit_webhook">Edit Webhook</string>
+    <string name="webhook_name">Webhook Name</string>
+    <string name="enable_webhook">Enable Webhook</string>
+    <string name="webhook_url">Webhook URL</string>
+    <string name="method">Method</string>
+    <string name="timeout_seconds">Timeout (Seconds)</string>
+    <string name="webhook_headers">Webhook Headers</string>
+    <string name="add_header">Add Header</string>
+    <string name="key">Key</string>
+    <string name="value">Value</string>
+    <string name="json_payload_template">JSON Payload Template</string>
+    <string name="beautify">Beautify</string>
+    <string name="clear">Clear</string>
+    <string name="auto_reply_message">Auto Reply Message (Optional)</string>
+    <string name="test_webhook">Test Webhook</string>
+    <string name="save_webhook">Save Webhook</string>
+    <string name="remove_header">Remove Header</string>
+    <string name="remove_header_confirm">Are you sure you want to remove this header?</string>
+    <string name="show_variables">Show available variables</string>
+    <string name="hide_variables">Hide variables</string>
+    <string name="variables_helper_desc">Click a variable to copy its placeholder (e.g. {{sender}})</string>
+    <string name="success_caps">SUCCESS</string>
+    <string name="failed_caps">FAILED</string>
+    <string name="code">Code: %1$s</string>
+    <string name="sent_headers">Sent Headers:</string>
+    <string name="rendered_json_payload">Rendered JSON Payload:</string>
+    <string name="response">Response:</string>
+    <string name="global_header_saved">Global header saved</string>
+    <string name="global_header_deleted">Global header deleted</string>
+    <string name="cannot_disable_webhook_used">Cannot disable webhook. It is used in active rules: %1$s</string>
+    <string name="cannot_delete_webhook_used">Cannot delete webhook. It is used in rules: %1$s</string>
+    <string name="webhook_created">Webhook created</string>
+    <string name="webhook_updated">Webhook updated</string>
+    <string name="webhook_deleted">Webhook deleted</string>
+    <string name="webhook_enabled">Webhook enabled</string>
+    <string name="webhook_disabled">Webhook disabled</string>
+    <string name="global_headers_desc">Global headers sent with every webhook request.</string>
+    <string name="header_key">Header Key</string>
+    <string name="header_value">Header Value</string>
+    <string name="header_key_placeholder">Authorization</string>
+    <string name="header_value_placeholder">Bearer token…</string>
+    <string name="add_global_header">Add Global Header</string>
+    <string name="delete_global_header">Delete Global Header</string>
+    <string name="delete_global_header_confirm">Are you sure you want to delete the global header \'%1$s\'?</string>
+
+    <!-- Variable Descriptors -->
+    <string name="var_sender_desc">Sender\'s phone number</string>
+    <string name="var_receiver_desc">Receiver\'s phone number</string>
+    <string name="var_message_desc">SMS message body</string>
+    <string name="var_received_at_desc">Time when message was received</string>
+    <string name="var_message_id_desc">Unique message ID</string>
+    <string name="var_gateway_id_desc">Gateway ID</string>
+    <string name="var_gateway_name_desc">Gateway Name</string>
+    <string name="var_device_id_desc">Android Device ID</string>
+    <string name="var_device_model_desc">Phone Model</string>
+    <string name="var_manufacturer_desc">Device Manufacturer</string>
+    <string name="var_android_version_desc">Android Version</string>
+    <string name="var_app_version_desc">Kizuna: SMS Gateway App Version</string>
+    <string name="var_phone_number_desc">SIM Phone Number</string>
+    <string name="var_display_name_desc">SIM Display Name</string>
+    <string name="var_sim_slot_desc">SIM Slot Index (0/1)</string>
+    <string name="var_sub_id_desc">SIM Subscription ID</string>
+    <string name="var_current_date_desc">Today\'s Date (YYYY-MM-DD)</string>
+    <string name="var_current_time_desc">Current Time (HH:mm:ss)</string>
+    <string name="var_current_timestamp_desc">Current Unix Timestamp (ms)</string>
+
+    <!-- Outbound Settings -->
+    <string name="outbound_settings">Outbound Settings</string>
+    <string name="base_url">Base URL</string>
+    <string name="base_url_desc">Use this URL to send SMS from external applications. Make sure to append the correct endpoint and parameters.</string>
+    <string name="tunnel_server_url">Tunnel Server URL</string>
+    <string name="tunnel_server_url_desc">The server address used for the WebSocket tunnel. Change this to your local IP (e.g., 192.168.1.10:8081) for local testing.</string>
+    <string name="global_webhook_callback_url">Global Webhook Callback URL</string>
+    <string name="webhook_callback_desc">Status updates (Sent, Failed) will be POSTed to this URL to notify your application about the SMS delivery status.</string>
+    <string name="base_url_copied">Base URL copied to clipboard</string>
+    <string name="copy_base_url">Copy Base URL</string>
+
+    <!-- API Keys -->
+    <string name="api_key_credentials">API Key Credentials</string>
+    <string name="no_api_keys">No API keys configured</string>
+    <string name="add_api_key">Add API Key</string>
+    <string name="add_api_key_desc">Give this key a name to identify the application using it.</string>
+    <string name="key_name_placeholder">Key Name (e.g. My App)</string>
+    <string name="generate">Generate</string>
+    <string name="delete_api_key">Delete API Key</string>
+    <string name="delete_api_key_confirm">Are you sure you want to delete this API key? Applications using this key will no longer be able to send messages.</string>
+    <string name="api_key_copied">API Key copied to clipboard</string>
+    <string name="copy_key">Copy key</string>
+    <string name="rate">Rate: %1$s</string>
+    <string name="unlimited">Unlimited</string>
+
+    <!-- Home -->
+    <string name="battery_optimization_active">Battery Optimization Active</string>
+    <string name="battery_optimization_desc">To ensure stable background service, please set battery usage to \'Unrestricted\'.</string>
+    <string name="configure">Configure</string>
+    <string name="services">Services</string>
+    <string name="inbound_sms">Inbound SMS</string>
+    <string name="inbound_sms_desc">Manage incoming SMS, webhooks, and rules</string>
+    <string name="outbound_sms">Outbound SMS</string>
+    <string name="outbound_sms_desc">Send SMS and manage outgoing campaigns</string>
+
+    <!-- Outbound Logs -->
+    <string name="outbound_logs">Outbound Logs</string>
+    <string name="sms_logs">SMS Logs</string>
+    <string name="no_outbound_messages">No outbound messages logged</string>
+    <string name="clear_outbound_logs_title">Clear Outbound Logs</string>
+    <string name="clear_outbound_logs_confirm">Are you sure you want to delete all outbound SMS logs? This action cannot be undone.</string>
+    <string name="error">Error: %1$s</string>
+
+    <!-- Navigation Tabs & Menus -->
+    <string name="home">Home</string>
+    <string name="credentials">Credentials</string>
+    <string name="rate_limiter">Rate Limiter</string>
+    <string name="documentation">Documentation</string>
+    <string name="menu">Menu</string>
+
+    <!-- Rate Limiter -->
+    <string name="rate_limiter_desc">Manage sending limits per minute for each API key. Set to 0 or leave empty for unlimited.</string>
+    <string name="no_api_keys_found">No API keys found. Create one in Credentials tab.</string>
+    <string name="sms_per_minute">SMS Per Minute</string>
+    <string name="save_limit">Save Limit</string>
+    <string name="key_prefix">Key: %1$s…</string>
+
+    <!-- API Documentation -->
+    <string name="api_documentation">API Documentation</string>
+    <string name="base_url_for_device">Base URL for this device:</string>
+    <string name="endpoints">Endpoints</string>
+    <string name="send_single_sms">Send a single SMS message</string>
+    <string name="send_multiple_sms">Send multiple SMS messages</string>
+    <string name="check_sms_status">Check status of a specific SMS</string>
+    <string name="check_queue_size">Check current pending queue size</string>
+    <string name="callback_triggered_desc">Callback triggered when SMS status changes</string>
+    <string name="expects_200_ok">Expects 200 OK</string>
+    <string name="headers">Headers</string>
+    <string name="request_body">Request Body</string>
+    <string name="collapse">Collapse</string>
+    <string name="expand">Expand</string>
+    <string name="websocket_service_unavailable">Websocket service unavailable</string>
+
+    <!-- API Errors -->
+    <string name="error_service_shutting_down">Service is shutting down</string>
+    <string name="error_missing_api_key">Missing API Key</string>
+    <string name="error_invalid_api_key">Invalid or inactive API Key</string>
+    <string name="error_rate_limit_exceeded">Minute rate limit exceeded</string>
+    <string name="error_invalid_id">Invalid ID</string>
+    <string name="error_sms_not_found">SMS not found</string>
+
+    <!-- Legal Details -->
+    <string name="terms_1_title">1. Acceptance of Terms</string>
+    <string name="terms_1_body">By using Kizuna: SMS Gateway (\"the App\"), you agree to be bound by these Terms and Conditions. This App is designed as a bridge between mobile SMS services and external web applications.</string>
+    <string name="terms_2_title">2. Nature of Service</string>
+    <string name="terms_2_body">Kizuna: SMS Gateway provides two primary functions:\n• Inbound: Relaying incoming SMS messages to user-defined webhooks.\n• Outbound: Providing a local REST API and WebSocket tunnel to send SMS from external systems.</string>
+    <string name="terms_3_title">3. User Responsibility &amp; Compliance</string>
+    <string name="terms_3_body">You are solely responsible for all message content processed through the App. You must comply with all local and international laws regarding telecommunications, privacy, and anti-spam (e.g., TCPA, GDPR). Unauthorized use for spamming, harassment, or fraud is strictly prohibited.</string>
+    <string name="terms_4_title">4. Usage &amp; Limitations</string>
+    <string name="terms_4_body">Kizuna: SMS Gateway is provided as a free tool. There are no hidden fees or premium restrictions for core gateway functionalities, such as rule-based routing, webhook delivery, and outbound API access.</string>
+    <string name="terms_5_title">5. Limitation of Liability</string>
+    <string name="terms_5_body">The App is provided \"as is\" without warranties. We are not liable for any data loss, delivery failures, carrier charges, or damages resulting from service interruptions or misuse of the gateway.</string>
+    <string name="terms_6_title">6. Modifications</string>
+    <string name="terms_6_body">We reserve the right to update these terms to reflect changes in the App\'s functionality or legal requirements. Continued use after changes constitutes acceptance.</string>
+
+    <string name="privacy_1_title">1. Data Collection &amp; Processing</string>
+    <string name="privacy_1_body">The App processes SMS messages received on your device. This data is stored locally in a Room database on your device. We do not host your SMS data on our own servers.</string>
+    <string name="privacy_2_title">2. Data Transmission</string>
+    <string name="privacy_2_body">SMS content and device metadata (Sender, Timestamp, etc.) are transmitted only to the webhooks and API endpoints explicitly configured by you. You are responsible for the security of the endpoints you define.</string>
+    <string name="privacy_3_title">3. Device Permissions</string>
+    <string name="privacy_3_body">To function as a gateway, the App requires critical permissions:\n• RECEIVE_SMS &amp; READ_SMS: To intercept and relay inbound messages.\n• SEND_SMS: To process outbound requests.\n• READ_PHONE_STATE: To identify the device for gateway routing.\nThese permissions are used exclusively for core gateway functionality.</string>
+    <string name="privacy_4_title">4. Local Storage &amp; Security</string>
+    <string name="privacy_4_body">Message history is stored locally in your device\'s database. We recommend securing your device with biometric or passcode locks to protect local data from unauthorized physical access.</string>
+    <string name="privacy_5_title">5. Outbound Security</string>
+    <string name="privacy_5_body">Outbound API access is secured via API Keys. For enhanced security, API secrets are masked in the UI after creation. Rate limiting is available to prevent carrier-level detection of unusual activity.</string>
+    <string name="privacy_6_title">6. Third-Party Services</string>
+    <string name="privacy_6_body">Payment processing is handled by the Google Play Store. Please refer to their privacy policy for billing-related data handling.</string>
+    <string name="privacy_7_title">7. Contact Information</string>
+    <string name="privacy_7_body">For privacy inquiries or support, please contact the developer at 4ndri.nr@gmail.com.</string>
+</resources>

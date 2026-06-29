@@ -64,7 +64,7 @@ class OutboundSmsService : Service() {
 
     private fun startService() {
         _isRunning.value = true
-        val notification = createNotification("Outbound service is running...")
+        val notification = createNotification(getString(R.string.outbound_service_running))
         
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
             startForeground(NOTIFICATION_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE)
@@ -95,7 +95,7 @@ class OutboundSmsService : Service() {
 
     private fun stopService() {
         _isRunning.value = false
-        updateNotification("Stopping outbound service...")
+        updateNotification(getString(R.string.stopping_outbound_service))
         
         tunnelClient.stop()
         httpGatewayServer.stop {
@@ -194,7 +194,7 @@ class OutboundSmsService : Service() {
     private fun createNotificationChannel() {
         val serviceChannel = NotificationChannel(
             CHANNEL_ID,
-            "Outbound SMS Gateway Channel",
+            getString(R.string.outbound_channel_name),
             NotificationManager.IMPORTANCE_DEFAULT
         )
         val manager = getSystemService(NotificationManager::class.java)

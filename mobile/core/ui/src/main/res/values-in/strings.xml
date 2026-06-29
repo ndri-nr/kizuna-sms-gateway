@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Kizuna: SMS Gateway</string>
+    <string name="connected">Terhubung</string>
+    <string name="disconnected">Terputus</string>
+    <string name="pending">Tertunda</string>
+    <string name="sent">Terkirim</string>
+    <string name="failed">Gagal</string>
+    <string name="permissions_granted">Semua izin yang diperlukan diberikan</string>
+    <string name="permissions_required">Izin diperlukan untuk fungsionalitas penuh</string>
+    <string name="could_not_open_file">Tidak dapat membuka file</string>
+    <string name="settings">Pengaturan</string>
+    <string name="delete_untracked_sms">Hapus SMS Tidak Terlacak</string>
+    <string name="delete_untracked_sms_desc">Hapus pesan yang diterima secara otomatis yang tidak cocok dengan aturan apa pun.</string>
+    <string name="device_secret_token">Token Rahasia Perangkat</string>
+    <string name="hide_token">Sembunyikan token</string>
+    <string name="show_token">Tampilkan token</string>
+    <string name="copy_token">Salin token</string>
+    <string name="token_copied">Token disalin ke papan klip</string>
+    <string name="device_token_desc">Token perangkat ini akan dikirim secara otomatis sebagai header saat memanggil webhook dengan nama X_HEADER_TOKEN. Anda dapat menggunakan token ini untuk mengautentikasi atau mengidentifikasi sumber permintaan.</string>
+    <string name="language">Bahasa</string>
+    <string name="english">Inggris</string>
+    <string name="indonesian">Indonesia</string>
+    <string name="back">Kembali</string>
+    <string name="service_started">Layanan dimulai</string>
+    <string name="service_stopped">Layanan dihentikan</string>
+    <string name="api_key_generated">API Key dibuat</string>
+    <string name="api_key_enabled">API Key diaktifkan</string>
+    <string name="api_key_disabled">API Key dinonaktifkan</string>
+    <string name="rate_limit_updated">Batas kecepatan diperbarui untuk %1$s</string>
+    <string name="gateway_name_updated">Nama gateway diperbarui</string>
+    <string name="untracked_sms_deletion_enabled">Penghapusan SMS tidak terlacak diaktifkan</string>
+    <string name="untracked_sms_deletion_disabled">Penghapusan SMS tidak terlacak dinonaktifkan</string>
+    <string name="variable_saved">Variabel disimpan</string>
+    <string name="backup_saved">Cadangan berhasil disimpan</string>
+    <string name="export_failed">Gagal mengekspor cadangan</string>
+    <string name="import_success">Data dan konfigurasi berhasil dipulihkan</string>
+    <string name="import_failed">Gagal mengimpor cadangan</string>
+
+    <!-- About Screen -->
+    <string name="about">Tentang</string>
+    <string name="gateway_detail">Detail Gateway</string>
+    <string name="gateway_name">Nama Gateway</string>
+    <string name="edit_gateway_name">Ubah Nama Gateway</string>
+    <string name="name">Nama</string>
+    <string name="save">Simpan</string>
+    <string name="cancel">Batal</string>
+    <string name="backup_and_restore">Cadangkan dan Pulihkan</string>
+    <string name="backup_data">Cadangkan Data</string>
+    <string name="restore_data">Pulihkan Data</string>
+    <string name="support">Dukungan</string>
+    <string name="support_desc">Butuh bantuan atau punya saran? Hubungi kami melalui email.</string>
+    <string name="email_support">Dukungan Email</string>
+    <string name="legal">Hukum</string>
+    <string name="terms_and_conditions">Syarat dan Ketentuan</string>
+    <string name="privacy_policy">Kebijakan Privasi</string>
+    <string name="version">Versi</string>
+    <string name="rights_reserved">© 2026 Kizuna: SMS Gateway. Hak cipta dilindungi undang-undang.</string>
+    <string name="last_updated">Terakhir Diperbarui: Juni 2026</string>
+    <string name="support_email_subject">Dukungan Kizuna: SMS Gateway</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard">Dasbor</string>
+    <string name="sms_today">SMS Hari Ini</string>
+    <string name="queue_size">Ukuran Antrean</string>
+    <string name="success">Berhasil</string>
+    <string name="last_sms_received">SMS Terakhir Diterima</string>
+    <string name="from">Dari</string>
+    <string name="to">Ke</string>
+    <string name="no_messages_received">Belum ada pesan yang diterima</string>
+    <string name="last_successful_webhook">Webhook Berhasil Terakhir</string>
+    <string name="response_code">Kode Respons</string>
+    <string name="no_webhook_delivered">Belum ada webhook yang terkirim</string>
+
+    <!-- Rules -->
+    <string name="routing_rules">Aturan Perutean</string>
+    <string name="no_routing_rules">Tidak ada aturan perutean yang dikonfigurasi</string>
+    <string name="forward_to">Teruskan ke: %1$s</string>
+    <string name="sender_regex">Regex Pengirim: %1$s</string>
+    <string name="contains">Berisi: %1$s</string>
+    <string name="catch_all_rule">Aturan Tangkap Semua</string>
+    <string name="delete_rule">Hapus Aturan</string>
+    <string name="delete_rule_confirm">Apakah Anda yakin ingin menghapus aturan perutean ini?</string>
+    <string name="add_rule">Tambah Aturan</string>
+    <string name="delete">Hapus</string>
+    <string name="create_rule">Buat Aturan</string>
+    <string name="edit_rule">Ubah Aturan</string>
+    <string name="rule_name">Nama Aturan</string>
+    <string name="enable_rule">Aktifkan Aturan</string>
+    <string name="priority_desc">Prioritas (Lebih tinggi dijalankan lebih dulu)</string>
+    <string name="sender_regex_optional">Regex Pengirim (Opsional)</string>
+    <string name="contains_text_optional">Berisi Teks (Opsional)</string>
+    <string name="select_webhook">Pilih Webhook</string>
+    <string name="target_webhook">Target: %1$s</string>
+    <string name="search_webhook">Cari webhook…</string>
+    <string name="no_results_found">Tidak ada hasil ditemukan</string>
+    <string name="save_rule">Simpan Aturan</string>
+    <string name="unknown">Tidak Diketahui</string>
+    <string name="cannot_enable_rule_webhook_error">Tidak dapat mengaktifkan aturan. Webhook target dinonaktifkan atau hilang.</string>
+    <string name="rule_created">Aturan dibuat</string>
+    <string name="rule_updated">Aturan diperbarui</string>
+    <string name="rule_deleted">Aturan dihapus</string>
+    <string name="rule_enabled">Aturan diaktifkan</string>
+    <string name="rule_disabled">Aturan dinonaktifkan</string>
+
+    <!-- Logs -->
+    <string name="inbound_logs">Log Masuk</string>
+    <string name="delivery_logs">Log Pengiriman</string>
+    <string name="received_sms">SMS Diterima</string>
+    <string name="clear_logs">Bersihkan Log</string>
+    <string name="clear_sms">Bersihkan SMS</string>
+    <string name="clear_all">Bersihkan Semua</string>
+    <string name="delete_all">Hapus Semua</string>
+    <string name="clear_logs_title">Bersihkan Log</string>
+    <string name="clear_logs_confirm">Apakah Anda yakin ingin menghapus semua log pengiriman? Tindakan ini tidak dapat dibatalkan.</string>
+    <string name="clear_sms_confirm">Apakah Anda yakin ingin menghapus semua pesan SMS yang diterima? Tindakan ini tidak dapat dibatalkan.</string>
+    <string name="delete_log_confirm">Apakah Anda yakin ingin menghapus entri log pengiriman ini?</string>
+    <string name="delete_group_confirm">Apakah Anda yakin ingin menghapus semua log untuk SMS ini? Tindakan ini tidak dapat dibatalkan.</string>
+    <string name="delete_sms_confirm">Apakah Anda yakin ingin menghapus pesan SMS yang diterima ini?</string>
+    <string name="no_logs_found">Tidak ada log ditemukan</string>
+    <string name="no_delivery_logs">Tidak ada log pengiriman</string>
+    <string name="no_sms_received">Tidak ada pesan SMS yang diterima</string>
+    <string name="load_more_logs">Muat Lebih Banyak Log</string>
+    <string name="load_more_sms">Muat Lebih Banyak SMS</string>
+    <string name="status">Status</string>
+    <string name="received_at">Diterima Pada</string>
+    <string name="sms_id">ID SMS: %1$s</string>
+    <string name="attempts">Upaya: %1$d</string>
+    <string name="latest">Terbaru: %1$s</string>
+    <string name="delivered">Terkirim</string>
+    <string name="delivery_history">Riwayat Pengiriman</string>
+    <string name="retry_latest">Coba Lagi Terbaru</string>
+    <string name="delete_group">Hapus Grup</string>
+    <string name="webhook">Webhook: %1$s</string>
+    <string name="request_headers">Header Permintaan:</string>
+    <string name="request_payload">Payload Permintaan:</string>
+    <string name="response_body">Body Respons:</string>
+    <string name="time">Waktu: %1$s</string>
+    <string name="processed">Diproses</string>
+
+    <!-- Webhooks -->
+    <string name="webhooks">Webhook</string>
+    <string name="add_webhook">Tambah Webhook</string>
+    <string name="delete_webhook">Hapus Webhook</string>
+    <string name="delete_webhook_confirm">Apakah Anda yakin ingin menghapus webhook ini?</string>
+    <string name="url">URL</string>
+    <string name="global_headers">Header Global</string>
+    <string name="no_webhooks">Tidak ada webhook yang dikonfigurasi</string>
+    <string name="used_by">Digunakan oleh</string>
+    <string name="create_webhook">Buat Webhook</string>
+    <string name="edit_webhook">Ubah Webhook</string>
+    <string name="webhook_name">Nama Webhook</string>
+    <string name="enable_webhook">Aktifkan Webhook</string>
+    <string name="webhook_url">URL Webhook</string>
+    <string name="method">Metode</string>
+    <string name="timeout_seconds">Timeout (Detik)</string>
+    <string name="webhook_headers">Header Webhook</string>
+    <string name="add_header">Tambah Header</string>
+    <string name="key">Kunci</string>
+    <string name="value">Nilai</string>
+    <string name="json_payload_template">Templat Payload JSON</string>
+    <string name="beautify">Percantik</string>
+    <string name="clear">Bersihkan</string>
+    <string name="auto_reply_message">Pesan Balasan Otomatis (Opsional)</string>
+    <string name="test_webhook">Uji Webhook</string>
+    <string name="save_webhook">Simpan Webhook</string>
+    <string name="remove_header">Hapus Header</string>
+    <string name="remove_header_confirm">Apakah Anda yakin ingin menghapus header ini?</string>
+    <string name="show_variables">Tampilkan variabel tersedia</string>
+    <string name="hide_variables">Sembunyikan variabel</string>
+    <string name="variables_helper_desc">Klik variabel untuk menyalin placeholder-nya (misal: {{sender}})</string>
+    <string name="success_caps">BERHASIL</string>
+    <string name="failed_caps">GAGAL</string>
+    <string name="code">Kode: %1$s</string>
+    <string name="sent_headers">Header Terkirim:</string>
+    <string name="rendered_json_payload">Payload JSON Dirender:</string>
+    <string name="response">Respons:</string>
+    <string name="global_header_saved">Header global disimpan</string>
+    <string name="global_header_deleted">Header global dihapus</string>
+    <string name="cannot_disable_webhook_used">Tidak dapat menonaktifkan webhook. Digunakan dalam aturan aktif: %1$s</string>
+    <string name="cannot_delete_webhook_used">Tidak dapat menghapus webhook. Digunakan dalam aturan: %1$s</string>
+    <string name="webhook_created">Webhook dibuat</string>
+    <string name="webhook_updated">Webhook diperbarui</string>
+    <string name="webhook_deleted">Webhook dihapus</string>
+    <string name="webhook_enabled">Webhook diaktifkan</string>
+    <string name="webhook_disabled">Webhook dinonaktifkan</string>
+    <string name="global_headers_desc">Header global dikirim dengan setiap permintaan webhook.</string>
+    <string name="header_key">Kunci Header</string>
+    <string name="header_value">Nilai Header</string>
+    <string name="header_key_placeholder">Authorization</string>
+    <string name="header_value_placeholder">Bearer token…</string>
+    <string name="add_global_header">Tambah Header Global</string>
+    <string name="delete_global_header">Hapus Header Global</string>
+    <string name="delete_global_header_confirm">Apakah Anda yakin ingin menghapus header global \'%1$s\'?</string>
+
+    <!-- Variable Descriptors -->
+    <string name="var_sender_desc">Nomor telepon pengirim</string>
+    <string name="var_receiver_desc">Nomor telepon penerima</string>
+    <string name="var_message_desc">Body pesan SMS</string>
+    <string name="var_received_at_desc">Waktu saat pesan diterima</string>
+    <string name="var_message_id_desc">ID pesan unik</string>
+    <string name="var_gateway_id_desc">ID Gateway</string>
+    <string name="var_gateway_name_desc">Nama Gateway</string>
+    <string name="var_device_id_desc">ID Perangkat Android</string>
+    <string name="var_device_model_desc">Model Telepon</string>
+    <string name="var_manufacturer_desc">Produsen Perangkat</string>
+    <string name="var_android_version_desc">Versi Android</string>
+    <string name="var_app_version_desc">Versi Aplikasi Kizuna: SMS Gateway</string>
+    <string name="var_phone_number_desc">Nomor Telepon SIM</string>
+    <string name="var_display_name_desc">Nama Tampilan SIM</string>
+    <string name="var_sim_slot_desc">Indeks Slot SIM (0/1)</string>
+    <string name="var_sub_id_desc">ID Langganan SIM</string>
+    <string name="var_current_date_desc">Tanggal Hari Ini (YYYY-MM-DD)</string>
+    <string name="var_current_time_desc">Waktu Sekarang (HH:mm:ss)</string>
+    <string name="var_current_timestamp_desc">Timestamp Unix Sekarang (ms)</string>
+
+    <!-- Outbound Settings -->
+    <string name="outbound_settings">Pengaturan Keluar</string>
+    <string name="base_url">URL Dasar</string>
+    <string name="base_url_desc">Gunakan URL ini untuk mengirim SMS dari aplikasi eksternal. Pastikan untuk menambahkan endpoint dan parameter yang benar.</string>
+    <string name="tunnel_server_url">URL Server Tunnel</string>
+    <string name="tunnel_server_url_desc">Alamat server yang digunakan untuk tunnel WebSocket. Ubah ini ke IP lokal Anda (misal, 192.168.1.10:8081) untuk pengujian lokal.</string>
+    <string name="global_webhook_callback_url">URL Callback Webhook Global</string>
+    <string name="webhook_callback_desc">Pembaruan status (Terkirim, Gagal) akan di-POST ke URL ini untuk memberitahu aplikasi Anda tentang status pengiriman SMS.</string>
+    <string name="base_url_copied">URL Dasar disalin ke papan klip</string>
+    <string name="copy_base_url">Salin URL Dasar</string>
+
+    <!-- API Keys -->
+    <string name="api_key_credentials">Kredensial API Key</string>
+    <string name="no_api_keys">Tidak ada API key yang dikonfigurasi</string>
+    <string name="add_api_key">Tambah API Key</string>
+    <string name="add_api_key_desc">Beri nama key ini untuk mengidentifikasi aplikasi yang menggunakannya.</string>
+    <string name="key_name_placeholder">Nama Key (misal: Aplikasi Saya)</string>
+    <string name="generate">Buat</string>
+    <string name="delete_api_key">Hapus API Key</string>
+    <string name="delete_api_key_confirm">Apakah Anda yakin ingin menghapus API key ini? Aplikasi yang menggunakan key ini tidak akan lagi dapat mengirim pesan.</string>
+    <string name="api_key_copied">API Key disalin ke papan klip</string>
+    <string name="copy_key">Salin key</string>
+    <string name="rate">Kec: %1$s</string>
+    <string name="unlimited">Tanpa Batas</string>
+
+    <!-- Home -->
+    <string name="battery_optimization_active">Optimasi Baterai Aktif</string>
+    <string name="battery_optimization_desc">Untuk memastikan layanan latar belakang stabil, harap atur penggunaan baterai ke \'Tidak Terbatas\'.</string>
+    <string name="configure">Konfigurasi</string>
+    <string name="services">Layanan</string>
+    <string name="inbound_sms">SMS Masuk</string>
+    <string name="inbound_sms_desc">Kelola SMS masuk, webhook, dan aturan</string>
+    <string name="outbound_sms">SMS Keluar</string>
+    <string name="outbound_sms_desc">Kirim SMS dan kelola kampanye keluar</string>
+
+    <!-- Outbound Logs -->
+    <string name="outbound_logs">Log Keluar</string>
+    <string name="sms_logs">Log SMS</string>
+    <string name="no_outbound_messages">Tidak ada pesan keluar yang tercatat</string>
+    <string name="clear_outbound_logs_title">Bersihkan Log Keluar</string>
+    <string name="clear_outbound_logs_confirm">Apakah Anda yakin ingin menghapus semua log SMS keluar? Tindakan ini tidak dapat dibatalkan.</string>
+    <string name="error">Kesalahan: %1$s</string>
+
+    <!-- Navigation Tabs & Menus -->
+    <string name="home">Beranda</string>
+    <string name="credentials">Kredensial</string>
+    <string name="rate_limiter">Pembatas Kecepatan</string>
+    <string name="documentation">Dokumentasi</string>
+    <string name="menu">Menu</string>
+
+    <!-- Rate Limiter -->
+    <string name="rate_limiter_desc">Kelola batas pengiriman per menit untuk setiap API key. Atur ke 0 atau kosongkan untuk tanpa batas.</string>
+    <string name="no_api_keys_found">Tidak ada API key ditemukan. Buat satu di tab Kredensial.</string>
+    <string name="sms_per_minute">SMS Per Menit</string>
+    <string name="save_limit">Simpan Batas</string>
+    <string name="key_prefix">Key: %1$s…</string>
+
+    <!-- API Documentation -->
+    <string name="api_documentation">Dokumentasi API</string>
+    <string name="base_url_for_device">URL Dasar untuk perangkat ini:</string>
+    <string name="endpoints">Titik Akhir</string>
+    <string name="send_single_sms">Kirim pesan SMS tunggal</string>
+    <string name="send_multiple_sms">Kirim banyak pesan SMS</string>
+    <string name="check_sms_status">Periksa status SMS tertentu</string>
+    <string name="check_queue_size">Periksa ukuran antrean tertunda saat ini</string>
+    <string name="callback_triggered_desc">Callback dipicu saat status SMS berubah</string>
+    <string name="expects_200_ok">Mengharapkan 200 OK</string>
+    <string name="headers">Header</string>
+    <string name="request_body">Body Permintaan</string>
+    <string name="collapse">Sembunyikan</string>
+    <string name="expand">Tampilkan</string>
+    <string name="websocket_service_unavailable">Layanan Websocket tidak tersedia</string>
+
+    <!-- API Errors -->
+    <string name="error_service_shutting_down">Layanan sedang dimatikan</string>
+    <string name="error_missing_api_key">API Key tidak ada</string>
+    <string name="error_invalid_api_key">API Key tidak valid atau tidak aktif</string>
+    <string name="error_rate_limit_exceeded">Batas kecepatan menit terlampaui</string>
+    <string name="error_invalid_id">ID tidak valid</string>
+    <string name="error_sms_not_found">SMS tidak ditemukan</string>
+
+    <!-- Legal Details -->
+    <string name="terms_1_title">1. Penerimaan Ketentuan</string>
+    <string name="terms_1_body">Dengan menggunakan Kizuna: SMS Gateway (\"Aplikasi\"), Anda setuju untuk terikat oleh Syarat dan Ketentuan ini. Aplikasi ini dirancang sebagai jembatan antara layanan SMS seluler dan aplikasi web eksternal.</string>
+    <string name="terms_2_title">2. Sifat Layanan</string>
+    <string name="terms_2_body">Kizuna: SMS Gateway menyediakan dua fungsi utama:\n• Masuk: Meneruskan pesan SMS masuk ke webhook yang ditentukan pengguna.\n• Keluar: Menyediakan API REST lokal dan tunnel WebSocket untuk mengirim SMS dari sistem eksternal.</string>
+    <string name="terms_3_title">3. Tanggung Jawab Pengguna &amp; Kepatuhan</string>
+    <string name="terms_3_body">Anda bertanggung jawab penuh atas semua konten pesan yang diproses melalui Aplikasi. Anda harus mematuhi semua hukum lokal dan internasional mengenai telekomunikasi, privasi, dan anti-spam (misalnya, TCPA, GDPR). Penggunaan tidak sah untuk spamming, pelecehan, atau penipuan sangat dilarang.</string>
+    <string name="terms_4_title">4. Penggunaan &amp; Batasan</string>
+    <string name="terms_4_body">Kizuna: SMS Gateway disediakan sebagai alat gratis. Tidak ada biaya tersembunyi atau batasan premium untuk fungsionalitas inti gateway, seperti perutean berbasis aturan, pengiriman webhook, dan akses API keluar.</string>
+    <string name="terms_5_title">5. Batasan Tanggung Jawab</string>
+    <string name="terms_5_body">Aplikasi disediakan \"apa adanya\" tanpa jaminan. Kami tidak bertanggung jawab atas kehilangan data, kegagalan pengiriman, biaya operator, atau kerusakan yang diakibatkan oleh gangguan layanan atau penyalahgunaan gateway.</string>
+    <string name="terms_6_title">6. Modifikasi</string>
+    <string name="terms_6_body">Kami berhak untuk memperbarui ketentuan ini untuk mencerminkan perubahan dalam fungsionalitas Aplikasi atau persyaratan hukum. Penggunaan berkelanjutan setelah perubahan merupakan penerimaan.</string>
+
+    <string name="privacy_1_title">1. Pengumpulan &amp; Pemrosesan Data</string>
+    <string name="privacy_1_body">Aplikasi memproses pesan SMS yang diterima di perangkat Anda. Data ini disimpan secara lokal di database Room di perangkat Anda. Kami tidak menyimpan data SMS Anda di server kami sendiri.</string>
+    <string name="privacy_2_title">2. Transmisi Data</string>
+    <string name="privacy_2_body">Konten SMS dan metadata perangkat (Pengirim, Stempel Waktu, dll.) dikirimkan hanya ke webhook dan titik akhir API yang secara eksplisit dikonfigurasi oleh Anda. Anda bertanggung jawab atas keamanan titik akhir yang Anda tentukan.</string>
+    <string name="privacy_3_title">3. Izin Perangkat</string>
+    <string name="privacy_3_body">Untuk berfungsi sebagai gateway, Aplikasi memerlukan izin penting:\n• RECEIVE_SMS &amp; READ_SMS: Untuk mencegat dan meneruskan pesan masuk.\n• SEND_SMS: To process outbound requests.\n• READ_PHONE_STATE: Untuk mengidentifikasi perangkat untuk perutean gateway.\nIzin ini digunakan secara eksklusif untuk fungsionalitas inti gateway.</string>
+    <string name="privacy_4_title">4. Penyimpanan Lokal &amp; Keamanan</string>
+    <string name="privacy_4_body">Riwayat pesan disimpan secara lokal di database perangkat Anda. Kami menyarankan untuk mengamankan perangkat Anda dengan kunci biometrik atau kode sandi untuk melindungi data lokal dari akses fisik yang tidak sah.</string>
+    <string name="privacy_5_title">5. Keamanan Keluar</string>
+    <string name="privacy_5_body">Akses API keluar diamankan melalui API Key. Untuk keamanan yang lebih baik, rahasia API disamarkan di UI setelah pembuatan. Batas kecepatan tersedia untuk mencegah deteksi aktivitas tidak biasa oleh operator.</string>
+    <string name="privacy_6_title">6. Layanan Pihak Ketiga</string>
+    <string name="privacy_6_body">Pemrosesan pembayaran ditangani oleh Google Play Store. Silakan merujuk ke kebijakan privasi mereka untuk penanganan data terkait penagihan.</string>
+    <string name="privacy_7_title">7. Informasi Kontak</string>
+    <string name="privacy_7_body">Untuk pertanyaan privasi atau dukungan, silakan hubungi pengembang di 4ndri.nr@gmail.com.</string>
+</resources>

@@ -17,9 +17,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.kizunagateway.core.ui.R
 import com.kizunagateway.domain.model.DeliveryLog
 import com.kizunagateway.domain.model.SmsMessage
 import java.time.Instant
@@ -39,7 +41,7 @@ fun LogsScreen(viewModel: LogsViewModel) {
     var logToDelete by remember { mutableStateOf<Long?>(null) }
     var groupToDelete by remember { mutableStateOf<Long?>(null) }
     var smsToDelete by remember { mutableStateOf<Long?>(null) }
-    val tabs = listOf("Delivery Logs", "Received SMS")
+    val tabs = listOf(stringResource(R.string.delivery_logs), stringResource(R.string.received_sms))
 
     Scaffold(
         topBar = {
@@ -99,11 +101,11 @@ fun LogsScreen(viewModel: LogsViewModel) {
                     )
                     if (selectedTab == 0 && groupedLogs.isNotEmpty()) {
                         IconButton(onClick = { showClearConfirmDialog = true }) {
-                            Icon(Icons.Default.Delete, contentDescription = "Clear Logs", tint = Color(0xFFF87171))
+                            Icon(Icons.Default.Delete, contentDescription = stringResource(R.string.clear_logs), tint = Color(0xFFF87171))
                         }
                     } else if (selectedTab == 1 && smsList.isNotEmpty()) {
                         IconButton(onClick = { showClearSmsConfirmDialog = true }) {
-                            Icon(Icons.Default.Delete, contentDescription = "Clear SMS", tint = Color(0xFFF87171))
+                            Icon(Icons.Default.Delete, contentDescription = stringResource(R.string.clear_sms), tint = Color(0xFFF87171))
                         }
                     }
                 }
@@ -112,7 +114,7 @@ fun LogsScreen(viewModel: LogsViewModel) {
                 if (selectedTab == 0) {
                     if (groupedLogs.isEmpty()) {
                         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                            Text("No delivery logs", color = KizunaColors.Muted)
+                            Text(stringResource(R.string.no_delivery_logs), color = KizunaColors.Muted)
                         }
                     } else {
                         LazyColumn(
@@ -139,7 +141,7 @@ fun LogsScreen(viewModel: LogsViewModel) {
                                         contentAlignment = Alignment.Center
                                     ) {
                                         TextButton(onClick = { viewModel.loadMoreLogs() }) {
-                                            Text("Load More Logs", color = KizunaColors.Primary)
+                                            Text(stringResource(R.string.load_more_logs), color = KizunaColors.Primary)
                                         }
                                     }
                                 }
@@ -149,7 +151,7 @@ fun LogsScreen(viewModel: LogsViewModel) {
                 } else {
                     if (smsList.isEmpty()) {
                         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                            Text("No SMS messages received", color = KizunaColors.Muted)
+                            Text(stringResource(R.string.no_sms_received), color = KizunaColors.Muted)
                         }
                     } else {
                         LazyColumn(
@@ -168,7 +170,7 @@ fun LogsScreen(viewModel: LogsViewModel) {
                                         contentAlignment = Alignment.Center
                                     ) {
                                         TextButton(onClick = { viewModel.loadMoreSms() }) {
-                                            Text("Load More SMS", color = KizunaColors.Primary)
+                                            Text(stringResource(R.string.load_more_sms), color = KizunaColors.Primary)
                                         }
                                     }
                                 }
@@ -184,8 +186,8 @@ fun LogsScreen(viewModel: LogsViewModel) {
         AlertDialog(
             onDismissRequest = { showClearConfirmDialog = false },
             containerColor = KizunaColors.Surface,
-            title = { Text("Clear Logs", color = KizunaColors.OnSurface) },
-            text = { Text("Are you sure you want to delete all delivery logs? This action cannot be undone.", color = KizunaColors.Muted) },
+            title = { Text(stringResource(R.string.clear_logs_title), color = KizunaColors.OnSurface) },
+            text = { Text(stringResource(R.string.clear_logs_confirm), color = KizunaColors.Muted) },
             confirmButton = {
                 TextButton(
                     onClick = {
@@ -193,12 +195,12 @@ fun LogsScreen(viewModel: LogsViewModel) {
                         showClearConfirmDialog = false
                     }
                 ) {
-                    Text("Clear All", color = Color(0xFFF87171), fontWeight = FontWeight.Bold)
+                    Text(stringResource(R.string.clear_all), color = Color(0xFFF87171), fontWeight = FontWeight.Bold)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showClearConfirmDialog = false }) {
-                    Text("Cancel", color = KizunaColors.Muted)
+                    Text(stringResource(R.string.cancel), color = KizunaColors.Muted)
                 }
             }
         )
@@ -208,8 +210,8 @@ fun LogsScreen(viewModel: LogsViewModel) {
         AlertDialog(
             onDismissRequest = { showClearSmsConfirmDialog = false },
             containerColor = KizunaColors.Surface,
-            title = { Text("Clear All SMS", color = KizunaColors.OnSurface) },
-            text = { Text("Are you sure you want to delete all received SMS messages? This action cannot be undone.", color = KizunaColors.Muted) },
+            title = { Text(stringResource(R.string.clear_sms), color = KizunaColors.OnSurface) },
+            text = { Text(stringResource(R.string.clear_sms_confirm), color = KizunaColors.Muted) },
             confirmButton = {
                 TextButton(
                     onClick = {
@@ -217,12 +219,12 @@ fun LogsScreen(viewModel: LogsViewModel) {
                         showClearSmsConfirmDialog = false
                     }
                 ) {
-                    Text("Clear All", color = Color(0xFFF87171), fontWeight = FontWeight.Bold)
+                    Text(stringResource(R.string.clear_all), color = Color(0xFFF87171), fontWeight = FontWeight.Bold)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showClearSmsConfirmDialog = false }) {
-                    Text("Cancel", color = KizunaColors.Muted)
+                    Text(stringResource(R.string.cancel), color = KizunaColors.Muted)
                 }
             }
         )
@@ -232,8 +234,8 @@ fun LogsScreen(viewModel: LogsViewModel) {
         AlertDialog(
             onDismissRequest = { logToDelete = null },
             containerColor = KizunaColors.Surface,
-            title = { Text("Delete Log", color = KizunaColors.OnSurface) },
-            text = { Text("Are you sure you want to delete this delivery log entry?", color = KizunaColors.Muted) },
+            title = { Text(stringResource(R.string.delete_all), color = KizunaColors.OnSurface) },
+            text = { Text(stringResource(R.string.delete_log_confirm), color = KizunaColors.Muted) },
             confirmButton = {
                 TextButton(
                     onClick = {
@@ -241,12 +243,12 @@ fun LogsScreen(viewModel: LogsViewModel) {
                         logToDelete = null
                     }
                 ) {
-                    Text("Delete", color = Color(0xFFF87171), fontWeight = FontWeight.Bold)
+                    Text(stringResource(R.string.delete), color = Color(0xFFF87171), fontWeight = FontWeight.Bold)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { logToDelete = null }) {
-                    Text("Cancel", color = KizunaColors.Muted)
+                    Text(stringResource(R.string.cancel), color = KizunaColors.Muted)
                 }
             }
         )
@@ -256,8 +258,8 @@ fun LogsScreen(viewModel: LogsViewModel) {
         AlertDialog(
             onDismissRequest = { groupToDelete = null },
             containerColor = KizunaColors.Surface,
-            title = { Text("Delete Log Group", color = KizunaColors.OnSurface) },
-            text = { Text("Are you sure you want to delete all logs for this SMS? This action cannot be undone.", color = KizunaColors.Muted) },
+            title = { Text(stringResource(R.string.delete_group), color = KizunaColors.OnSurface) },
+            text = { Text(stringResource(R.string.delete_group_confirm), color = KizunaColors.Muted) },
             confirmButton = {
                 TextButton(
                     onClick = {
@@ -265,12 +267,12 @@ fun LogsScreen(viewModel: LogsViewModel) {
                         groupToDelete = null
                     }
                 ) {
-                    Text("Delete All", color = Color(0xFFF87171), fontWeight = FontWeight.Bold)
+                    Text(stringResource(R.string.delete_all), color = Color(0xFFF87171), fontWeight = FontWeight.Bold)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { groupToDelete = null }) {
-                    Text("Cancel", color = KizunaColors.Muted)
+                    Text(stringResource(R.string.cancel), color = KizunaColors.Muted)
                 }
             }
         )
@@ -280,8 +282,8 @@ fun LogsScreen(viewModel: LogsViewModel) {
         AlertDialog(
             onDismissRequest = { smsToDelete = null },
             containerColor = KizunaColors.Surface,
-            title = { Text("Delete SMS", color = KizunaColors.OnSurface) },
-            text = { Text("Are you sure you want to delete this received SMS message?", color = KizunaColors.Muted) },
+            title = { Text(stringResource(R.string.delete), color = KizunaColors.OnSurface) },
+            text = { Text(stringResource(R.string.delete_sms_confirm), color = KizunaColors.Muted) },
             confirmButton = {
                 TextButton(
                     onClick = {
@@ -289,12 +291,12 @@ fun LogsScreen(viewModel: LogsViewModel) {
                         smsToDelete = null
                     }
                 ) {
-                    Text("Delete", color = Color(0xFFF87171), fontWeight = FontWeight.Bold)
+                    Text(stringResource(R.string.delete), color = Color(0xFFF87171), fontWeight = FontWeight.Bold)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { smsToDelete = null }) {
-                    Text("Cancel", color = KizunaColors.Muted)
+                    Text(stringResource(R.string.cancel), color = KizunaColors.Muted)
                 }
             }
         )
@@ -330,21 +332,21 @@ fun GroupedDeliveryLogCard(
             ) {
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = "SMS ID: ${groupedLog.smsId}",
+                        text = stringResource(R.string.sms_id, groupedLog.smsId),
                         color = KizunaColors.OnSurface,
                         fontWeight = FontWeight.Bold,
                         fontSize = 15.sp
                     )
                     val webhookName = if (latest.webhookId == 0L) "None" else webhookNames[latest.webhookId] ?: "ID: ${latest.webhookId}"
                     Text(
-                        text = "Attempts: ${groupedLog.logs.size} | Latest: $webhookName",
+                        text = "${stringResource(R.string.attempts, groupedLog.logs.size)} | ${stringResource(R.string.latest, webhookName)}",
                         color = KizunaColors.Muted,
                         fontSize = 12.sp
                     )
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        text = if (groupedLog.success) "Delivered" else "Failed",
+                        text = if (groupedLog.success) stringResource(R.string.delivered) else stringResource(R.string.failed),
                         color = statusColor,
                         fontWeight = FontWeight.Bold,
                         fontSize = 13.sp
@@ -357,7 +359,7 @@ fun GroupedDeliveryLogCard(
                         ) {
                             Icon(
                                 Icons.Default.Refresh,
-                                contentDescription = "Retry Latest",
+                                contentDescription = stringResource(R.string.retry_latest),
                                 tint = KizunaColors.Primary,
                                 modifier = Modifier.size(20.dp)
                             )
@@ -370,7 +372,7 @@ fun GroupedDeliveryLogCard(
                     ) {
                         Icon(
                             Icons.Default.Delete,
-                            contentDescription = "Delete Group",
+                            contentDescription = stringResource(R.string.delete_group),
                             tint = Color(0xFFF87171),
                             modifier = Modifier.size(20.dp)
                         )
@@ -384,7 +386,7 @@ fun GroupedDeliveryLogCard(
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
-                    text = "Delivery History",
+                    text = stringResource(R.string.delivery_history),
                     color = KizunaColors.OnSurface,
                     fontWeight = FontWeight.Bold,
                     fontSize = 13.sp,
@@ -430,14 +432,14 @@ fun LogHistoryItem(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "Webhook: ${if (log.webhookId == 0L) "None" else webhookName}",
+                    text = stringResource(R.string.webhook, if (log.webhookId == 0L) "None" else webhookName),
                     color = KizunaColors.Primary,
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Bold
                 )
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        text = if (log.responseCode > 0) "HTTP ${log.responseCode}" else if (log.success) "Success" else "Failed",
+                        text = if (log.responseCode > 0) "HTTP ${log.responseCode}" else if (log.success) stringResource(R.string.success) else stringResource(R.string.failed),
                         color = statusColor,
                         fontSize = 11.sp,
                         fontWeight = FontWeight.Bold
@@ -449,7 +451,7 @@ fun LogHistoryItem(
                     ) {
                         Icon(
                             Icons.Default.Delete,
-                            contentDescription = "Delete Log",
+                            contentDescription = stringResource(R.string.delete),
                             tint = Color(0xFFF87171),
                             modifier = Modifier.size(16.dp)
                         )
@@ -458,7 +460,7 @@ fun LogHistoryItem(
             }
 
             Text(
-                text = "Time: ${Instant.ofEpochMilli(log.createdAt).toString().take(19).replace("T", " ")}",
+                text = stringResource(R.string.time, Instant.ofEpochMilli(log.createdAt).toString().take(19).replace("T", " ")),
                 color = KizunaColors.Muted,
                 fontSize = 10.sp
             )
@@ -466,7 +468,7 @@ fun LogHistoryItem(
             if (log.requestHeaders.isNotBlank()) {
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "Request Headers:",
+                    text = stringResource(R.string.request_headers),
                     color = KizunaColors.Muted,
                     fontSize = 11.sp,
                     fontWeight = FontWeight.Bold
@@ -487,7 +489,7 @@ fun LogHistoryItem(
 
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "Request Payload:",
+                text = stringResource(R.string.request_payload),
                 color = KizunaColors.Muted,
                 fontSize = 11.sp,
                 fontWeight = FontWeight.Bold
@@ -508,7 +510,7 @@ fun LogHistoryItem(
             if (log.responseBody.isNotBlank()) {
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "Response Body:",
+                    text = stringResource(R.string.response_body),
                     color = KizunaColors.Muted,
                     fontSize = 11.sp,
                     fontWeight = FontWeight.Bold
@@ -568,7 +570,7 @@ fun SmsLogCard(sms: SmsMessage, onDelete: () -> Unit) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = if (sms.processed) "Processed" else "Pending",
+                    text = if (sms.processed) stringResource(R.string.processed) else stringResource(R.string.pending),
                     color = if (sms.processed) Color(0xFF25D366) else Color(0xFFFBBF24),
                     fontSize = 11.sp,
                     fontWeight = FontWeight.Bold
@@ -579,7 +581,7 @@ fun SmsLogCard(sms: SmsMessage, onDelete: () -> Unit) {
                 ) {
                     Icon(
                         Icons.Default.Delete,
-                        contentDescription = "Delete SMS",
+                        contentDescription = stringResource(R.string.delete),
                         tint = Color(0xFFF87171),
                         modifier = Modifier.size(20.dp)
                     )

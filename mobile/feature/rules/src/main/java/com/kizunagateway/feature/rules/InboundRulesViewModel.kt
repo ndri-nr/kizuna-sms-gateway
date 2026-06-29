@@ -2,6 +2,7 @@ package com.kizunagateway.feature.rules
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kizunagateway.core.ui.R
 import com.kizunagateway.domain.model.Rule
 import com.kizunagateway.domain.model.Webhook
 import com.kizunagateway.domain.service.NotificationService
@@ -48,17 +49,17 @@ class InboundRulesViewModel @Inject constructor(
         if (rule.enabled) {
             val webhook = webhookRepository.getWebhookById(rule.webhookId)
             if (webhook == null || !webhook.enabled) {
-                notificationService.showMessage("Cannot enable rule. Target webhook is disabled or missing.")
+                notificationService.showMessage(R.string.cannot_enable_rule_webhook_error)
                 return false
             }
         }
 
         if (rule.id == 0L) {
             ruleRepository.insertRule(rule)
-            notificationService.showMessage("Rule created")
+            notificationService.showMessage(R.string.rule_created)
         } else {
             ruleRepository.updateRule(rule)
-            notificationService.showMessage("Rule updated")
+            notificationService.showMessage(R.string.rule_updated)
         }
         loadData()
         return true
@@ -68,7 +69,7 @@ class InboundRulesViewModel @Inject constructor(
         viewModelScope.launch {
             ruleRepository.deleteRule(id)
             loadData()
-            notificationService.showMessage("Rule deleted")
+            notificationService.showMessage(R.string.rule_deleted)
         }
     }
 
@@ -77,14 +78,14 @@ class InboundRulesViewModel @Inject constructor(
             if (!rule.enabled) { // Trying to enable
                 val webhook = webhookRepository.getWebhookById(rule.webhookId)
                 if (webhook == null || !webhook.enabled) {
-                    notificationService.showMessage("Cannot enable rule. Target webhook is disabled.")
+                    notificationService.showMessage(R.string.cannot_enable_rule_webhook_error)
                     return@launch
                 }
             }
             val newState = !rule.enabled
             ruleRepository.updateRule(rule.copy(enabled = newState))
             loadData()
-            notificationService.showMessage(if (newState) "Rule enabled" else "Rule disabled")
+            notificationService.showMessage(if (newState) R.string.rule_enabled else R.string.rule_disabled)
         }
     }
 }

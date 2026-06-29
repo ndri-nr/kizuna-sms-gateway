@@ -2,6 +2,7 @@ package com.kizunagateway.feature.webhook
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kizunagateway.core.ui.R
 import com.kizunagateway.domain.model.*
 import com.kizunagateway.domain.repository.WebhookRepository
 import com.kizunagateway.domain.service.DeviceInfoProvider
@@ -81,7 +82,7 @@ class WebhookViewModel @Inject constructor(
         viewModelScope.launch {
             variableRepository.insertVariable(CustomVariable(key, value))
             loadGlobalHeaders()
-            notificationService.showMessage("Global header saved")
+            notificationService.showMessage(R.string.global_header_saved)
         }
     }
 
@@ -89,7 +90,7 @@ class WebhookViewModel @Inject constructor(
         viewModelScope.launch {
             variableRepository.deleteVariable(key)
             loadGlobalHeaders()
-            notificationService.showMessage("Global header deleted")
+            notificationService.showMessage(R.string.global_header_deleted)
         }
     }
 
@@ -104,7 +105,7 @@ class WebhookViewModel @Inject constructor(
             val usedInRules = rules.filter { it.webhookId == webhook.id && it.enabled }
             if (usedInRules.isNotEmpty()) {
                 val ruleNames = usedInRules.joinToString { it.name }
-                notificationService.showMessage("Cannot disable webhook. It is used in active rules: $ruleNames")
+                notificationService.showMessage(R.string.cannot_disable_webhook_used, ruleNames)
                 return false
             }
         }
@@ -127,7 +128,7 @@ class WebhookViewModel @Inject constructor(
             webhookRepository.insertHeader(it.copy(webhookId = id))
         }
         loadWebhooks()
-        notificationService.showMessage(if (webhook.id == 0L) "Webhook created" else "Webhook updated")
+        notificationService.showMessage(if (webhook.id == 0L) R.string.webhook_created else R.string.webhook_updated)
         return true
     }
 
@@ -138,13 +139,13 @@ class WebhookViewModel @Inject constructor(
             
             if (usedInRules.isNotEmpty()) {
                 val ruleNames = usedInRules.joinToString { it.name }
-                notificationService.showMessage("Cannot delete webhook. It is used in rules: $ruleNames")
+                notificationService.showMessage(R.string.cannot_delete_webhook_used, ruleNames)
                 return@launch
             }
 
             webhookRepository.deleteWebhook(id)
             loadWebhooks()
-            notificationService.showMessage("Webhook deleted")
+            notificationService.showMessage(R.string.webhook_deleted)
         }
     }
 
@@ -156,7 +157,7 @@ class WebhookViewModel @Inject constructor(
                 val usedInRules = rules.filter { it.webhookId == webhook.id && it.enabled }
                 if (usedInRules.isNotEmpty()) {
                     val ruleNames = usedInRules.joinToString { it.name }
-                    notificationService.showMessage("Cannot disable webhook. It is used in active rules: $ruleNames")
+                    notificationService.showMessage(R.string.cannot_disable_webhook_used, ruleNames)
                     return@launch
                 }
             }
@@ -164,7 +165,7 @@ class WebhookViewModel @Inject constructor(
             val newState = !webhook.enabled
             webhookRepository.updateWebhook(webhook.copy(enabled = newState))
             loadWebhooks()
-            notificationService.showMessage(if (newState) "Webhook enabled" else "Webhook disabled")
+            notificationService.showMessage(if (newState) R.string.webhook_enabled else R.string.webhook_disabled)
         }
     }
 
@@ -181,7 +182,7 @@ class WebhookViewModel @Inject constructor(
 
             val sms = SmsMessage(
                 sender = sampleSender,
-                receiver = "Self",
+                receiver = notificationService.getString(R.string.about), // Using 'About' or something neutral, or add 'Self' to strings
                 message = sampleMessage,
                 receivedAt = java.time.Instant.now().toString()
             )

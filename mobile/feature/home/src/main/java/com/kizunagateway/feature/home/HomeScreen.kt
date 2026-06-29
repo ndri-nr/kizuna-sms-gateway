@@ -22,10 +22,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
+import com.kizunagateway.core.ui.R
 import com.kizunagateway.core.ui.theme.KizunaColors
 
 @Composable
@@ -78,14 +80,14 @@ fun HomeScreen(
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
-                    text = uiState.gatewayConfig?.gatewayName ?: "Kizuna: SMS Gateway",
+                    text = uiState.gatewayConfig?.gatewayName ?: stringResource(R.string.app_name),
                     color = KizunaColors.OnSurface,
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = "ID: ${uiState.gatewayConfig?.gatewayId ?: "Initializing..."}",
+                    text = "ID: ${uiState.gatewayConfig?.gatewayId ?: stringResource(R.string.pending)}",
                     color = KizunaColors.Primary,
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Medium
@@ -94,22 +96,22 @@ fun HomeScreen(
         }
 
         Text(
-            text = "Services",
+            text = stringResource(R.string.services),
             style = MaterialTheme.typography.titleMedium,
             color = KizunaColors.OnSurface,
             fontWeight = FontWeight.Bold
         )
 
         ServiceItem(
-            title = "Inbound SMS",
-            description = "Manage incoming SMS, webhooks, and rules",
+            title = stringResource(R.string.inbound_sms),
+            description = stringResource(R.string.inbound_sms_desc),
             icon = Icons.AutoMirrored.Filled.List,
             onClick = onInboundClick
         )
 
         ServiceItem(
-            title = "Outbound SMS",
-            description = "Send SMS and manage outgoing campaigns",
+            title = stringResource(R.string.outbound_sms),
+            description = stringResource(R.string.outbound_sms_desc),
             icon = Icons.AutoMirrored.Filled.Send,
             onClick = onOutboundClick
         )
@@ -133,7 +135,7 @@ private fun BatteryWarningCard(onConfigureClick: () -> Unit) {
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = "Battery Optimization Active",
+                    text = stringResource(R.string.battery_optimization_active),
                     color = KizunaColors.Error,
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.Bold
@@ -141,7 +143,7 @@ private fun BatteryWarningCard(onConfigureClick: () -> Unit) {
             }
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "To ensure stable background service, please set battery usage to 'Unrestricted'.",
+                text = stringResource(R.string.battery_optimization_desc),
                 color = KizunaColors.OnSurface,
                 style = MaterialTheme.typography.bodySmall
             )
@@ -152,7 +154,7 @@ private fun BatteryWarningCard(onConfigureClick: () -> Unit) {
                 contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
                 modifier = Modifier.align(Alignment.End)
             ) {
-                Text("Configure", style = MaterialTheme.typography.labelLarge)
+                Text(stringResource(R.string.configure), style = MaterialTheme.typography.labelLarge)
             }
         }
     }

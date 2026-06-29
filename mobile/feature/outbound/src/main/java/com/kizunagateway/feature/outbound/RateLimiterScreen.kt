@@ -11,10 +11,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.kizunagateway.core.ui.R
 import com.kizunagateway.core.ui.theme.KizunaColors
 import com.kizunagateway.domain.model.ApiKey
 
@@ -30,13 +32,13 @@ fun RateLimiterScreen(viewModel: OutboundViewModel) {
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
             Text(
-                text = "Rate Limiter",
+                text = stringResource(R.string.rate_limiter),
                 color = KizunaColors.OnSurface,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
             )
             Text(
-                text = "Manage sending limits per minute for each API key. Set to 0 or leave empty for unlimited.",
+                text = stringResource(R.string.rate_limiter_desc),
                 color = KizunaColors.Muted,
                 fontSize = 14.sp,
                 modifier = Modifier.padding(top = 8.dp, bottom = 16.dp)
@@ -44,7 +46,7 @@ fun RateLimiterScreen(viewModel: OutboundViewModel) {
 
             if (apiKeys.isEmpty()) {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text("No API keys found. Create one in Credentials tab.", color = KizunaColors.Muted)
+                    Text(stringResource(R.string.no_api_keys_found), color = KizunaColors.Muted)
                 }
             } else {
                 LazyColumn(
@@ -85,7 +87,7 @@ fun RateLimiterCard(
                 fontSize = 16.sp
             )
             Text(
-                text = "Key: ${apiKey.key.take(8)}...",
+                text = stringResource(R.string.key_prefix, apiKey.key.take(8)),
                 color = KizunaColors.Muted,
                 fontSize = 12.sp,
                 modifier = Modifier.padding(bottom = 12.dp)
@@ -94,7 +96,7 @@ fun RateLimiterCard(
             OutlinedTextField(
                 value = perMinuteText,
                 onValueChange = { perMinuteText = it.filter { char -> char.isDigit() } },
-                label = { Text("SMS Per Minute", fontSize = 12.sp) },
+                label = { Text(stringResource(R.string.sms_per_minute), fontSize = 12.sp) },
                 modifier = Modifier.fillMaxWidth(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 colors = OutlinedTextFieldDefaults.colors(
@@ -117,7 +119,7 @@ fun RateLimiterCard(
                 colors = ButtonDefaults.buttonColors(containerColor = KizunaColors.Primary),
                 shape = RoundedCornerShape(8.dp)
             ) {
-                Text("Save Limit", color = Color.White)
+                Text(stringResource(R.string.save_limit), color = Color.White)
             }
         }
     }

@@ -15,11 +15,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.kizunagateway.core.ui.R
 import com.kizunagateway.core.ui.theme.KizunaColors
 
 @Composable
@@ -43,7 +45,7 @@ fun OutboundSettingsScreen(viewModel: OutboundViewModel) {
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Text(
-                text = "Settings",
+                text = stringResource(R.string.settings),
                 color = KizunaColors.OnSurface,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
@@ -58,7 +60,7 @@ fun OutboundSettingsScreen(viewModel: OutboundViewModel) {
                     // Base URL Section (Styled like Device Secret Token)
                     Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                         Text(
-                            text = "Base URL",
+                            text = stringResource(R.string.base_url),
                             color = KizunaColors.OnSurface,
                             fontWeight = FontWeight.Medium,
                             fontSize = 16.sp
@@ -81,11 +83,11 @@ fun OutboundSettingsScreen(viewModel: OutboundViewModel) {
                                 if (baseUrl.isNotBlank()) {
                                     clipboardManager.setText(AnnotatedString(baseUrl))
                                 }
-                                Toast.makeText(context, "Base URL copied to clipboard", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, context.getString(R.string.base_url_copied), Toast.LENGTH_SHORT).show()
                             }) {
                                 Icon(
                                     imageVector = Icons.Default.ContentCopy,
-                                    contentDescription = "Copy Base URL",
+                                    contentDescription = stringResource(R.string.copy_base_url),
                                     tint = KizunaColors.Muted,
                                     modifier = Modifier.size(20.dp)
                                 )
@@ -93,7 +95,7 @@ fun OutboundSettingsScreen(viewModel: OutboundViewModel) {
                         }
 
                         Text(
-                            text = "Use this URL to send SMS from external applications. Make sure to append the correct endpoint and parameters.",
+                            text = stringResource(R.string.base_url_desc),
                             color = KizunaColors.Muted,
                             fontSize = 11.sp
                         )
@@ -108,7 +110,7 @@ fun OutboundSettingsScreen(viewModel: OutboundViewModel) {
                     // Tunnel Server URL Section
                     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         Text(
-                            text = "Tunnel Server URL",
+                            text = stringResource(R.string.tunnel_server_url),
                             color = KizunaColors.OnSurface,
                             fontWeight = FontWeight.Medium,
                             fontSize = 16.sp
@@ -132,7 +134,7 @@ fun OutboundSettingsScreen(viewModel: OutboundViewModel) {
                         )
 
                         Text(
-                            text = "The server address used for the WebSocket tunnel. Change this to your local IP (e.g., 192.168.1.10:8081) for local testing.",
+                            text = stringResource(R.string.tunnel_server_url_desc),
                             color = KizunaColors.Muted,
                             fontSize = 11.sp
                         )
@@ -147,7 +149,7 @@ fun OutboundSettingsScreen(viewModel: OutboundViewModel) {
                     // Webhook URL Section
                     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         Text(
-                            text = "Global Webhook Callback URL",
+                            text = stringResource(R.string.global_webhook_callback_url),
                             color = KizunaColors.OnSurface,
                             fontWeight = FontWeight.Medium,
                             fontSize = 16.sp
@@ -171,7 +173,7 @@ fun OutboundSettingsScreen(viewModel: OutboundViewModel) {
                         )
                         
                         Text(
-                            text = "Status updates (Sent, Failed) will be POSTed to this URL to notify your application about the SMS delivery status.",
+                            text = stringResource(R.string.webhook_callback_desc),
                             color = KizunaColors.Muted,
                             fontSize = 11.sp
                         )

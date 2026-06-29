@@ -18,11 +18,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.kizunagateway.core.ui.R
 import com.kizunagateway.core.ui.theme.KizunaColors
 
 @Composable
@@ -46,13 +48,13 @@ fun OutboundDocumentationScreen(viewModel: OutboundViewModel) {
         ) {
             item {
                 Text(
-                    text = "API Documentation",
+                    text = stringResource(R.string.api_documentation),
                     color = KizunaColors.OnSurface,
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = "Base URL for this device:",
+                    text = stringResource(R.string.base_url_for_device),
                     color = KizunaColors.Muted,
                     fontSize = 14.sp,
                     modifier = Modifier.padding(top = 8.dp)
@@ -74,16 +76,16 @@ fun OutboundDocumentationScreen(viewModel: OutboundViewModel) {
                     IconButton(onClick = {
                         val urlToCopy = if (baseUrl.isBlank()) "https://sms-gateway.artivy.id/your-gateway-id" else baseUrl
                         clipboardManager.setText(AnnotatedString(urlToCopy))
-                        Toast.makeText(context, "URL copied to clipboard", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, context.getString(R.string.base_url_copied), Toast.LENGTH_SHORT).show()
                     }) {
-                        Icon(Icons.Default.ContentCopy, contentDescription = "Copy", tint = KizunaColors.Muted, modifier = Modifier.size(16.dp))
+                        Icon(Icons.Default.ContentCopy, contentDescription = stringResource(R.string.copy_base_url), tint = KizunaColors.Muted, modifier = Modifier.size(16.dp))
                     }
                 }
             }
 
             item {
                 Text(
-                    text = "Endpoints",
+                    text = stringResource(R.string.endpoints),
                     color = KizunaColors.OnSurface,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
@@ -95,7 +97,7 @@ fun OutboundDocumentationScreen(viewModel: OutboundViewModel) {
                 ApiEndpointCard(
                     method = "POST",
                     path = "/api/v1/sms/send",
-                    description = "Send a single SMS message",
+                    description = stringResource(R.string.send_single_sms),
                     headers = mapOf("X-API-KEY" to "Your-API-Key", "Content-Type" to "application/json"),
                     requestBody = """
                     {
@@ -118,7 +120,7 @@ fun OutboundDocumentationScreen(viewModel: OutboundViewModel) {
                 ApiEndpointCard(
                     method = "POST",
                     path = "/api/v1/sms/send-batch",
-                    description = "Send multiple SMS messages",
+                    description = stringResource(R.string.send_multiple_sms),
                     headers = mapOf("X-API-KEY" to "Your-API-Key", "Content-Type" to "application/json"),
                     requestBody = """
                     {
@@ -148,7 +150,7 @@ fun OutboundDocumentationScreen(viewModel: OutboundViewModel) {
                 ApiEndpointCard(
                     method = "GET",
                     path = "/api/v1/sms/{id}",
-                    description = "Check status of a specific SMS",
+                    description = stringResource(R.string.check_sms_status),
                     headers = mapOf("X-API-KEY" to "Your-API-Key"),
                     responseBody = """
                     {
@@ -164,7 +166,7 @@ fun OutboundDocumentationScreen(viewModel: OutboundViewModel) {
                 ApiEndpointCard(
                     method = "GET",
                     path = "/api/v1/sms/queue",
-                    description = "Check current pending queue size",
+                    description = stringResource(R.string.check_queue_size),
                     headers = mapOf("X-API-KEY" to "Your-API-Key"),
                     responseBody = """
                     {
@@ -176,7 +178,7 @@ fun OutboundDocumentationScreen(viewModel: OutboundViewModel) {
 
             item {
                 Text(
-                    text = "Webhooks",
+                    text = stringResource(R.string.webhooks),
                     color = KizunaColors.OnSurface,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
@@ -188,7 +190,7 @@ fun OutboundDocumentationScreen(viewModel: OutboundViewModel) {
                 ApiEndpointCard(
                     method = "POST",
                     path = finalWebhookUrl,
-                    description = "Callback triggered when SMS status changes",
+                    description = stringResource(R.string.callback_triggered_desc),
                     headers = mapOf("Content-Type" to "application/json"),
                     requestBody = """
                     {
@@ -200,7 +202,7 @@ fun OutboundDocumentationScreen(viewModel: OutboundViewModel) {
                       "messageId": "msg_01h..."
                     }
                     """.trimIndent(),
-                    responseBody = "Expects 200 OK"
+                    responseBody = stringResource(R.string.expects_200_ok)
                 )
             }
             
@@ -259,7 +261,7 @@ fun ApiEndpointCard(
                 )
                 Icon(
                     imageVector = if (expanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
-                    contentDescription = if (expanded) "Collapse" else "Expand",
+                    contentDescription = if (expanded) stringResource(R.string.collapse) else stringResource(R.string.expand),
                     tint = KizunaColors.Muted
                 )
             }
@@ -268,20 +270,20 @@ fun ApiEndpointCard(
 
             AnimatedVisibility(visible = expanded) {
                 Column {
-                    DocSection("Headers") {
+                    DocSection(stringResource(R.string.headers)) {
                         headers.forEach { (k, v) ->
                             Text("$k: $v", color = KizunaColors.OnSurface, fontSize = 12.sp, fontFamily = FontFamily.Monospace)
                         }
                     }
 
                     requestBody?.let {
-                        DocSection("Request Body") {
+                        DocSection(stringResource(R.string.request_body)) {
                             Text(it, color = KizunaColors.OnSurface, fontSize = 11.sp, fontFamily = FontFamily.Monospace)
                         }
                     }
 
                     responseBody?.let {
-                        DocSection("Response Body") {
+                        DocSection(stringResource(R.string.response_body)) {
                             Text(it, color = KizunaColors.OnSurface, fontSize = 11.sp, fontFamily = FontFamily.Monospace)
                         }
                     }

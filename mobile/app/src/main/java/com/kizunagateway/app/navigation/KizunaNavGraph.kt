@@ -9,6 +9,7 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -18,6 +19,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
+import com.kizunagateway.core.ui.R
 import com.kizunagateway.core.ui.components.KizunaSnackbarHost
 import com.kizunagateway.core.ui.theme.KizunaColors
 import com.kizunagateway.feature.about.AboutScreen
@@ -55,20 +57,20 @@ private val mainTabs = listOf(
 )
 
 private val inboundSubTabs = listOf(
-    "Dashboard",
-    "Webhooks",
-    "Rules",
-    "Logs",
-    "Settings"
+    R.string.dashboard,
+    R.string.webhooks,
+    R.string.routing_rules,
+    R.string.inbound_logs,
+    R.string.settings
 )
 
 private val outboundSubTabs = listOf(
-    "Dashboard",
-    "Credentials",
-    "Rate Limiter",
-    "Logs",
-    "Documentation",
-    "Settings"
+    R.string.dashboard,
+    R.string.credentials,
+    R.string.rate_limiter,
+    R.string.outbound_logs,
+    R.string.documentation,
+    R.string.settings
 )
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
@@ -94,10 +96,10 @@ fun KizunaNavGraph(
             if (currentMainTab == MainTab.Inbound) {
                 ModalDrawerSheet {
                     Spacer(modifier = Modifier.height(16.dp))
-                    Text("Inbound SMS", modifier = Modifier.padding(16.dp), style = MaterialTheme.typography.titleMedium)
-                    inboundSubTabs.forEachIndexed { index, title ->
+                    Text(stringResource(R.string.inbound_sms), modifier = Modifier.padding(16.dp), style = MaterialTheme.typography.titleMedium)
+                    inboundSubTabs.forEachIndexed { index, resId ->
                         NavigationDrawerItem(
-                            label = { Text(title) },
+                            label = { Text(stringResource(resId)) },
                             selected = inboundSubIndex == index,
                             onClick = {
                                 inboundSubIndex = index
@@ -110,10 +112,10 @@ fun KizunaNavGraph(
             } else if (currentMainTab == MainTab.Outbound) {
                 ModalDrawerSheet {
                     Spacer(modifier = Modifier.height(16.dp))
-                    Text("Outbound SMS", modifier = Modifier.padding(16.dp), style = MaterialTheme.typography.titleMedium)
-                    outboundSubTabs.forEachIndexed { index, title ->
+                    Text(stringResource(R.string.outbound_sms), modifier = Modifier.padding(16.dp), style = MaterialTheme.typography.titleMedium)
+                    outboundSubTabs.forEachIndexed { index, resId ->
                         NavigationDrawerItem(
-                            label = { Text(title) },
+                            label = { Text(stringResource(resId)) },
                             selected = outboundSubIndex == index,
                             onClick = {
                                 outboundSubIndex = index
@@ -135,16 +137,16 @@ fun KizunaNavGraph(
                     TopAppBar(
                         title = {
                             val title = when (currentMainTab) {
-                                MainTab.Inbound -> inboundSubTabs[inboundSubIndex]
-                                MainTab.Outbound -> outboundSubTabs[outboundSubIndex]
-                                else -> currentMainTab.title
+                                MainTab.Inbound -> stringResource(inboundSubTabs[inboundSubIndex])
+                                MainTab.Outbound -> stringResource(outboundSubTabs[outboundSubIndex])
+                                else -> stringResource(currentMainTab.titleRes)
                             }
                             Text(title)
                         },
                         navigationIcon = {
                             if (currentMainTab == MainTab.Inbound || currentMainTab == MainTab.Outbound) {
                                 IconButton(onClick = { coroutineScope.launch { drawerState.open() } }) {
-                                    Icon(Icons.Default.Menu, contentDescription = "Menu")
+                                    Icon(Icons.Default.Menu, contentDescription = stringResource(R.string.menu))
                                 }
                             }
                         },
@@ -168,8 +170,8 @@ fun KizunaNavGraph(
                     ) {
                         mainTabs.forEachIndexed { index, tab ->
                             NavigationBarItem(
-                                icon = { Icon(tab.icon, contentDescription = tab.title) },
-                                label = { Text(tab.title) },
+                                icon = { Icon(tab.icon, contentDescription = stringResource(tab.titleRes)) },
+                                label = { Text(stringResource(tab.titleRes)) },
                                 selected = pagerState.currentPage == index,
                                 colors = NavigationBarItemDefaults.colors(
                                     selectedIconColor = KizunaColors.OnSurface,
@@ -247,11 +249,11 @@ fun KizunaNavGraph(
                             }
                             MainTab.Inbound -> {
                                 when (inboundSubTabs[inboundSubIndex]) {
-                                    "Dashboard" -> {
+                                    R.string.dashboard -> {
                                         val viewModel: DashboardViewModel = hiltViewModel()
                                         DashboardScreen(viewModel = viewModel, showHeaderOnly = true)
                                     }
-                                    "Webhooks" -> {
+                                    R.string.webhooks -> {
                                         val viewModel: WebhookViewModel = hiltViewModel()
                                         WebhookScreen(
                                             viewModel = viewModel,
@@ -260,7 +262,7 @@ fun KizunaNavGraph(
                                             onManageGlobalHeaders = { navController.navigate(Routes.GLOBAL_HEADERS) }
                                         )
                                     }
-                                    "Rules" -> {
+                                    R.string.routing_rules -> {
                                         val viewModel: InboundRulesViewModel = hiltViewModel()
                                         RulesScreen(
                                             viewModel = viewModel,
@@ -268,11 +270,11 @@ fun KizunaNavGraph(
                                             onEditRule = { id -> navController.navigate(Routes.editRule(id)) }
                                         )
                                     }
-                                    "Logs" -> {
+                                    R.string.inbound_logs -> {
                                         val viewModel: LogsViewModel = hiltViewModel()
                                         LogsScreen(viewModel = viewModel)
                                     }
-                                    "Settings" -> {
+                                    R.string.settings -> {
                                         val viewModel: InboundSettingsViewModel = hiltViewModel()
                                         SettingsScreen(viewModel = viewModel)
                                     }
@@ -281,22 +283,22 @@ fun KizunaNavGraph(
                             MainTab.Outbound -> {
                                 val viewModel: OutboundViewModel = hiltViewModel()
                                 when (outboundSubTabs[outboundSubIndex]) {
-                                    "Dashboard" -> {
+                                    R.string.dashboard -> {
                                         OutboundDashboardScreen(viewModel = viewModel)
                                     }
-                                    "Credentials" -> {
+                                    R.string.credentials -> {
                                         ApiKeyScreen(viewModel = viewModel)
                                     }
-                                    "Logs" -> {
+                                    R.string.outbound_logs -> {
                                         OutboundLogsScreen(viewModel = viewModel)
                                     }
-                                    "Rate Limiter" -> {
+                                    R.string.rate_limiter -> {
                                         com.kizunagateway.feature.outbound.RateLimiterScreen(viewModel = viewModel)
                                     }
-                                    "Documentation" -> {
+                                    R.string.documentation -> {
                                         OutboundDocumentationScreen(viewModel = viewModel)
                                     }
-                                    "Settings" -> {
+                                    R.string.settings -> {
                                         OutboundSettingsScreen(viewModel = viewModel)
                                     }
                                 }

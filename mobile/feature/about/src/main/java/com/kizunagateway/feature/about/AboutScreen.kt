@@ -15,9 +15,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
+import com.kizunagateway.core.ui.R
 import com.kizunagateway.core.ui.theme.KizunaColors
 
 @Composable
@@ -48,12 +50,12 @@ fun AboutScreen(
         var name by remember { mutableStateOf(gatewayConfig?.gatewayName ?: "") }
         AlertDialog(
             onDismissRequest = { showEditNameDialog = false },
-            title = { Text("Edit Gateway Name") },
+            title = { Text(stringResource(R.string.edit_gateway_name)) },
             text = {
                 OutlinedTextField(
                     value = name,
                     onValueChange = { name = it },
-                    label = { Text("Name") },
+                    label = { Text(stringResource(R.string.name)) },
                     singleLine = true
                 )
             },
@@ -62,12 +64,12 @@ fun AboutScreen(
                     viewModel.updateGatewayName(name)
                     showEditNameDialog = false
                 }) {
-                    Text("Save")
+                    Text(stringResource(R.string.save))
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showEditNameDialog = false }) {
-                    Text("Cancel")
+                    Text(stringResource(R.string.cancel))
                 }
             }
         )
@@ -81,9 +83,58 @@ fun AboutScreen(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
+        // Language Switcher Section
+        Text(
+            text = stringResource(R.string.language),
+            style = MaterialTheme.typography.titleMedium,
+            color = KizunaColors.OnSurface,
+            fontWeight = FontWeight.Bold
+        )
+
+        Card(
+            colors = CardDefaults.cardColors(containerColor = KizunaColors.Surface),
+            shape = RoundedCornerShape(12.dp),
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                val currentLang = gatewayConfig?.language ?: "en"
+                
+                Button(
+                    onClick = { viewModel.updateLanguage("en") },
+                    modifier = Modifier.weight(1f),
+                    shape = RoundedCornerShape(8.dp),
+                    colors = if (currentLang == "en") {
+                        ButtonDefaults.buttonColors(containerColor = KizunaColors.Primary)
+                    } else {
+                        ButtonDefaults.buttonColors(containerColor = KizunaColors.Background, contentColor = KizunaColors.Muted)
+                    }
+                ) {
+                    Text(stringResource(R.string.english))
+                }
+
+                Button(
+                    onClick = { viewModel.updateLanguage("in") },
+                    modifier = Modifier.weight(1f),
+                    shape = RoundedCornerShape(8.dp),
+                    colors = if (currentLang == "in") {
+                        ButtonDefaults.buttonColors(containerColor = KizunaColors.Primary)
+                    } else {
+                        ButtonDefaults.buttonColors(containerColor = KizunaColors.Background, contentColor = KizunaColors.Muted)
+                    }
+                ) {
+                    Text(stringResource(R.string.indonesian))
+                }
+            }
+        }
+
         // Gateway Name Section
         Text(
-            text = "Gateway Detail",
+            text = stringResource(R.string.gateway_detail),
             style = MaterialTheme.typography.titleMedium,
             color = KizunaColors.OnSurface,
             fontWeight = FontWeight.Bold
@@ -100,7 +151,7 @@ fun AboutScreen(
             ) {
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = "Gateway Name",
+                        text = stringResource(R.string.gateway_name),
                         style = MaterialTheme.typography.labelMedium,
                         color = KizunaColors.Muted
                     )
@@ -112,14 +163,14 @@ fun AboutScreen(
                     )
                 }
                 IconButton(onClick = { showEditNameDialog = true }) {
-                    Icon(Icons.Default.Edit, contentDescription = "Edit", tint = KizunaColors.Primary)
+                    Icon(Icons.Default.Edit, contentDescription = stringResource(R.string.name), tint = KizunaColors.Primary)
                 }
             }
         }
 
         // Backup and Restore
         Text(
-            text = "Backup and Restore",
+            text = stringResource(R.string.backup_and_restore),
             style = MaterialTheme.typography.titleMedium,
             color = KizunaColors.OnSurface,
             fontWeight = FontWeight.Bold
@@ -130,19 +181,19 @@ fun AboutScreen(
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(containerColor = KizunaColors.Primary)
         ) {
-            Text("Backup Data")
+            Text(stringResource(R.string.backup_data))
         }
 
         OutlinedButton(
             onClick = { importLauncher.launch(arrayOf("application/json")) },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Restore Data")
+            Text(stringResource(R.string.restore_data))
         }
 
         // Support
         Text(
-            text = "Support",
+            text = stringResource(R.string.support),
             style = MaterialTheme.typography.titleMedium,
             color = KizunaColors.OnSurface,
             fontWeight = FontWeight.Bold
@@ -155,7 +206,7 @@ fun AboutScreen(
         ) {
             Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
-                    text = "Need help or have suggestions? Contact us via email.",
+                    text = stringResource(R.string.support_desc),
                     color = KizunaColors.Muted,
                     style = MaterialTheme.typography.bodyMedium
                 )
@@ -163,7 +214,7 @@ fun AboutScreen(
                     onClick = {
                         val intent = Intent(Intent.ACTION_SENDTO).apply {
                             data = "mailto:4ndri.nr@gmail.com".toUri()
-                            putExtra(Intent.EXTRA_SUBJECT, "Kizuna: SMS Gateway Support")
+                            putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.support_email_subject))
                         }
                         try {
                             context.startActivity(intent)
@@ -174,14 +225,14 @@ fun AboutScreen(
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(containerColor = KizunaColors.Primary)
                 ) {
-                    Text("Email Support")
+                    Text(stringResource(R.string.email_support))
                 }
             }
         }
 
         // Legal
         Text(
-            text = "Legal",
+            text = stringResource(R.string.legal),
             style = MaterialTheme.typography.titleMedium,
             color = KizunaColors.OnSurface,
             fontWeight = FontWeight.Bold
@@ -194,16 +245,16 @@ fun AboutScreen(
         ) {
             Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 TextButton(onClick = onNavigateToTerms) {
-                    Text("Terms and Conditions", color = KizunaColors.Primary)
+                    Text(stringResource(R.string.terms_and_conditions), color = KizunaColors.Primary)
                 }
                 TextButton(onClick = onNavigateToPrivacy) {
-                    Text("Privacy Policy", color = KizunaColors.Primary)
+                    Text(stringResource(R.string.privacy_policy), color = KizunaColors.Primary)
                 }
             }
         }
 
         Text(
-            text = "Version",
+            text = stringResource(R.string.version),
             style = MaterialTheme.typography.titleMedium,
             color = KizunaColors.OnSurface,
             fontWeight = FontWeight.Bold
@@ -216,12 +267,12 @@ fun AboutScreen(
         ) {
             Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 Text(
-                    text = "Version: 1.0.0",
+                    text = "${stringResource(R.string.version)}: 1.0.0",
                     style = MaterialTheme.typography.bodySmall,
                     color = KizunaColors.Muted
                 )
                 Text(
-                    text = "© 2026 Kizuna: SMS Gateway. All rights reserved.",
+                    text = stringResource(R.string.rights_reserved),
                     style = MaterialTheme.typography.bodySmall,
                     color = KizunaColors.Muted
                 )

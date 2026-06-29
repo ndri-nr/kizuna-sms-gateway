@@ -26,6 +26,7 @@ class GatewayConfigRepositoryImpl(private val context: Context) : GatewayConfigR
         val DELETE_UNTRACKED_SMS = booleanPreferencesKey("delete_untracked_sms")
         val OUTBOUND_WEBHOOK_URL = stringPreferencesKey("outbound_webhook_url")
         val TUNNEL_SERVER_URL = stringPreferencesKey("tunnel_server_url")
+        val LANGUAGE = stringPreferencesKey("language")
     }
 
     override suspend fun getGatewayConfig(): GatewayConfig {
@@ -38,7 +39,7 @@ class GatewayConfigRepositoryImpl(private val context: Context) : GatewayConfigR
             val generatedSecret = UUID.randomUUID().toString()
             val generatedName = "Gateway-${Build.MODEL}"
 
-            val newConfig = GatewayConfig(generatedId, generatedName, generatedSecret, false)
+            val newConfig = GatewayConfig(generatedId, generatedName, generatedSecret, false, language = "en")
             saveGatewayConfig(newConfig)
             return newConfig
         }
@@ -53,6 +54,7 @@ class GatewayConfigRepositoryImpl(private val context: Context) : GatewayConfigR
             val deleteUntracked = prefs[PreferencesKeys.DELETE_UNTRACKED_SMS] ?: false
             val outboundWebhookUrl = prefs[PreferencesKeys.OUTBOUND_WEBHOOK_URL]
             val tunnelServerUrl = prefs[PreferencesKeys.TUNNEL_SERVER_URL] ?: "sms-gateway.artivy.id"
+            val language = prefs[PreferencesKeys.LANGUAGE] ?: "en"
 
             if (gatewayId == null || deviceSecret == null) {
                 // Return a temporary config or handle initialization separately.
@@ -64,10 +66,11 @@ class GatewayConfigRepositoryImpl(private val context: Context) : GatewayConfigR
                     deviceSecret ?: "",
                     deleteUntracked,
                     outboundWebhookUrl,
-                    tunnelServerUrl
+                    tunnelServerUrl,
+                    language
                 )
             } else {
-                GatewayConfig(gatewayId, gatewayName ?: "Gateway-${Build.MODEL}", deviceSecret, deleteUntracked, outboundWebhookUrl, tunnelServerUrl)
+                GatewayConfig(gatewayId, gatewayName ?: "Gateway-${Build.MODEL}", deviceSecret, deleteUntracked, outboundWebhookUrl, tunnelServerUrl, language)
             }
         }
     }
@@ -80,6 +83,7 @@ class GatewayConfigRepositoryImpl(private val context: Context) : GatewayConfigR
             preferences[PreferencesKeys.DELETE_UNTRACKED_SMS] = config.deleteUntrackedSms
             config.outboundWebhookUrl?.let { preferences[PreferencesKeys.OUTBOUND_WEBHOOK_URL] = it }
             preferences[PreferencesKeys.TUNNEL_SERVER_URL] = config.tunnelServerUrl
+            preferences[PreferencesKeys.LANGUAGE] = config.language
         }
     }
 }

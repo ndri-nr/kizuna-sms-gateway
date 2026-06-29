@@ -13,6 +13,7 @@ import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import com.kizunagateway.core.service.R
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -83,7 +84,7 @@ class WebSocketTunnelClient @Inject constructor(
                 } catch (e: Exception) {
                     if (e is CancellationException) throw e
                     Log.e("Tunnel", "Tunnel error: ${e.message}")
-                    notificationService.showMessage("Websocket service unavailable")
+                    notificationService.showMessage(R.string.websocket_service_unavailable)
                     onError() // Notify service to stop
 
                     delay(backoff)

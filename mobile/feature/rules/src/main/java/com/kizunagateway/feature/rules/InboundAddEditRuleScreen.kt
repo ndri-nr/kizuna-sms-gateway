@@ -11,9 +11,11 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.kizunagateway.core.ui.R
 import com.kizunagateway.domain.model.Rule
 import kotlinx.coroutines.launch
 
@@ -70,10 +72,10 @@ fun AddEditRuleScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(if (ruleId == null) "Create Rule" else "Edit Rule") },
+                title = { Text(if (ruleId == null) stringResource(R.string.create_rule) else stringResource(R.string.edit_rule)) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back))
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -97,7 +99,7 @@ fun AddEditRuleScreen(
             OutlinedTextField(
                 value = name,
                 onValueChange = { name = it },
-                label = { Text("Rule Name") },
+                label = { Text(stringResource(R.string.rule_name)) },
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = KizunaColors.Primary,
                     focusedLabelColor = KizunaColors.Primary,
@@ -113,7 +115,7 @@ fun AddEditRuleScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
             ) {
-                Text("Enable Rule", color = KizunaColors.OnSurface)
+                Text(stringResource(R.string.enable_rule), color = KizunaColors.OnSurface)
                 Switch(
                     checked = enabled,
                     onCheckedChange = { enabled = it },
@@ -127,7 +129,7 @@ fun AddEditRuleScreen(
             OutlinedTextField(
                 value = priority,
                 onValueChange = { priority = it },
-                label = { Text("Priority (Higher runs first)") },
+                label = { Text(stringResource(R.string.priority_desc)) },
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = KizunaColors.Primary,
                     focusedLabelColor = KizunaColors.Primary,
@@ -140,7 +142,7 @@ fun AddEditRuleScreen(
             OutlinedTextField(
                 value = senderRegex,
                 onValueChange = { senderRegex = it },
-                label = { Text("Sender Regex (Optional)") },
+                label = { Text(stringResource(R.string.sender_regex_optional)) },
                 placeholder = { Text("^\\+628.*") },
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = KizunaColors.Primary,
@@ -154,7 +156,7 @@ fun AddEditRuleScreen(
             OutlinedTextField(
                 value = containsText,
                 onValueChange = { containsText = it },
-                label = { Text("Contains Text (Optional)") },
+                label = { Text(stringResource(R.string.contains_text_optional)) },
                 placeholder = { Text("OTP") },
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = KizunaColors.Primary,
@@ -168,7 +170,7 @@ fun AddEditRuleScreen(
 
             // Target Webhook selector
             Box(modifier = Modifier.fillMaxWidth()) {
-                val selectedName = webhooks.find { it.id == selectedWebhookId }?.name ?: "Select Webhook"
+                val selectedName = webhooks.find { it.id == selectedWebhookId }?.name ?: stringResource(R.string.select_webhook)
                 OutlinedButton(
                     onClick = {
                         searchQuery = ""
@@ -182,7 +184,7 @@ fun AddEditRuleScreen(
                     ),
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text("Target: $selectedName")
+                    Text(stringResource(R.string.target_webhook, selectedName))
                 }
                 DropdownMenu(
                     expanded = expandedDropdown,
@@ -195,7 +197,7 @@ fun AddEditRuleScreen(
                     OutlinedTextField(
                         value = searchQuery,
                         onValueChange = { searchQuery = it },
-                        placeholder = { Text("Search webhook...", color = KizunaColors.Muted) },
+                        placeholder = { Text(stringResource(R.string.search_webhook), color = KizunaColors.Muted) },
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(8.dp),
@@ -210,7 +212,7 @@ fun AddEditRuleScreen(
                     
                     if (filteredWebhooks.isEmpty()) {
                         DropdownMenuItem(
-                            text = { Text("No results found", color = KizunaColors.Muted) },
+                            text = { Text(stringResource(R.string.no_results_found), color = KizunaColors.Muted) },
                             onClick = { },
                             enabled = false
                         )
@@ -258,7 +260,7 @@ fun AddEditRuleScreen(
                 shape = RoundedCornerShape(8.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Save Rule", fontWeight = FontWeight.Bold)
+                Text(stringResource(R.string.save_rule), fontWeight = FontWeight.Bold)
             }
         }
     }

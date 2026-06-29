@@ -5,6 +5,7 @@ import com.kizunagateway.core.network.model.SmsRequest
 import com.kizunagateway.core.network.model.SmsResponse
 import com.kizunagateway.domain.model.OutboundSms
 import com.kizunagateway.domain.repository.OutboundRepository
+import com.kizunagateway.domain.service.NotificationService
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
@@ -15,6 +16,7 @@ import io.ktor.server.plugins.statuspages.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import kotlin.time.Duration.Companion.milliseconds
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -25,7 +27,8 @@ import javax.inject.Singleton
 
 @Singleton
 class HttpGatewayServer @Inject constructor(
-    private val outboundRepository: OutboundRepository
+    private val outboundRepository: OutboundRepository,
+    private val notificationService: NotificationService
 ) {
     private var server: NettyApplicationEngine? = null
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
@@ -48,19 +51,19 @@ class HttpGatewayServer @Inject constructor(
                 route("/api/v1/sms") {
                     intercept(ApplicationCallPipeline.Plugins) {
                         if (isDraining) {
-                            call.respond(HttpStatusCode.ServiceUnavailable, mapOf("error" to "Service is shutting down"))
+                            call.respond(HttpStatusCode.ServiceUnavailable, mapOf("error" to notificationService.getString(R.string.error_service_shutting_down)))
                             finish()
                             return@intercept
                         }
                         
                         val apiKey = call.request.headers["X-API-KEY"]
                         if (apiKey == null) {
-                            call.respond(HttpStatusCode.Unauthorized, mapOf("error" to "Missing API Key"))
+                            call.respond(HttpStatusCode.Unauthorized, mapOf("error" to notificationService.getString(R.string.error_missing_api_key)))
                             finish()
                         } else {
                             val keyInfo = outboundRepository.getActiveKey(apiKey)
                             if (keyInfo == null) {
-                                call.respond(HttpStatusCode.Forbidden, mapOf("error" to "Invalid or inactive API Key"))
+                                call.respond(HttpStatusCode.Forbidden, mapOf("error" to notificationService.getString(R.string.error_invalid_api_key)))
                                 finish()
                                 return@intercept
                             }
@@ -70,7 +73,7 @@ class HttpGatewayServer @Inject constructor(
                                 val minuteAgo = java.time.LocalDateTime.now().minusMinutes(1)
                                 val countMinute = outboundRepository.getSmsCountByKeyInTimeRange(apiKey, minuteAgo)
                                 if (countMinute >= keyInfo.smsPerMinute) {
-                                    call.respond(HttpStatusCode.TooManyRequests, mapOf("error" to "Minute rate limit exceeded"))
+                                    call.respond(HttpStatusCode.TooManyRequests, mapOf("error" to notificationService.getString(R.string.error_rate_limit_exceeded)))
                                     finish()
                                     return@intercept
                                 }
@@ -114,12 +117,12 @@ class HttpGatewayServer @Inject constructor(
                     get("/{id}") {
                         val id = call.parameters["id"]?.toLongOrNull()
                         if (id == null) {
-                            call.respond(HttpStatusCode.BadRequest, mapOf("error" to "Invalid ID"))
+                            call.respond(HttpStatusCode.BadRequest, mapOf("error" to notificationService.getString(R.string.error_invalid_id)))
                             return@get
                         }
                         val sms = outboundRepository.getOutboundSmsById(id)
                         if (sms == null) {
-                            call.respond(HttpStatusCode.NotFound, mapOf("error" to "SMS not found"))
+                            call.respond(HttpStatusCode.NotFound, mapOf("error" to notificationService.getString(R.string.error_sms_not_found)))
                         } else {
                             call.respond(SmsResponse(sms.id, sms.status.name, sms.errorMessage))
                         }
@@ -139,7 +142,7 @@ class HttpGatewayServer @Inject constructor(
         scope.launch {
             // Wait for queue to be empty
             while (outboundRepository.getPendingCount().first() > 0) {
-                kotlinx.coroutines.delay(1000)
+                kotlinx.coroutines.delay(1000.milliseconds)
             }
             server?.stop(1000, 5000)
             server = null

@@ -4,7 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import androidx.activity.ComponentActivity
+import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
@@ -22,34 +22,75 @@ import com.kizunagateway.domain.service.NotificationService
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import androidx.core.net.toUri
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
+import com.kizunagateway.domain.repository.GatewayConfigRepository
+import kotlinx.coroutines.runBlocking
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var notificationService: NotificationService
+
+    @Inject
+    lateinit var gatewayConfigRepository: GatewayConfigRepository
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
         val allGranted = permissions.values.all { it }
         if (allGranted) {
-            notificationService.showMessage("All required permissions granted")
+            notificationService.showMessage(getString(com.kizunagateway.core.ui.R.string.permissions_granted))
         } else {
-            notificationService.showMessage("Permissions are required for full functionality")
+            notificationService.showMessage(getString(com.kizunagateway.core.ui.R.string.permissions_required))
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
-        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+        
+        // Sync language preference before setContent to avoid flickering
+        runBlocking {
+            val config = gatewayConfigRepository.getGatewayConfig()
+            val targetLang = config.language
+            val currentLocales = AppCompatDelegate.getApplicationLocales()
+            val currentLang = if (currentLocales.isEmpty) {
+                java.util.Locale.getDefault().language
+            } else {
+                currentLocales.get(0)?.language
+            }
+            
+            if (currentLang != targetLang) {
+                AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(targetLang))
+            }
+        }
+
+        enableEdgeToEdge()
         checkAndRequestPermissions()
 
         setContent {
             KizunaTheme {
                 val snackbarHostState = remember { SnackbarHostState() }
                 val navController = rememberNavController()
+
+                // Observe future language changes
+                LaunchedEffect(Unit) {
+                    gatewayConfigRepository.getGatewayConfigFlow().collect { config ->
+                        val targetLang = config.language
+                        val currentLocales = AppCompatDelegate.getApplicationLocales()
+                        val currentLang = if (currentLocales.isEmpty) {
+                            java.util.Locale.getDefault().language
+                        } else {
+                            currentLocales.get(0)?.language
+                        }
+                        
+                        if (currentLang != targetLang) {
+                            AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(targetLang))
+                        }
+                    }
+                }
 
                 LaunchedEffect(Unit) {
                     notificationService.notifications.collect { notification ->
@@ -80,7 +121,7 @@ class MainActivity : ComponentActivity() {
             }
             startActivity(intent)
         } catch (_: Exception) {
-            notificationService.showMessage("Could not open file")
+            notificationService.showMessage(getString(com.kizunagateway.core.ui.R.string.could_not_open_file))
         }
     }
 

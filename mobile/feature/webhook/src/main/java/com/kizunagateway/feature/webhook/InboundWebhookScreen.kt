@@ -16,10 +16,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.kizunagateway.core.ui.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -43,7 +45,7 @@ fun WebhookScreen(
                 contentColor = Color.White,
                 shape = RoundedCornerShape(16.dp)
             ) {
-                Icon(Icons.Default.Add, contentDescription = "Add Webhook")
+                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add_webhook))
             }
         },
         containerColor = Color.Transparent,
@@ -63,20 +65,20 @@ fun WebhookScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Webhooks",
+                        text = stringResource(R.string.webhooks),
                         color = KizunaColors.OnSurface,
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold
                     )
                     TextButton(onClick = onManageGlobalHeaders) {
-                        Text("Global Headers", color = KizunaColors.Primary, fontWeight = FontWeight.Bold)
+                        Text(stringResource(R.string.global_headers), color = KizunaColors.Primary, fontWeight = FontWeight.Bold)
                     }
                 }
                 Spacer(modifier = Modifier.height(16.dp))
 
                 if (webhooks.isEmpty()) {
                     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        Text(text = "No webhooks configured", color = KizunaColors.Muted)
+                        Text(text = stringResource(R.string.no_webhooks), color = KizunaColors.Muted)
                     }
                 } else {
                     LazyColumn(
@@ -130,7 +132,7 @@ fun WebhookScreen(
                                         if (associatedRules.isNotEmpty()) {
                                             Spacer(modifier = Modifier.height(4.dp))
                                             Text(
-                                                text = "Used by: ${associatedRules.joinToString { it.name }}",
+                                                text = "${stringResource(R.string.used_by)}: ${associatedRules.joinToString { it.name }}",
                                                 color = Color(0xFF25D366),
                                                 fontSize = 11.sp,
                                                 fontWeight = FontWeight.Medium,
@@ -163,7 +165,7 @@ fun WebhookScreen(
                                             Box(contentAlignment = Alignment.Center) {
                                                 Icon(
                                                     Icons.Default.Delete,
-                                                    contentDescription = "Delete",
+                                                    contentDescription = stringResource(R.string.delete),
                                                     tint = Color(0xFFF87171),
                                                     modifier = Modifier.size(30.dp)
                                                 )
@@ -183,8 +185,8 @@ fun WebhookScreen(
         AlertDialog(
             onDismissRequest = { webhookToDelete = null },
             containerColor = KizunaColors.Surface,
-            title = { Text("Delete Webhook", color = KizunaColors.OnSurface) },
-            text = { Text("Are you sure you want to delete this webhook?", color = KizunaColors.Muted) },
+            title = { Text(stringResource(R.string.delete_webhook), color = KizunaColors.OnSurface) },
+            text = { Text(stringResource(R.string.delete_webhook_confirm), color = KizunaColors.Muted) },
             confirmButton = {
                 TextButton(
                     onClick = {
@@ -192,12 +194,12 @@ fun WebhookScreen(
                         webhookToDelete = null
                     }
                 ) {
-                    Text("Delete", color = Color(0xFFF87171), fontWeight = FontWeight.Bold)
+                    Text(stringResource(R.string.delete), color = Color(0xFFF87171), fontWeight = FontWeight.Bold)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { webhookToDelete = null }) {
-                    Text("Cancel", color = KizunaColors.Muted)
+                    Text(stringResource(R.string.cancel), color = KizunaColors.Muted)
                 }
             }
         )

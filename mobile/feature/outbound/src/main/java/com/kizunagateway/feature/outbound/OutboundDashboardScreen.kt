@@ -7,9 +7,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.kizunagateway.core.ui.R
 import com.kizunagateway.core.ui.components.PowerSwitch
 import com.kizunagateway.core.ui.theme.KizunaColors
 import com.kizunagateway.domain.model.OutboundSmsStatus
@@ -43,7 +45,7 @@ fun OutboundDashboardScreen(viewModel: OutboundViewModel) {
             Spacer(modifier = Modifier.height(16.dp))
             
             Text(
-                text = if (isRunning) "Connected" else "Disconnected",
+                text = if (isRunning) stringResource(R.string.connected) else stringResource(R.string.disconnected),
                 color = if (isRunning) Color(0xFF25D366) else KizunaColors.Muted,
                 fontWeight = FontWeight.Medium,
                 fontSize = 20.sp
@@ -52,9 +54,9 @@ fun OutboundDashboardScreen(viewModel: OutboundViewModel) {
             Spacer(modifier = Modifier.height(48.dp))
 
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                StatCard("Pending", pendingCount.toString(), KizunaColors.Muted, Modifier.weight(1f))
-                StatCard("Sent", sentCount.toString(), KizunaColors.Primary, Modifier.weight(1f))
-                StatCard("Failed", failedCount.toString(), KizunaColors.Error, Modifier.weight(1f))
+                StatCard(stringResource(R.string.pending), pendingCount.toString(), KizunaColors.Muted, Modifier.weight(1f))
+                StatCard(stringResource(R.string.sent), sentCount.toString(), KizunaColors.Primary, Modifier.weight(1f))
+                StatCard(stringResource(R.string.failed), failedCount.toString(), KizunaColors.Error, Modifier.weight(1f))
             }
         }
     }

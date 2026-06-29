@@ -15,9 +15,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.kizunagateway.core.ui.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -33,10 +35,10 @@ fun GlobalHeadersScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Global Headers") },
+                title = { Text(stringResource(R.string.global_headers)) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back))
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -58,7 +60,7 @@ fun GlobalHeadersScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Text(
-                text = "Global headers sent with every webhook request.",
+                text = stringResource(R.string.global_headers_desc),
                 color = KizunaColors.Muted,
                 fontSize = 14.sp
             )
@@ -76,8 +78,8 @@ fun GlobalHeadersScreen(
                         OutlinedTextField(
                             value = varKey,
                             onValueChange = { varKey = it },
-                            label = { Text("Header Key") },
-                            placeholder = { Text("Authorization") },
+                            label = { Text(stringResource(R.string.header_key)) },
+                            placeholder = { Text(stringResource(R.string.header_key_placeholder)) },
                             colors = OutlinedTextFieldDefaults.colors(
                                 focusedBorderColor = KizunaColors.Primary,
                                 focusedLabelColor = KizunaColors.Primary,
@@ -90,8 +92,8 @@ fun GlobalHeadersScreen(
                         OutlinedTextField(
                             value = varValue,
                             onValueChange = { varValue = it },
-                            label = { Text("Value") },
-                            placeholder = { Text("Bearer token...") },
+                            label = { Text(stringResource(R.string.header_value)) },
+                            placeholder = { Text(stringResource(R.string.header_value_placeholder)) },
                             colors = OutlinedTextFieldDefaults.colors(
                                 focusedBorderColor = KizunaColors.Primary,
                                 focusedLabelColor = KizunaColors.Primary,
@@ -115,9 +117,9 @@ fun GlobalHeadersScreen(
                         shape = RoundedCornerShape(8.dp),
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Icon(Icons.Default.Add, contentDescription = "Add")
+                        Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add_global_header))
                         Spacer(modifier = Modifier.width(4.dp))
-                        Text("Add Global Header")
+                        Text(stringResource(R.string.add_global_header))
                     }
 
                     if (globalHeaders.isNotEmpty()) {
@@ -139,7 +141,7 @@ fun GlobalHeadersScreen(
                                     Text(text = header.value, color = KizunaColors.OnSurface, fontSize = 13.sp)
                                 }
                                 IconButton(onClick = { headerToDelete = header.key }) {
-                                    Icon(Icons.Default.Delete, contentDescription = "Delete", tint = Color(0xFFF87171))
+                                    Icon(Icons.Default.Delete, contentDescription = stringResource(R.string.delete), tint = Color(0xFFF87171))
                                 }
                             }
                         }
@@ -153,8 +155,8 @@ fun GlobalHeadersScreen(
         AlertDialog(
             onDismissRequest = { headerToDelete = null },
             containerColor = KizunaColors.Surface,
-            title = { Text("Delete Global Header", color = KizunaColors.OnSurface) },
-            text = { Text("Are you sure you want to delete the global header '${headerToDelete}'?", color = KizunaColors.Muted) },
+            title = { Text(stringResource(R.string.delete_global_header), color = KizunaColors.OnSurface) },
+            text = { Text(stringResource(R.string.delete_global_header_confirm, headerToDelete!!), color = KizunaColors.Muted) },
             confirmButton = {
                 TextButton(
                     onClick = {
@@ -162,12 +164,12 @@ fun GlobalHeadersScreen(
                         headerToDelete = null
                     }
                 ) {
-                    Text("Delete", color = Color(0xFFF87171), fontWeight = FontWeight.Bold)
+                    Text(stringResource(R.string.delete), color = Color(0xFFF87171), fontWeight = FontWeight.Bold)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { headerToDelete = null }) {
-                    Text("Cancel", color = KizunaColors.Muted)
+                    Text(stringResource(R.string.cancel), color = KizunaColors.Muted)
                 }
             }
         )

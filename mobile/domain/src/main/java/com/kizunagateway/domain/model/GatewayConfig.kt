@@ -9,5 +9,6 @@ data class GatewayConfig (
     val deviceSecret: String,
     val deleteUntrackedSms: Boolean = false,
     val outboundWebhookUrl: String? = null,
-    val tunnelServerUrl: String = "sms-gateway.artivy.id"
+    val tunnelServerUrl: String = "sms-gateway.artivy.id",
+    val language: String = "en"
 )

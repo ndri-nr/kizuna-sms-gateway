@@ -15,9 +15,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.kizunagateway.core.ui.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,7 +41,7 @@ fun RulesScreen(
                 contentColor = Color.White,
                 shape = RoundedCornerShape(16.dp)
             ) {
-                Icon(Icons.Default.Add, contentDescription = "Add Rule")
+                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add_rule))
             }
         },
         containerColor = Color.Transparent,
@@ -54,7 +56,7 @@ fun RulesScreen(
         ) {
             Column(modifier = Modifier.fillMaxSize()) {
                 Text(
-                    text = "Routing Rules",
+                    text = stringResource(R.string.routing_rules),
                     color = KizunaColors.OnSurface,
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold
@@ -63,14 +65,14 @@ fun RulesScreen(
 
                 if (rules.isEmpty()) {
                     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        Text(text = "No routing rules configured", color = KizunaColors.Muted)
+                        Text(text = stringResource(R.string.no_routing_rules), color = KizunaColors.Muted)
                     }
                 } else {
                     LazyColumn(
                         verticalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
                         items(rules) { rule ->
-                            val targetWebhook = webhooks.find { it.id == rule.webhookId }?.name ?: "Unknown"
+                            val targetWebhook = webhooks.find { it.id == rule.webhookId }?.name ?: stringResource(R.string.unknown)
                             Card(
                                 onClick = { onEditRule(rule.id) },
                                 colors = CardDefaults.cardColors(containerColor = KizunaColors.Surface),
@@ -108,28 +110,32 @@ fun RulesScreen(
                                         }
                                         Spacer(modifier = Modifier.height(4.dp))
                                         Text(
-                                            text = "Forward to: $targetWebhook",
+                                            text = stringResource(R.string.forward_to, targetWebhook),
                                             color = Color(0xFF25D366),
                                             fontSize = 13.sp,
                                             fontWeight = FontWeight.Medium
                                         )
                                         if (!rule.senderRegex.isNullOrBlank()) {
                                             Text(
-                                                text = "Sender Regex: ${rule.senderRegex}",
+                                                text = stringResource(R.string.sender_regex,
+                                                    rule.senderRegex!!
+                                                ),
                                                 color = KizunaColors.Muted,
                                                 fontSize = 12.sp
                                             )
                                         }
                                         if (!rule.containsText.isNullOrBlank()) {
                                             Text(
-                                                text = "Contains: ${rule.containsText}",
+                                                text = stringResource(R.string.contains,
+                                                    rule.containsText!!
+                                                ),
                                                 color = KizunaColors.Muted,
                                                 fontSize = 12.sp
                                             )
                                         }
                                         if (rule.senderRegex.isNullOrBlank() && rule.containsText.isNullOrBlank()) {
                                             Text(
-                                                text = "Catch-All Rule",
+                                                text = stringResource(R.string.catch_all_rule),
                                                 color = Color(0xFFFBBF24),
                                                 fontSize = 12.sp
                                             )
@@ -159,7 +165,7 @@ fun RulesScreen(
                                             Box(contentAlignment = Alignment.Center) {
                                                 Icon(
                                                     Icons.Default.Delete,
-                                                    contentDescription = "Delete",
+                                                    contentDescription = stringResource(R.string.delete),
                                                     tint = Color(0xFFF87171),
                                                     modifier = Modifier.size(30.dp)
                                                 )
@@ -179,8 +185,8 @@ fun RulesScreen(
         AlertDialog(
             onDismissRequest = { ruleToDelete = null },
             containerColor = KizunaColors.Surface,
-            title = { Text("Delete Rule", color = KizunaColors.OnSurface) },
-            text = { Text("Are you sure you want to delete this routing rule?", color = KizunaColors.Muted) },
+            title = { Text(stringResource(R.string.delete_rule), color = KizunaColors.OnSurface) },
+            text = { Text(stringResource(R.string.delete_rule_confirm), color = KizunaColors.Muted) },
             confirmButton = {
                 TextButton(
                     onClick = {
@@ -188,12 +194,12 @@ fun RulesScreen(
                         ruleToDelete = null
                     }
                 ) {
-                    Text("Delete", color = Color(0xFFF87171), fontWeight = FontWeight.Bold)
+                    Text(stringResource(R.string.delete), color = Color(0xFFF87171), fontWeight = FontWeight.Bold)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { ruleToDelete = null }) {
-                    Text("Cancel", color = KizunaColors.Muted)
+                    Text(stringResource(R.string.cancel), color = KizunaColors.Muted)
                 }
             }
         )

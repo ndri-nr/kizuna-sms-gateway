@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_service_shutting_down">Layanan sedang dimatikan</string>
+    <string name="error_missing_api_key">API Key tidak ada</string>
+    <string name="error_invalid_api_key">API Key tidak valid atau tidak aktif</string>
+    <string name="error_rate_limit_exceeded">Batas kecepatan menit terlampaui</string>
+    <string name="error_invalid_id">ID tidak valid</string>
+    <string name="error_sms_not_found">SMS tidak ditemukan</string>
+</resources>

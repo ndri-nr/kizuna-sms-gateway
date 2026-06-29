@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="outbound_service_running">Outbound service is running…</string>
+    <string name="stopping_outbound_service">Stopping outbound service…</string>
+    <string name="outbound_channel_name">Outbound SMS Gateway Channel</string>
+    <string name="websocket_service_unavailable">Websocket service unavailable</string>
+</resources>

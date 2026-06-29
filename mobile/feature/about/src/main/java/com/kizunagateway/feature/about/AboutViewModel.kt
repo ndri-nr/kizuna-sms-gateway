@@ -2,6 +2,7 @@ package com.kizunagateway.feature.about
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kizunagateway.core.ui.R
 import com.kizunagateway.domain.model.AppNotification
 import com.kizunagateway.domain.model.GatewayConfig
 import com.kizunagateway.domain.repository.GatewayConfigRepository
@@ -34,10 +35,15 @@ class AboutViewModel @Inject constructor(
     val gatewayConfig: StateFlow<GatewayConfig?> = _gatewayConfig.asStateFlow()
 
     init {
-        loadData()
+        viewModelScope.launch {
+            gatewayConfigRepository.getGatewayConfigFlow().collect {
+                _gatewayConfig.value = it
+            }
+        }
     }
 
     fun loadData() {
+        // No longer strictly needed as init collects the flow, but kept for compatibility
         viewModelScope.launch {
             _gatewayConfig.value = gatewayConfigRepository.getGatewayConfig()
         }
@@ -49,7 +55,16 @@ class AboutViewModel @Inject constructor(
             val updated = current.copy(gatewayName = name)
             gatewayConfigRepository.saveGatewayConfig(updated)
             _gatewayConfig.value = updated
-            notificationService.showMessage("Gateway name updated")
+            notificationService.showMessage(R.string.gateway_name_updated)
+        }
+    }
+
+    fun updateLanguage(language: String) {
+        viewModelScope.launch {
+            val current = gatewayConfigRepository.getGatewayConfig()
+            val updated = current.copy(language = language)
+            gatewayConfigRepository.saveGatewayConfig(updated)
+            _gatewayConfig.value = updated
         }
     }
 
@@ -72,14 +87,14 @@ class AboutViewModel @Inject constructor(
 
                 notificationService.showNotification(
                     AppNotification(
-                        message = "Backup saved successfully",
+                        message = notificationService.getString(R.string.backup_saved),
                         actionLabel = "VIEW",
                         actionUri = uri.toString()
                     )
                 )
             } catch (e: Exception) {
                 e.printStackTrace()
-                notificationService.showMessage("Failed to export backup")
+                notificationService.showMessage(R.string.export_failed)
             }
         }
     }
@@ -97,10 +112,10 @@ class AboutViewModel @Inject constructor(
                 importBackupUseCase(payload)
 
                 loadData()
-                notificationService.showMessage("Data and configuration restored successfully")
+                notificationService.showMessage(R.string.import_success)
             } catch (e: Exception) {
                 e.printStackTrace()
-                notificationService.showMessage("Failed to import backup")
+                notificationService.showMessage(R.string.import_failed)
             }
         }
     }

@@ -12,9 +12,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.kizunagateway.core.ui.R
 import com.kizunagateway.core.ui.theme.KizunaColors
 import com.kizunagateway.domain.model.OutboundSms
 import com.kizunagateway.domain.model.OutboundSmsStatus
@@ -45,14 +47,14 @@ fun OutboundLogsScreen(viewModel: OutboundViewModel) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "SMS Logs",
+                        text = stringResource(R.string.sms_logs),
                         color = KizunaColors.OnSurface,
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold
                     )
                     if (logs.isNotEmpty()) {
                         IconButton(onClick = { showClearConfirmDialog = true }) {
-                            Icon(Icons.Default.Delete, contentDescription = "Clear Logs", tint = Color(0xFFF87171))
+                            Icon(Icons.Default.Delete, contentDescription = stringResource(R.string.clear_logs), tint = Color(0xFFF87171))
                         }
                     }
                 }
@@ -60,7 +62,7 @@ fun OutboundLogsScreen(viewModel: OutboundViewModel) {
 
                 if (logs.isEmpty()) {
                     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        Text("No outbound messages logged", color = KizunaColors.Muted)
+                        Text(stringResource(R.string.no_outbound_messages), color = KizunaColors.Muted)
                     }
                 } else {
                     LazyColumn(
@@ -83,8 +85,8 @@ fun OutboundLogsScreen(viewModel: OutboundViewModel) {
         AlertDialog(
             onDismissRequest = { showClearConfirmDialog = false },
             containerColor = KizunaColors.Surface,
-            title = { Text("Clear Outbound Logs", color = KizunaColors.OnSurface) },
-            text = { Text("Are you sure you want to delete all outbound SMS logs? This action cannot be undone.", color = KizunaColors.Muted) },
+            title = { Text(stringResource(R.string.clear_outbound_logs_title), color = KizunaColors.OnSurface) },
+            text = { Text(stringResource(R.string.clear_outbound_logs_confirm), color = KizunaColors.Muted) },
             confirmButton = {
                 TextButton(
                     onClick = {
@@ -92,12 +94,12 @@ fun OutboundLogsScreen(viewModel: OutboundViewModel) {
                         showClearConfirmDialog = false
                     }
                 ) {
-                    Text("Clear All", color = Color(0xFFF87171), fontWeight = FontWeight.Bold)
+                    Text(stringResource(R.string.clear_all), color = Color(0xFFF87171), fontWeight = FontWeight.Bold)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showClearConfirmDialog = false }) {
-                    Text("Cancel", color = KizunaColors.Muted)
+                    Text(stringResource(R.string.cancel), color = KizunaColors.Muted)
                 }
             }
         )
@@ -107,8 +109,8 @@ fun OutboundLogsScreen(viewModel: OutboundViewModel) {
         AlertDialog(
             onDismissRequest = { logToDelete = null },
             containerColor = KizunaColors.Surface,
-            title = { Text("Delete Log", color = KizunaColors.OnSurface) },
-            text = { Text("Are you sure you want to delete this log entry?", color = KizunaColors.Muted) },
+            title = { Text(stringResource(R.string.delete), color = KizunaColors.OnSurface) },
+            text = { Text(stringResource(R.string.delete_log_confirm), color = KizunaColors.Muted) },
             confirmButton = {
                 TextButton(
                     onClick = {
@@ -116,12 +118,12 @@ fun OutboundLogsScreen(viewModel: OutboundViewModel) {
                         logToDelete = null
                     }
                 ) {
-                    Text("Delete", color = Color(0xFFF87171), fontWeight = FontWeight.Bold)
+                    Text(stringResource(R.string.delete), color = Color(0xFFF87171), fontWeight = FontWeight.Bold)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { logToDelete = null }) {
-                    Text("Cancel", color = KizunaColors.Muted)
+                    Text(stringResource(R.string.cancel), color = KizunaColors.Muted)
                 }
             }
         )
@@ -171,7 +173,7 @@ fun OutboundSmsCard(sms: OutboundSms, onDelete: () -> Unit) {
             sms.errorMessage?.let {
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "Error: $it",
+                    text = stringResource(R.string.error, it),
                     color = Color(0xFFF87171),
                     fontSize = 12.sp,
                     fontStyle = androidx.compose.ui.text.font.FontStyle.Italic
@@ -202,7 +204,7 @@ fun OutboundSmsCard(sms: OutboundSms, onDelete: () -> Unit) {
                 ) {
                     Icon(
                         Icons.Default.Delete,
-                        contentDescription = "Delete",
+                        contentDescription = stringResource(R.string.delete),
                         tint = Color(0xFFF87171).copy(alpha = 0.7f),
                         modifier = Modifier.size(20.dp)
                     )

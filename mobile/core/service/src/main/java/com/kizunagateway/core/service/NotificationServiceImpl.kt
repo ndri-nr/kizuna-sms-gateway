@@ -29,4 +29,19 @@ class NotificationServiceImpl @Inject constructor(
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
         }
     }
+
+    override fun showMessage(resId: Int, vararg formatArgs: Any) {
+        Handler(Looper.getMainLooper()).post {
+            val message = getString(resId, *formatArgs)
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun getString(resId: Int, vararg formatArgs: Any): String {
+        return if (formatArgs.isEmpty()) {
+            context.getString(resId)
+        } else {
+            context.getString(resId, *formatArgs)
+        }
+    }
 }

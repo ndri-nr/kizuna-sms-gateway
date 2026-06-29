@@ -17,9 +17,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.kizunagateway.core.ui.R
 import com.kizunagateway.domain.model.Webhook
 import com.kizunagateway.domain.model.WebhookHeader
 
@@ -84,10 +86,10 @@ fun AddEditWebhookScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(if (webhookId == null) "Create Webhook" else "Edit Webhook") },
+                title = { Text(if (webhookId == null) stringResource(R.string.create_webhook) else stringResource(R.string.edit_webhook)) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back))
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -111,7 +113,7 @@ fun AddEditWebhookScreen(
             OutlinedTextField(
                 value = name,
                 onValueChange = { name = it },
-                label = { Text("Webhook Name") },
+                label = { Text(stringResource(R.string.webhook_name)) },
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = KizunaColors.Primary,
                     focusedLabelColor = KizunaColors.Primary,
@@ -127,7 +129,7 @@ fun AddEditWebhookScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text("Enable Webhook", color = KizunaColors.OnSurface)
+                Text(stringResource(R.string.enable_webhook), color = KizunaColors.OnSurface)
                 Switch(
                     checked = enabled,
                     onCheckedChange = { enabled = it },
@@ -141,7 +143,7 @@ fun AddEditWebhookScreen(
             OutlinedTextField(
                 value = url,
                 onValueChange = { url = it },
-                label = { Text("Webhook URL") },
+                label = { Text(stringResource(R.string.webhook_url)) },
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = KizunaColors.Primary,
                     focusedLabelColor = KizunaColors.Primary,
@@ -152,7 +154,7 @@ fun AddEditWebhookScreen(
                 modifier = Modifier.fillMaxWidth()
             )
 
-            Text("Method", color = KizunaColors.Muted, fontSize = 14.sp)
+            Text(stringResource(R.string.method), color = KizunaColors.Muted, fontSize = 14.sp)
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -175,7 +177,7 @@ fun AddEditWebhookScreen(
             OutlinedTextField(
                 value = timeout,
                 onValueChange = { timeout = it },
-                label = { Text("Timeout (Seconds)") },
+                label = { Text(stringResource(R.string.timeout_seconds)) },
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = KizunaColors.Primary,
                     focusedLabelColor = KizunaColors.Primary,
@@ -187,7 +189,7 @@ fun AddEditWebhookScreen(
             )
 
             // Webhook-Specific Headers
-            Text("Webhook Headers", color = KizunaColors.OnSurface, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+            Text(stringResource(R.string.webhook_headers), color = KizunaColors.OnSurface, fontWeight = FontWeight.Bold, fontSize = 16.sp)
             Card(
                 colors = CardDefaults.cardColors(containerColor = KizunaColors.Surface),
                 shape = RoundedCornerShape(12.dp),
@@ -201,7 +203,7 @@ fun AddEditWebhookScreen(
                         OutlinedTextField(
                             value = headerKey,
                             onValueChange = { headerKey = it },
-                            label = { Text("Key") },
+                            label = { Text(stringResource(R.string.key)) },
                             placeholder = { Text("X-Custom") },
                             colors = OutlinedTextFieldDefaults.colors(
                                 focusedBorderColor = KizunaColors.Primary,
@@ -215,7 +217,7 @@ fun AddEditWebhookScreen(
                         OutlinedTextField(
                             value = headerValue,
                             onValueChange = { headerValue = it },
-                            label = { Text("Value") },
+                            label = { Text(stringResource(R.string.value)) },
                             colors = OutlinedTextFieldDefaults.colors(
                                 focusedBorderColor = KizunaColors.Primary,
                                 focusedLabelColor = KizunaColors.Primary,
@@ -239,9 +241,9 @@ fun AddEditWebhookScreen(
                         shape = RoundedCornerShape(8.dp),
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Icon(Icons.Default.Add, contentDescription = "Add")
+                        Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add_header))
                         Spacer(modifier = Modifier.width(4.dp))
-                        Text("Add Header")
+                        Text(stringResource(R.string.add_header))
                     }
 
                     headers.forEachIndexed { index, h ->
@@ -255,7 +257,7 @@ fun AddEditWebhookScreen(
                                 Text(h.value, color = KizunaColors.OnSurface, fontSize = 13.sp)
                             }
                             IconButton(onClick = { headerToDeleteIndex = index }) {
-                                Icon(Icons.Default.Delete, contentDescription = "Delete", tint = Color(0xFFF87171), modifier = Modifier.size(20.dp))
+                                Icon(Icons.Default.Delete, contentDescription = stringResource(R.string.delete), tint = Color(0xFFF87171), modifier = Modifier.size(20.dp))
                             }
                         }
                     }
@@ -268,15 +270,15 @@ fun AddEditWebhookScreen(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text("JSON Payload Template", color = KizunaColors.OnSurface, fontSize = 14.sp, fontWeight = FontWeight.Bold)
+                    Text(stringResource(R.string.json_payload_template), color = KizunaColors.OnSurface, fontSize = 14.sp, fontWeight = FontWeight.Bold)
                     Row {
                         TextButton(onClick = {
                             bodyTemplate = viewModel.formatJson(bodyTemplate)
                         }) {
-                            Text("Beautify", fontSize = 12.sp)
+                            Text(stringResource(R.string.beautify), fontSize = 12.sp)
                         }
                         TextButton(onClick = { bodyTemplate = "" }) {
-                            Text("Clear", color = Color(0xFFF87171), fontSize = 12.sp)
+                            Text(stringResource(R.string.clear), color = Color(0xFFF87171), fontSize = 12.sp)
                         }
                     }
                 }
@@ -305,7 +307,7 @@ fun AddEditWebhookScreen(
             OutlinedTextField(
                 value = autoReplyMessage,
                 onValueChange = { autoReplyMessage = it },
-                label = { Text("Auto Reply Message (Optional)") },
+                label = { Text(stringResource(R.string.auto_reply_message)) },
                 placeholder = { Text("Thank you, we already accepted your message.") },
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = KizunaColors.Primary,
@@ -340,7 +342,7 @@ fun AddEditWebhookScreen(
                 shape = RoundedCornerShape(8.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Test Webhook")
+                Text(stringResource(R.string.test_webhook))
             }
 
             if (testResult != null) {
@@ -350,19 +352,19 @@ fun AddEditWebhookScreen(
                 ) {
                     Column(modifier = Modifier.padding(12.dp)) {
                         Text(
-                            text = if (testResult?.success == true) "SUCCESS" else "FAILED",
+                            text = if (testResult?.success == true) stringResource(R.string.success_caps) else stringResource(R.string.failed_caps),
                             color = if (testResult?.success == true) Color(0xFF25D366) else Color(0xFFF87171),
                             fontWeight = FontWeight.Bold
                         )
                         Text(
-                            text = "Code: ${testResult?.responseCode}",
+                            text = stringResource(R.string.code, testResult?.responseCode ?: 0),
                             color = KizunaColors.OnSurface,
                             fontSize = 12.sp
                         )
                         Spacer(modifier = Modifier.height(12.dp))
                         
                         Text(
-                            text = "Sent Headers:",
+                            text = stringResource(R.string.sent_headers),
                             color = KizunaColors.OnSurface,
                             fontSize = 11.sp,
                             fontWeight = FontWeight.Bold
@@ -382,7 +384,7 @@ fun AddEditWebhookScreen(
                         
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
-                            text = "Rendered JSON Payload:",
+                            text = stringResource(R.string.rendered_json_payload),
                             color = KizunaColors.OnSurface,
                             fontSize = 11.sp,
                             fontWeight = FontWeight.Bold
@@ -403,7 +405,7 @@ fun AddEditWebhookScreen(
                         if (!testResult?.responseBody.isNullOrBlank()) {
                             Spacer(modifier = Modifier.height(8.dp))
                             Text(
-                                text = "Response:",
+                                text = stringResource(R.string.response),
                                 color = KizunaColors.OnSurface,
                                 fontSize = 11.sp,
                                 fontWeight = FontWeight.Bold
@@ -453,7 +455,7 @@ fun AddEditWebhookScreen(
                 shape = RoundedCornerShape(8.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Save Webhook", fontWeight = FontWeight.Bold)
+                Text(stringResource(R.string.save_webhook), fontWeight = FontWeight.Bold)
             }
             
             Spacer(modifier = Modifier.height(32.dp))
@@ -464,8 +466,8 @@ fun AddEditWebhookScreen(
         AlertDialog(
             onDismissRequest = { headerToDeleteIndex = null },
             containerColor = KizunaColors.Surface,
-            title = { Text("Remove Header", color = KizunaColors.OnSurface) },
-            text = { Text("Are you sure you want to remove this header?", color = KizunaColors.Muted) },
+            title = { Text(stringResource(R.string.remove_header), color = KizunaColors.OnSurface) },
+            text = { Text(stringResource(R.string.remove_header_confirm), color = KizunaColors.Muted) },
             confirmButton = {
                 TextButton(
                     onClick = {
@@ -473,12 +475,12 @@ fun AddEditWebhookScreen(
                         headerToDeleteIndex = null
                     }
                 ) {
-                    Text("Remove", color = Color(0xFFF87171), fontWeight = FontWeight.Bold)
+                    Text(stringResource(R.string.delete), color = Color(0xFFF87171), fontWeight = FontWeight.Bold)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { headerToDeleteIndex = null }) {
-                    Text("Cancel", color = KizunaColors.Muted)
+                    Text(stringResource(R.string.cancel), color = KizunaColors.Muted)
                 }
             }
         )
@@ -491,25 +493,25 @@ fun VariableHelper() {
     val clipboardManager = LocalClipboardManager.current
 
     val variables = listOf(
-        "sender" to "Sender's phone number",
-        "receiver" to "Receiver's phone number",
-        "message" to "SMS message body",
-        "receivedAt" to "Time when message was received",
-        "messageId" to "Unique message ID",
-        "gatewayId" to "Gateway ID",
-        "gatewayName" to "Gateway Name",
-        "deviceId" to "Android Device ID",
-        "deviceModel" to "Phone Model",
-        "manufacturer" to "Device Manufacturer",
-        "androidVersion" to "Android Version",
-        "appVersion" to "Kizuna: SMS Gateway App Version",
-        "phoneNumber" to "SIM Phone Number",
-        "displayName" to "SIM Display Name",
-        "simSlot" to "SIM Slot Index (0/1)",
-        "subId" to "SIM Subscription ID",
-        "currentDate" to "Today's Date (YYYY-MM-DD)",
-        "currentTime" to "Current Time (HH:mm:ss)",
-        "currentTimestamp" to "Current Unix Timestamp (ms)"
+        "sender" to stringResource(R.string.var_sender_desc),
+        "receiver" to stringResource(R.string.var_receiver_desc),
+        "message" to stringResource(R.string.var_message_desc),
+        "receivedAt" to stringResource(R.string.var_received_at_desc),
+        "messageId" to stringResource(R.string.var_message_id_desc),
+        "gatewayId" to stringResource(R.string.var_gateway_id_desc),
+        "gatewayName" to stringResource(R.string.var_gateway_name_desc),
+        "deviceId" to stringResource(R.string.var_device_id_desc),
+        "deviceModel" to stringResource(R.string.var_device_model_desc),
+        "manufacturer" to stringResource(R.string.var_manufacturer_desc),
+        "androidVersion" to stringResource(R.string.var_android_version_desc),
+        "appVersion" to stringResource(R.string.var_app_version_desc),
+        "phoneNumber" to stringResource(R.string.var_phone_number_desc),
+        "displayName" to stringResource(R.string.var_display_name_desc),
+        "simSlot" to stringResource(R.string.var_sim_slot_desc),
+        "subId" to stringResource(R.string.var_sub_id_desc),
+        "currentDate" to stringResource(R.string.var_current_date_desc),
+        "currentTime" to stringResource(R.string.var_current_time_desc),
+        "currentTimestamp" to stringResource(R.string.var_current_timestamp_desc)
     )
 
     Column {
@@ -518,7 +520,7 @@ fun VariableHelper() {
             modifier = Modifier.align(Alignment.End)
         ) {
             Text(
-                if (expanded) "Hide variables" else "Show available variables",
+                if (expanded) stringResource(R.string.hide_variables) else stringResource(R.string.show_variables),
                 color = KizunaColors.Primary,
                 fontSize = 12.sp
             )
@@ -535,7 +537,7 @@ fun VariableHelper() {
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Text(
-                        "Click a variable to copy its placeholder (e.g. {{sender}})",
+                        stringResource(R.string.variables_helper_desc),
                         color = KizunaColors.Muted,
                         fontSize = 11.sp,
                         fontWeight = FontWeight.Medium
