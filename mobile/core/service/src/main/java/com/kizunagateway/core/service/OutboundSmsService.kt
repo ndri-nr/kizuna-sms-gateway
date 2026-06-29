@@ -2,6 +2,7 @@ package com.kizunagateway.core.service
 
 import android.app.*
 import android.content.Intent
+import android.content.pm.ServiceInfo
 import android.os.Build
 import android.os.IBinder
 import android.util.Log
@@ -21,6 +22,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.encodeToString
 import java.time.LocalDateTime
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.milliseconds
 
 @AndroidEntryPoint
 class OutboundSmsService : Service() {
@@ -62,8 +64,13 @@ class OutboundSmsService : Service() {
 
     private fun startService() {
         _isRunning.value = true
-        val notification = createNotification("Outbound SMS Gateway is running")
-        startForeground(NOTIFICATION_ID, notification)
+        val notification = createNotification("Outbound service is running...")
+        
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            startForeground(NOTIFICATION_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE)
+        } else {
+            startForeground(NOTIFICATION_ID, notification)
+        }
         
         if (!httpGatewayServer.isRunning()) {
             httpGatewayServer.start()
@@ -88,7 +95,7 @@ class OutboundSmsService : Service() {
 
     private fun stopService() {
         _isRunning.value = false
-        updateNotification("Stopping Outbound Service (Draining queue...)")
+        updateNotification("Stopping outbound service...")
         
         tunnelClient.stop()
         httpGatewayServer.stop {
@@ -107,7 +114,7 @@ class OutboundSmsService : Service() {
             while (isActive) {
                 val pendingSms = outboundRepository.getSmsByStatus(OutboundSmsStatus.PENDING)
                 if (pendingSms.isEmpty()) {
-                    delay(5000) // Poll every 5 seconds if empty
+                    delay(5000.milliseconds)
                     continue
                 }
 
@@ -135,7 +142,7 @@ class OutboundSmsService : Service() {
                         outboundRepository.updateOutboundSms(failedSms)
                         triggerWebhook(failedSms)
                     }
-                    delay(1000) // Wait between sends to avoid carrier blocking
+                    delay(1000.milliseconds)
                 }
             }
         }
@@ -169,8 +176,9 @@ class OutboundSmsService : Service() {
     }
 
     private fun createNotification(content: String): Notification {
+        val appName = packageManager.getApplicationLabel(applicationInfo).toString()
         return NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle("Kizuna Outbound")
+            .setContentTitle(appName)
             .setContentText(content)
             .setSmallIcon(android.R.drawable.ic_dialog_info)
             .setOngoing(true)
@@ -184,15 +192,13 @@ class OutboundSmsService : Service() {
     }
 
     private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val serviceChannel = NotificationChannel(
-                CHANNEL_ID,
-                "Outbound SMS Gateway Channel",
-                NotificationManager.IMPORTANCE_LOW
-            )
-            val manager = getSystemService(NotificationManager::class.java)
-            manager.createNotificationChannel(serviceChannel)
-        }
+        val serviceChannel = NotificationChannel(
+            CHANNEL_ID,
+            "Outbound SMS Gateway Channel",
+            NotificationManager.IMPORTANCE_DEFAULT
+        )
+        val manager = getSystemService(NotificationManager::class.java)
+        manager.createNotificationChannel(serviceChannel)
     }
 
     override fun onBind(intent: Intent?): IBinder? = null
