@@ -14,6 +14,9 @@ import com.kizunagateway.domain.service.SmsSender
 import com.kizunagateway.domain.service.WebhookHttpClient
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.encodeToString
 import java.time.LocalDateTime
@@ -38,10 +41,14 @@ class OutboundSmsService : Service() {
         
         const val ACTION_START = "ACTION_START"
         const val ACTION_STOP = "ACTION_STOP"
+
+        private val _isRunning = MutableStateFlow(false)
+        val isRunning: StateFlow<Boolean> = _isRunning.asStateFlow()
     }
 
     override fun onCreate() {
         super.onCreate()
+        _isRunning.value = true
         createNotificationChannel()
     }
 
@@ -54,6 +61,7 @@ class OutboundSmsService : Service() {
     }
 
     private fun startService() {
+        _isRunning.value = true
         val notification = createNotification("Outbound SMS Gateway is running")
         startForeground(NOTIFICATION_ID, notification)
         
@@ -79,6 +87,7 @@ class OutboundSmsService : Service() {
     }
 
     private fun stopService() {
+        _isRunning.value = false
         updateNotification("Stopping Outbound Service (Draining queue...)")
         
         tunnelClient.stop()
@@ -118,6 +127,7 @@ class OutboundSmsService : Service() {
                         outboundRepository.updateOutboundSms(updatedSms)
                         triggerWebhook(updatedSms)
                     } catch (e: Exception) {
+                        if (e is CancellationException) throw e
                         val failedSms = sms.copy(
                             status = OutboundSmsStatus.FAILED,
                             errorMessage = e.message
@@ -153,6 +163,7 @@ class OutboundSmsService : Service() {
                 bodyContent = Json.encodeToString(payload)
             )
         } catch (e: Exception) {
+            if (e is CancellationException) throw e
             Log.e("OutboundSmsService", "Failed to trigger webhook: ${e.message}")
         }
     }
@@ -187,6 +198,7 @@ class OutboundSmsService : Service() {
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onDestroy() {
+        _isRunning.value = false
         serviceScope.cancel()
         super.onDestroy()
     }

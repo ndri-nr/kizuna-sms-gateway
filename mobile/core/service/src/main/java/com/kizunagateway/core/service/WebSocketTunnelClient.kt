@@ -81,6 +81,7 @@ class WebSocketTunnelClient @Inject constructor(
                         }
                     }
                 } catch (e: Exception) {
+                    if (e is CancellationException) throw e
                     Log.e("Tunnel", "Tunnel error: ${e.message}")
                     notificationService.showMessage("Websocket service unavailable")
                     onError() // Notify service to stop

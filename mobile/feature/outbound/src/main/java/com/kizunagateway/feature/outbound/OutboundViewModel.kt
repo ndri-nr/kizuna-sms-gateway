@@ -32,7 +32,7 @@ class OutboundViewModel @Inject constructor(
     private val notificationService: NotificationService
 ) : AndroidViewModel(application) {
 
-    private val _isServiceRunning = MutableStateFlow(false)
+    private val _isServiceRunning = MutableStateFlow(OutboundSmsService.isRunning.value)
     val isServiceRunning: StateFlow<Boolean> = _isServiceRunning.asStateFlow()
 
     private val _apiKeys = MutableStateFlow<List<ApiKey>>(emptyList())
@@ -59,27 +59,10 @@ class OutboundViewModel @Inject constructor(
 
     init {
         loadData()
-        startServiceStatusPolling()
-    }
-
-    private var statusPollingJob: Job? = null
-    private fun startServiceStatusPolling() {
-        statusPollingJob?.cancel()
-        statusPollingJob = viewModelScope.launch {
-            while (true) {
-                checkServiceStatus()
-                delay(1000) // Poll every second
+        viewModelScope.launch {
+            OutboundSmsService.isRunning.collect { running ->
+                _isServiceRunning.value = running
             }
-        }
-    }
-
-    private fun checkServiceStatus() {
-        val manager = getApplication<Application>().getSystemService(android.content.Context.ACTIVITY_SERVICE) as android.app.ActivityManager
-        val isRunning = manager.getRunningServices(Integer.MAX_VALUE).any { 
-            it.service.className == OutboundSmsService::class.java.name 
-        }
-        if (_isServiceRunning.value != isRunning) {
-            _isServiceRunning.value = isRunning
         }
     }
 
@@ -108,8 +91,7 @@ class OutboundViewModel @Inject constructor(
         } else {
             getApplication<Application>().startService(intent)
         }
-        _isServiceRunning.value = enabled
-        notificationService.showMessage(if (enabled) "Outbound service started" else "Outbound service stopped")
+        notificationService.showMessage(if (enabled) "Service started" else "Service stopped")
     }
 
     fun generateApiKey(name: String) {
