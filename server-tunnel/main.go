@@ -7,6 +7,7 @@ import (
 	"log"
 	"net"
 	"net/http"
+	"os"
 	"strings"
 	"sync"
 	"time"
@@ -46,10 +47,15 @@ func main() {
 	http.HandleFunc("/ws/", handleWebSocket)
 	http.HandleFunc("/", handleProxy)
 
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8081"
+	}
+
 	fmt.Println("Kizuna Tunnel Server starting...")
 	printIPAddresses()
-	fmt.Println("Listening on 0.0.0.0:8081...")
-	log.Fatal(http.ListenAndServe("0.0.0.0:8081", nil))
+	fmt.Printf("Listening on 0.0.0.0:%s...\n", port)
+	log.Fatal(http.ListenAndServe("0.0.0.0:"+port, nil))
 }
 
 func printIPAddresses() {
@@ -85,14 +91,6 @@ func handleWebSocket(w http.ResponseWriter, r *http.Request) {
 	if gatewayID == "" {
 		http.Error(w, "Gateway ID required", http.StatusBadRequest)
 		return
-	}
-
-	// Simple authentication using deviceSecret in Authorization header
-	apiKey := r.Header.Get("X-API-KEY")
-	if apiKey == "" {
-		// In production, verify this secret against a database
-		log.Printf("Warning: Connection attempt without Authorization for %s", gatewayID)
-		// For now, let's allow it or implement a simple check if you have one
 	}
 
 	conn, err := upgrader.Upgrade(w, r, nil)
