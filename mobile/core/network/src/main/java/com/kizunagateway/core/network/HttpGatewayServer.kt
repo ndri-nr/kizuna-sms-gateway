@@ -34,7 +34,11 @@ class HttpGatewayServer @Inject constructor(
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
     private var isDraining = false
 
-    fun start(port: Int = 8080) {
+    companion object {
+        const val DEFAULT_PORT = 8080
+    }
+
+    fun start(port: Int = DEFAULT_PORT) {
         if (server != null) return
         isDraining = false
 

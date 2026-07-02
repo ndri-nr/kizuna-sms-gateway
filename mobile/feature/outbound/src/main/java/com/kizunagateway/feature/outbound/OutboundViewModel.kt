@@ -10,6 +10,7 @@ import com.kizunagateway.domain.model.ApiKey
 import com.kizunagateway.domain.model.OutboundSms
 import com.kizunagateway.domain.repository.GatewayConfigRepository
 import com.kizunagateway.domain.repository.OutboundRepository
+import com.kizunagateway.domain.service.NetworkInfoProvider
 import com.kizunagateway.domain.service.NotificationService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -30,7 +31,8 @@ class OutboundViewModel @Inject constructor(
     application: Application,
     private val outboundRepository: OutboundRepository,
     private val gatewayConfigRepository: GatewayConfigRepository,
-    private val notificationService: NotificationService
+    private val notificationService: NotificationService,
+    private val networkInfoProvider: NetworkInfoProvider
 ) : AndroidViewModel(application) {
 
     private val _isServiceRunning = MutableStateFlow(OutboundSmsService.isRunning.value)
@@ -54,6 +56,13 @@ class OutboundViewModel @Inject constructor(
     private val _gatewayId = MutableStateFlow("")
     val gatewayId: StateFlow<String> = _gatewayId.asStateFlow()
 
+    // Testable REST API addresses, populated while the outbound service is running.
+    private val _localAddress = MutableStateFlow("")   // e.g. "192.168.x.x:8080"
+    val localAddress: StateFlow<String> = _localAddress.asStateFlow()
+
+    private val _publicAddress = MutableStateFlow("")  // e.g. "<publicIP>:8080"
+    val publicAddress: StateFlow<String> = _publicAddress.asStateFlow()
+
     val baseUrl: StateFlow<String> = combine(_tunnelServerUrl, _gatewayId) { tunnel, id ->
         if (tunnel.isBlank() || id.isBlank()) "" else "https://$tunnel/${id.lowercase()}"
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "")
@@ -63,6 +72,14 @@ class OutboundViewModel @Inject constructor(
         viewModelScope.launch {
             OutboundSmsService.isRunning.collect { running ->
                 _isServiceRunning.value = running
+                if (running) {
+                    val port = networkInfoProvider.serverPort
+                    _localAddress.value = networkInfoProvider.getLocalIpAddress()?.let { "$it:$port" } ?: ""
+                    _publicAddress.value = networkInfoProvider.getPublicIpAddress()?.let { "$it:$port" } ?: ""
+                } else {
+                    _localAddress.value = ""
+                    _publicAddress.value = ""
+                }
             }
         }
     }

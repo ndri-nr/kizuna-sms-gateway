@@ -225,6 +225,15 @@
     <string name="base_url_copied">Base URL copied to clipboard</string>
     <string name="copy_base_url">Copy Base URL</string>
 
+    <!-- Outbound Test Endpoints -->
+    <string name="test_endpoints">Test Endpoints</string>
+    <string name="local_address">Local (same Wi-Fi network)</string>
+    <string name="public_address">Public IP</string>
+    <string name="public_address_hint">Reachable from the internet only if port forwarding is configured on your router.</string>
+    <string name="tunnel_url">Tunnel URL</string>
+    <string name="address_copied">Address copied to clipboard</string>
+    <string name="copy_address">Copy address</string>
+
     <!-- API Keys -->
     <string name="api_key_credentials">API Key Credentials</string>
     <string name="no_api_keys">No API keys configured</string>

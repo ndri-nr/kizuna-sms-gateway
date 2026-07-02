@@ -225,6 +225,15 @@
     <string name="base_url_copied">URL Dasar disalin ke papan klip</string>
     <string name="copy_base_url">Salin URL Dasar</string>
 
+    <!-- Outbound Test Endpoints -->
+    <string name="test_endpoints">Endpoint Pengujian</string>
+    <string name="local_address">Lokal (jaringan Wi-Fi yang sama)</string>
+    <string name="public_address">IP Publik</string>
+    <string name="public_address_hint">Hanya dapat diakses dari internet jika penerusan port (port forwarding) dikonfigurasi di router Anda.</string>
+    <string name="tunnel_url">URL Tunnel</string>
+    <string name="address_copied">Alamat disalin ke papan klip</string>
+    <string name="copy_address">Salin alamat</string>
+
     <!-- API Keys -->
     <string name="api_key_credentials">Kredensial API Key</string>
     <string name="no_api_keys">Tidak ada API key yang dikonfigurasi</string>
